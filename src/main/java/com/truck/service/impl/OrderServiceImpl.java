@@ -685,7 +685,7 @@ public class OrderServiceImpl implements IOrderService {
             stockAlteration.setAlterationProductPrice(orderDetail.getCurrentUnitPrice());
             stockAlterationMapper.insertSelective(stockAlteration);
 
-            orderDetail.setOrderDetailStatus(Const.OrderDetailStatusEnum.DISTRIBUTION.getCode());
+            orderDetail.setOrderDetailStatus(Const.OrderDetailStatusEnum.SHIPPED.getCode());
             resultCount = orderDetailMapper.updateByPrimaryKeySelective(orderDetail);
             if (resultCount > 0) {
                 Order order = orderMapper.selectByPrimaryKey(orderDetail.getOrderId());
