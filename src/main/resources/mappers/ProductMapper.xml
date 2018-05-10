@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.ProductMapper">
+    <resultMap id="BaseResultMap" type="com.truck.pojo.Product">
+        <constructor>
+            <idArg column="Product_ID" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="admin_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+            <arg column="Product_CategoryID" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="Product_Title" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="Product_SubTitle" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="Product_Promotion" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="Product_Weight" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+            <arg column="Product_Size" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="Product_Price" jdbcType="DECIMAL" javaType="java.math.BigDecimal"/>
+            <arg column="Product_Status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="Product_Stock" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+            <arg column="Product_FirstImg" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="CreateTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="EndTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
+            <arg column="Product_Desc" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="Product_SubImg" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    Product_ID, admin_id,Product_CategoryID, Product_Title, Product_SubTitle, Product_Promotion, 
+    Product_Weight, Product_Size, Product_Price, Product_Status, Product_Stock, Product_FirstImg, 
+    CreateTime, EndTime, Product_Desc, Product_SubImg
+  </sql>
+    <select id="selectByProductKeywordAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from truck_product
+        where Product_Status = 1
+        <if test="productKeyword != null">
+            and Product_Title like #{productKeyword}
+        </if>
+        <if test="categoryIdList != null">
+            and Product_CategoryID in
+            <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+                #{item}
+            </foreach>
+        </if>
+        <if test="order != null">
+            order by #{order}
+        </if>
+        <if test="by != null">
+             #{by}
+        </if>
+    </select>
+    <select id="selectByCategoryKeywordAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"></include>
+        from truck_product
+        where Product_Status = 1
+        <if test="categoryIdList != null">
+            and Product_CategoryID in
+            <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+                #{item}
+            </foreach>
+        </if>
+        <if test="order != null">
+            order by #{order}
+        </if>
+        <if test="by != null">
+            #{by}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from truck_product
+        where Product_ID = #{productId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List"/>
+        from truck_product
+    </select>
+    <select id="selectByAdminId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from truck_product
+        <if test="adminId!=null">
+            where admin_id = #{adminId,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="selectByCaAID" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from truck_product
+        <if test="productId!=null">
+            where Product_CategoryID = #{productId,jdbcType=INTEGER}
+        </if>
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from truck_product
+    where Product_ID = #{productId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.truck.pojo.Product">
+    insert into truck_product (Product_ID, admin_id,Product_CategoryID, Product_Title,
+      Product_SubTitle, Product_Promotion, Product_Weight,
+      Product_Size, Product_Price, Product_Status,
+      Product_Stock, Product_FirstImg, CreateTime,
+      EndTime, Product_Desc, Product_SubImg
+      )
+    values (#{productId,jdbcType=INTEGER},#{adminId,jdbcType=INTEGER}, #{productCategoryid,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR},
+      #{productSubtitle,jdbcType=VARCHAR}, #{productPromotion,jdbcType=VARCHAR}, #{productWeight,jdbcType=DECIMAL},
+      #{productSize,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productStatus,jdbcType=INTEGER},
+      #{productStock,jdbcType=INTEGER}, #{productFirstimg,jdbcType=VARCHAR}, now(),
+      #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.truck.pojo.Product">
+        insert into truck_product
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                Product_ID,
+	    </if>
+     	    <if test="adminId != null" >
+        	admin_id,
+            </if>
+            <if test="productCategoryid != null">
+                Product_CategoryID,
+            </if>
+            <if test="productTitle != null">
+                Product_Title,
+            </if>
+            <if test="productSubtitle != null">
+                Product_SubTitle,
+            </if>
+            <if test="productPromotion != null">
+                Product_Promotion,
+            </if>
+            <if test="productWeight != null">
+                Product_Weight,
+            </if>
+            <if test="productSize != null">
+                Product_Size,
+            </if>
+            <if test="productPrice != null">
+                Product_Price,
+            </if>
+            <if test="productStatus != null">
+                Product_Status,
+            </if>
+            <if test="productStock != null">
+                Product_Stock,
+            </if>
+            <if test="productFirstimg != null">
+                Product_FirstImg,
+            </if>
+                CreateTime,
+                EndTime,
+            <if test="productDesc != null">
+                Product_Desc,
+            </if>
+            <if test="productSubimg != null">
+                Product_SubImg,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">
+                #{productId,jdbcType=INTEGER},
+	      </if>
+	      <if test="adminId != null" >
+	        #{adminId,jdbcType=INTEGER},
+            </if>
+            <if test="productCategoryid != null">
+                #{productCategoryid,jdbcType=INTEGER},
+            </if>
+            <if test="productTitle != null">
+                #{productTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productSubtitle != null">
+                #{productSubtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productPromotion != null">
+                #{productPromotion,jdbcType=VARCHAR},
+            </if>
+            <if test="productWeight != null">
+                #{productWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="productSize != null">
+                #{productSize,jdbcType=VARCHAR},
+            </if>
+            <if test="productPrice != null">
+                #{productPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="productStatus != null">
+                #{productStatus,jdbcType=INTEGER},
+            </if>
+            <if test="productStock != null">
+                #{productStock,jdbcType=INTEGER},
+            </if>
+            <if test="productFirstimg != null">
+                #{productFirstimg,jdbcType=VARCHAR},
+            </if>
+                now(),
+                now(),
+            <if test="productDesc != null">
+                #{productDesc,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="productSubimg != null">
+                #{productSubimg,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Product">
+        update truck_product
+        <set>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+            <if test="productCategoryid != null">
+                Product_CategoryID = #{productCategoryid,jdbcType=INTEGER},
+            </if>
+            <if test="productTitle != null">
+                Product_Title = #{productTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productSubtitle != null">
+                Product_SubTitle = #{productSubtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="productPromotion != null">
+                Product_Promotion = #{productPromotion,jdbcType=VARCHAR},
+            </if>
+            <if test="productWeight != null">
+                Product_Weight = #{productWeight,jdbcType=DECIMAL},
+            </if>
+            <if test="productSize != null">
+                Product_Size = #{productSize,jdbcType=VARCHAR},
+            </if>
+            <if test="productPrice != null">
+                Product_Price = #{productPrice,jdbcType=DECIMAL},
+            </if>
+            <if test="productStatus != null">
+                Product_Status = #{productStatus,jdbcType=INTEGER},
+            </if>
+            <if test="productStock != null">
+                Product_Stock = #{productStock,jdbcType=INTEGER},
+            </if>
+            <if test="productFirstimg != null">
+                Product_FirstImg = #{productFirstimg,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                CreateTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+                EndTime = now(),
+            <if test="productDesc != null">
+                Product_Desc = #{productDesc,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="productSubimg != null">
+                Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where Product_ID = #{productId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Product">
+    update truck_product
+    set Product_CategoryID = #{productCategoryid,jdbcType=INTEGER},
+      Product_Title = #{productTitle,jdbcType=VARCHAR},
+      Product_SubTitle = #{productSubtitle,jdbcType=VARCHAR},
+      Product_Promotion = #{productPromotion,jdbcType=VARCHAR},
+      Product_Weight = #{productWeight,jdbcType=DECIMAL},
+      Product_Size = #{productSize,jdbcType=VARCHAR},
+      Product_Price = #{productPrice,jdbcType=DECIMAL},
+      Product_Status = #{productStatus,jdbcType=INTEGER},
+      Product_Stock = #{productStock,jdbcType=INTEGER},
+      Product_FirstImg = #{productFirstimg,jdbcType=VARCHAR},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      EndTime = now(),
+      Product_Desc = #{productDesc,jdbcType=LONGVARCHAR},
+      Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR}
+    where Product_ID = #{productId,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from truck_product
+        <where>
+            <if test="productName != null">
+                and Product_Title like #{productName}
+            </if>
+            <if test="productId != null">
+                and truck_product = #{productId}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectCountMin" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from truck_product where Product_Stock &lt; #{Min}
+    </select>
+</mapper>

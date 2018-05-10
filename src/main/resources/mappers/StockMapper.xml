@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.StockMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.Stock" >
+    <constructor >
+      <idArg column="stock_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="admin_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="warehouse_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="shop_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="stock_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="stock_limit_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="stock_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="stock_category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="in_stock_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stock_id, product_id, admin_id, warehouse_id, shop_id, stock_num, stock_limit_num,
+    stock_status, create_time, update_time, stock_category_id, in_stock_price
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_product_stock
+    where stock_id = #{stockId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByStockIdAndProductId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_product_stock
+    where stock_id = #{stockId,jdbcType=INTEGER}
+    and product_id=#{productId}
+  </select>
+  <select id="selectListByProductIdWarehouseId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_product_stock
+    <where>
+    <if test="productId != null">
+      and product_id = #{productId}
+    </if>
+    <if test="warehouseId != null">
+      and warehouse_id = #{warehouseId}
+    </if>
+      and admin_id = #{adminId}
+    </where>
+  </select>
+  <select id="selectListByWarehouseId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_product_stock
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_product_stock
+    where stock_id = #{stockId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Stock" >
+    insert into truck_product_stock (stock_id, product_id, admin_id,
+    warehouse_id, shop_id, stock_num,
+    stock_limit_num, stock_status, create_time,
+    update_time, stock_category_id, in_stock_price
+    )
+    values (#{stockId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER},
+    #{warehouseId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{stockNum,jdbcType=INTEGER},
+    #{stockLimitNum,jdbcType=INTEGER}, #{stockStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{stockCategoryId,jdbcType=INTEGER}, #{inStockPrice,jdbcType=DECIMAL}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Stock" useGeneratedKeys="true" keyProperty="stockId">
+    insert into truck_product_stock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        stock_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="stockNum != null" >
+        stock_num,
+      </if>
+      <if test="stockLimitNum != null" >
+        stock_limit_num,
+      </if>
+      <if test="stockStatus != null" >
+        stock_status,
+      </if>
+        create_time,
+        update_time,
+      <if test="stockCategoryId != null" >
+        stock_category_id,
+      </if>
+      <if test="inStockPrice != null" >
+        in_stock_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stockId != null" >
+        #{stockId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="stockNum != null" >
+        #{stockNum,jdbcType=INTEGER},
+      </if>
+      <if test="stockLimitNum != null" >
+        #{stockLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="stockStatus != null" >
+        #{stockStatus,jdbcType=INTEGER},
+      </if>
+         now(),
+         now(),
+      <if test="stockCategoryId != null" >
+        #{stockCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="inStockPrice != null" >
+        #{inStockPrice,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Stock" >
+    update truck_product_stock
+    <set >
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseId != null" >
+        warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="stockNum != null" >
+        stock_num = #{stockNum,jdbcType=INTEGER},
+      </if>
+      <if test="stockLimitNum != null" >
+        stock_limit_num = #{stockLimitNum,jdbcType=INTEGER},
+      </if>
+      <if test="stockStatus != null" >
+        stock_status = #{stockStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+      <if test="stockCategoryId != null" >
+        stock_category_id = #{stockCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="inStockPrice != null" >
+        in_stock_price = #{inStockPrice,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where stock_id = #{stockId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Stock" >
+    update truck_product_stock
+    set product_id = #{productId,jdbcType=INTEGER},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      warehouse_id = #{warehouseId,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      stock_num = #{stockNum,jdbcType=INTEGER},
+      stock_limit_num = #{stockLimitNum,jdbcType=INTEGER},
+      stock_status = #{stockStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      stock_category_id = #{stockCategoryId,jdbcType=INTEGER},
+      in_stock_price = #{inStockPrice,jdbcType=DECIMAL}
+    where stock_id = #{stockId,jdbcType=INTEGER}
+  </update>
+</mapper>

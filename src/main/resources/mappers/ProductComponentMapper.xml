@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+  <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  <mapper namespace="com.truck.dao.ProductComponentMapper" >
+    <resultMap id="BaseResultMap" type="com.truck.pojo.ProductComponent" >
+      <constructor >
+        <idArg column="component_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <arg column="product_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+        <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+        <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+        <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      </constructor>
+    </resultMap>
+    <sql id="Base_Column_List" >
+      component_id, product_id, name, create_time, update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from truck_product_component
+      where component_id = #{componentId,jdbcType=INTEGER}
+    </select>
+    <select id="listComponentByProductId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+      select
+      <include refid="Base_Column_List" />
+      from truck_product_component
+      where product_id = #{productId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByComponentId" parameterType="java.lang.Integer" >
+      delete from truck_product_component
+      where component_id = #{componentId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.truck.pojo.ProductComponent" useGeneratedKeys="true" keyProperty="componentId">
+      insert into truck_product_component (component_id, product_id, name,
+      create_time, update_time)
+      values (#{componentId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      now(), now())
+    </insert>
+    <insert id="insertSelective" parameterType="com.truck.pojo.ProductComponent" >
+      insert into truck_product_component
+      <trim prefix="(" suffix=")" suffixOverrides="," >
+        <if test="componentId != null" >
+          component_id,
+        </if>
+        <if test="productId != null" >
+          product_id,
+        </if>
+        <if test="name != null" >
+          name,
+        </if>
+        <if test="createTime != null" >
+          create_time,
+        </if>
+        <if test="updateTime != null" >
+          update_time,
+        </if>
+      </trim>
+      <trim prefix="values (" suffix=")" suffixOverrides="," >
+        <if test="componentId != null" >
+          #{componentId,jdbcType=INTEGER},
+        </if>
+        <if test="productId != null" >
+          #{productId,jdbcType=INTEGER},
+        </if>
+        <if test="name != null" >
+          #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null" >
+          now(),
+        </if>
+        <if test="updateTime != null" >
+          now(),
+        </if>
+      </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.ProductComponent" >
+      update truck_product_component
+      <set >
+        <if test="productId != null" >
+          product_id = #{productId,jdbcType=INTEGER},
+        </if>
+        <if test="name != null" >
+          name = #{name,jdbcType=VARCHAR},
+        </if>
+        <if test="createTime != null" >
+          create_time = #{createTime,jdbcType=TIMESTAMP},
+        </if>
+        <if test="updateTime != null" >
+          update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </if>
+      </set>
+      where component_id = #{componentId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.truck.pojo.ProductComponent" >
+      update truck_product_component
+      set product_id = #{productId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      where component_id = #{componentId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByProductComponent" parameterType="com.truck.pojo.ProductComponent">
+     update truck_product_component
+      set product_id = #{productId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+      where component_id = #{componentId,jdbcType=INTEGER}
+    </update>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.WarehouseMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.Warehouse" >
+    <constructor >
+      <idArg column="warehouse_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="shop_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="warehouse_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="warehouse_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="warehouse_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="warehouse_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    warehouse_id, shop_id, warehouse_name, warehouse_desc, warehouse_phone, warehouse_email, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_shop_warehouse
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_shop_warehouse
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Warehouse" >
+    insert into truck_shop_warehouse (warehouse_id, shop_id, warehouse_name, 
+      warehouse_desc, warehouse_phone, warehouse_email, 
+      create_time, update_time)
+    values (#{warehouseId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{warehouseName,jdbcType=VARCHAR}, 
+      #{warehouseDesc,jdbcType=VARCHAR}, #{warehousePhone,jdbcType=VARCHAR}, #{warehouseEmail,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Warehouse" useGeneratedKeys="true" keyProperty="warehouseId">
+    insert into truck_shop_warehouse
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name,
+      </if>
+      <if test="warehouseDesc != null" >
+        warehouse_desc,
+      </if>
+      <if test="warehousePhone != null" >
+        warehouse_phone,
+      </if>
+      <if test="warehouseEmail != null" >
+        warehouse_email,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="warehouseId != null" >
+        #{warehouseId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseDesc != null" >
+        #{warehouseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="warehousePhone != null" >
+        #{warehousePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseEmail != null" >
+        #{warehouseEmail,jdbcType=VARCHAR},
+      </if>
+       now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Warehouse" >
+    update truck_shop_warehouse
+    <set >
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="warehouseName != null" >
+        warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseDesc != null" >
+        warehouse_desc = #{warehouseDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="warehousePhone != null" >
+        warehouse_phone = #{warehousePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseEmail != null" >
+        warehouse_email = #{warehouseEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+    </set>
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Warehouse" >
+    update truck_shop_warehouse
+    set shop_id = #{shopId,jdbcType=INTEGER},
+      warehouse_name = #{warehouseName,jdbcType=VARCHAR},
+      warehouse_desc = #{warehouseDesc,jdbcType=VARCHAR},
+      warehouse_phone = #{warehousePhone,jdbcType=VARCHAR},
+      warehouse_email = #{warehouseEmail,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where warehouse_id = #{warehouseId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByShopId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from truck_shop_warehouse
+    where shop_id = #{shopId}
+  </select>
+</mapper>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.BalanceAlterationMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.BalanceAlteration" >
+    <constructor >
+      <idArg column="balance_alteration_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_info_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_money" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="alteration_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_reason" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    balance_alteration_id, user_info_id, alteration_money, alteration_status, alteration_reason, 
+    order_id, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_balance_alteration
+    where balance_alteration_id = #{balanceAlterationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_balance_alteration
+    where balance_alteration_id = #{balanceAlterationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.BalanceAlteration" >
+    insert into truck_balance_alteration (balance_alteration_id, user_info_id, 
+      alteration_money, alteration_status, alteration_reason, 
+      order_id, create_time, update_time
+      )
+    values (#{balanceAlterationId,jdbcType=INTEGER}, #{userInfoId,jdbcType=INTEGER}, 
+      #{alterationMoney,jdbcType=DECIMAL}, #{alterationStatus,jdbcType=INTEGER}, #{alterationReason,jdbcType=INTEGER}, 
+      #{orderId,jdbcType=INTEGER}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.BalanceAlteration" useGeneratedKeys="true" keyProperty="balanceAlterationId" >
+    insert into truck_balance_alteration
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="balanceAlterationId != null" >
+        balance_alteration_id,
+      </if>
+      <if test="userInfoId != null" >
+        user_info_id,
+      </if>
+      <if test="alterationMoney != null" >
+        alteration_money,
+      </if>
+      <if test="alterationStatus != null" >
+        alteration_status,
+      </if>
+      <if test="alterationReason != null" >
+        alteration_reason,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="balanceAlterationId != null" >
+        #{balanceAlterationId,jdbcType=INTEGER},
+      </if>
+      <if test="userInfoId != null" >
+        #{userInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="alterationMoney != null" >
+        #{alterationMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="alterationStatus != null" >
+        #{alterationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="alterationReason != null" >
+        #{alterationReason,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.BalanceAlteration" >
+    update truck_balance_alteration
+    <set >
+      <if test="userInfoId != null" >
+        user_info_id = #{userInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="alterationMoney != null" >
+        alteration_money = #{alterationMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="alterationStatus != null" >
+        alteration_status = #{alterationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="alterationReason != null" >
+        alteration_reason = #{alterationReason,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+        update_time = now(),
+    </set>
+    where balance_alteration_id = #{balanceAlterationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.BalanceAlteration" >
+    update truck_balance_alteration
+    set user_info_id = #{userInfoId,jdbcType=INTEGER},
+      alteration_money = #{alterationMoney,jdbcType=DECIMAL},
+      alteration_status = #{alterationStatus,jdbcType=INTEGER},
+      alteration_reason = #{alterationReason,jdbcType=INTEGER},
+      order_id = #{orderId,jdbcType=INTEGER},
+      update_time = now()
+    where balance_alteration_id = #{balanceAlterationId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllBalanceAlteration" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_balance_alteration
+    <where>
+      <if test="status != null">
+        and alteration_status = #{status}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectBalanceAlterationByUserInfo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_balance_alteration
+    where user_info_id = #{userInfoId}
+    <if test="status != null">
+      and alteration_status = #{status}
+    </if>
+    order by create_time desc
+  </select>
+
+  <select id="selectByUserInfo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_balance_alteration
+    where user_info_id = #{userInfoId}
+    order by create_time desc
+  </select>
+
+  <delete id="deleteByUserInfoId" parameterType="int">
+    delete from truck_balance_alteration
+    where user_info_id = #{userInfoId}
+  </delete>
+</mapper>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.Order" >
+    <constructor >
+      <idArg column="order_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="shop_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="payment_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="payment_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="freight" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="order_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="payment_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    order_id, order_no, user_id, shop_id, order_price, payment_price, payment_type, freight, 
+    order_status, payment_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_order
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Order" >
+    insert into truck_order (order_id, order_no, user_id, 
+      shop_id, order_price, payment_price, 
+      payment_type, freight, order_status, 
+      payment_time, create_time, update_time
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{shopId,jdbcType=INTEGER}, #{orderPrice,jdbcType=DECIMAL}, #{paymentPrice,jdbcType=DECIMAL}, 
+      #{paymentType,jdbcType=INTEGER}, #{freight,jdbcType=DECIMAL}, #{orderStatus,jdbcType=INTEGER}, 
+      #{paymentTime,jdbcType=TIMESTAMP}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Order" useGeneratedKeys="true" keyProperty="orderId" >
+    insert into truck_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderNo != null" >
+        order_no,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="orderPrice != null" >
+        order_price,
+      </if>
+      <if test="paymentPrice != null" >
+        payment_price,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="paymentTime != null" >
+        payment_time,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="orderPrice != null" >
+        #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentPrice != null" >
+        #{paymentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTime != null" >
+        #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Order" >
+    update truck_order
+    <set >
+      <if test="orderNo != null" >
+        order_no = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="orderPrice != null" >
+        order_price = #{orderPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentPrice != null" >
+        payment_price = #{paymentPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="paymentTime != null" >
+        payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Order" >
+    update truck_order
+    set order_no = #{orderNo,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      shop_id = #{shopId,jdbcType=INTEGER},
+      order_price = #{orderPrice,jdbcType=DECIMAL},
+      payment_price = #{paymentPrice,jdbcType=DECIMAL},
+      payment_type = #{paymentType,jdbcType=INTEGER},
+      freight = #{freight,jdbcType=DECIMAL},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      payment_time = #{paymentTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_order
+    where order_no = #{orderNo}
+    and user_id = #{userId}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_order
+    where user_id = #{userId}
+    order by create_time desc
+  </select>
+
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"></include>
+    from truck_order
+    order by create_time desc
+  </select>
+
+  <select id="selectOrderByShopId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"/>
+    from truck_order
+    where order_id
+    IN (
+    select DISTINCT order_id
+    from truck_order_detail
+    where shop_id=#{shopId}
+    )
+  </select>
+
+  <select id="searchByOrderNo" resultMap="BaseResultMap" parameterType="String">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_order
+    <where>
+      <if test="orderNo != null">
+        and order_no like #{orderNo}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectOrderByShopIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from truck_order
+    where order_id
+    IN (
+    select DISTINCT order_id
+    from truck_order_detail
+    where shop_id=#{shopId}
+    )
+    <if test="orderNo != null and orderNo!='' ">
+      and order_no like #{orderNo}
+    </if>
+  </select>
+
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="String">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_order
+    where order_no = #{orderNo}
+  </select>
+
+  <select id="selectPurchaseByUserId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"/>
+    from truck_order
+    where user_id = #{userId}
+    and order_status != 0
+  </select>
+</mapper>

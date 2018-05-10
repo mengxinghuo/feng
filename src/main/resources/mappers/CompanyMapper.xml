@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.CompanyMapper" >
+  <resultMap id="ResultMapWithBLOBs" type="com.truck.pojo.Company" >
+    <constructor >
+      <idArg column="company_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="company_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_headImg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_firstImg" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="company_subImg" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="company_account" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="company_tax_card" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="company_sppkp" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="company_licence" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    company_id, user_id, company_name, company_desc, company_email, company_phone, company_address, company_headImg,
+    company_firstImg, company_subImg,create_time, update_time, company_account, company_tax_card, company_sppkp, company_licence
+  </sql>
+  <select id="checkCompanyName" resultType="int" parameterType="string">
+    select count(1) from truck_user_company where company_name=#{companyName}
+  </select>
+
+
+  <select id="checkCompanyEmail" resultType="int" parameterType="string">
+    select count(1) from truck_user_company where company_email=#{companyEmail}
+  </select>
+
+  <select id="checkCompanyNum" resultType="int" parameterType="java.lang.Integer">
+    select count(1) from truck_user_company where user_id=#{userId}
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_user_company
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUserId" parameterType="java.lang.Integer" >
+    delete from truck_user_company
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Company" useGeneratedKeys="true" keyProperty="companyId">
+    insert into truck_user_company (company_id, user_id, company_name,
+    company_desc, company_email, company_phone,
+    company_address, company_headImg,company_firstImg, company_subImg,
+    create_time, update_time,company_account, company_tax_card, company_sppkp,
+    company_licence
+    )
+    values (#{companyId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR},
+    #{companyDesc,jdbcType=VARCHAR}, #{companyEmail,jdbcType=VARCHAR}, #{companyPhone,jdbcType=VARCHAR},
+    #{companyAddress,jdbcType=VARCHAR}, #{companyHeadimg,jdbcType=VARCHAR}, #{companyFirstimg,jdbcType=LONGVARCHAR},
+    #{companySubimg,jdbcType=LONGVARCHAR}, now(), now(),
+    #{companyAccount,jdbcType=LONGVARCHAR}, #{companyTaxCard,jdbcType=LONGVARCHAR}, #{companySppkp,jdbcType=LONGVARCHAR},
+    #{companyLicence,jdbcType=LONGVARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Company" >
+    insert into truck_user_company
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="companyDesc != null" >
+        company_desc,
+      </if>
+      <if test="companyEmail != null" >
+        company_email,
+      </if>
+      <if test="companyPhone != null" >
+        company_phone,
+      </if>
+      <if test="companyAddress != null" >
+        company_address,
+      </if>
+      <if test="companyHeadimg != null" >
+        company_headImg,
+      </if>
+      <if test="companyFirstimg != null" >
+        company_firstImg,
+      </if>
+      <if test="companySubimg != null" >
+        company_subImg,
+      </if>
+
+      create_time,
+
+
+      update_time,
+      <if test="companyAccount != null" >
+        company_account,
+      </if>
+      <if test="companyTaxCard != null" >
+        company_tax_card,
+      </if>
+      <if test="companySppkp != null" >
+        company_sppkp,
+      </if>
+      <if test="companyLicence != null" >
+        company_licence,
+      </if>
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null" >
+        #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHeadimg != null" >
+        #{companyHeadimg,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFirstimg != null" >
+        #{companyFirstimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companySubimg != null" >
+        #{companySubimg,jdbcType=LONGVARCHAR},
+      </if>
+
+      now(),
+
+
+      now(),
+      <if test="companyAccount != null" >
+        #{companyAccount,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companyTaxCard != null" >
+        #{companyTaxCard,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companySppkp != null" >
+        #{companySppkp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companyLicence != null" >
+        #{companyLicence,jdbcType=LONGVARCHAR},
+      </if>
+
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Company" >
+    update truck_user_company
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyDesc != null" >
+        company_desc = #{companyDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        company_email = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        company_phone = #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyAddress != null" >
+        company_address = #{companyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyHeadimg != null" >
+        company_headImg = #{companyHeadimg,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFirstimg != null" >
+        company_firstImg = #{companyFirstimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companySubimg != null" >
+        company_subImg = #{companySubimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+
+      update_time = now(),
+      <if test="companyAccount != null" >
+        company_account = #{companyAccount,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companyTaxCard != null" >
+        company_tax_card = #{companyTaxCard,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companySppkp != null" >
+        company_sppkp = #{companySppkp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="companyLicence != null" >
+        company_licence = #{companyLicence,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Company" >
+    update truck_user_company
+    set
+    company_name = #{companyName,jdbcType=VARCHAR},
+    company_desc = #{companyDesc,jdbcType=VARCHAR},
+    company_email = #{companyEmail,jdbcType=VARCHAR},
+    company_phone = #{companyPhone,jdbcType=VARCHAR},
+    company_address = #{companyAddress,jdbcType=VARCHAR},
+    company_headImg = #{companyHeadimg,jdbcType=VARCHAR},
+    company_firstImg = #{companyFirstimg,jdbcType=LONGVARCHAR},
+    company_subImg = #{companySubimg,jdbcType=LONGVARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = now(),
+    company_account = #{companyAccount,jdbcType=LONGVARCHAR},
+    company_tax_card = #{companyTaxCard,jdbcType=LONGVARCHAR},
+    company_sppkp = #{companySppkp,jdbcType=LONGVARCHAR},
+    company_licence = #{companyLicence,jdbcType=LONGVARCHAR}
+    where company_id = #{companyId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectList" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_user_company
+  </select>
+
+  <select id="selectByUserId" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_user_company
+    where
+    user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectCompanyIdByuserId" resultType="int" parameterType="java.lang.Integer" >
+    SELECT
+    company_id
+    from truck_user_company
+    where
+    user_id = #{userId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByNameAndCompanyId" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_user_company
+    <where>
+      <if test="companyName != null">
+        and company_name like #{companyName}
+      </if>
+      <if test="companyId != null">
+        and company_id = #{companyId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByNameAndCompanyIdUserId" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_user_company
+    <where>
+      <if test="companyName != null">
+        and company_name like #{companyName}
+      </if>
+      <if test="companyId != null">
+        and company_id = #{companyId}
+      </if>
+      <if test="userId != null">
+        and user_id = #{userId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByNameAndCategoryIds" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_user_company
+    where status = 1
+    <if test="companyName != null">
+      and company_name like #{companyName}
+    </if>
+    <if test="categoryIdList != null" >
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectCompanyListByUserId" resultMap="ResultMapWithBLOBs" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_company
+    where user_id in
+    (select user_id from truck_product where Product_ID in
+    (select cart_product_id from truck_cart where cart_user_id = #{userId})
+    group by user_id)
+  </select>
+
+  <select id="selectCompanyListByOrderId" resultMap="ResultMapWithBLOBs" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_company
+    where user_id in(
+    select user_id from truck_product
+    where Product_ID in (
+    select product_id from truck_order_detail where order_id=#{orderId}
+    )
+    group by user_id
+    )
+  </select>
+</mapper>

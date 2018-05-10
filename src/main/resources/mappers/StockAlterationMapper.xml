@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.StockAlterationMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.StockAlteration" >
+    <constructor >
+      <idArg column="alteration_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="stock_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_detail_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_num" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_reason" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="alteration_product_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    alteration_id, stock_id, order_detail_id, alteration_num, alteration_status, alteration_reason, 
+    alteration_product_price, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_stock_alteration
+    where alteration_id = #{alterationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_stock_alteration
+    where alteration_id = #{alterationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.StockAlteration" useGeneratedKeys="true" keyProperty="alterationId">
+    insert into truck_stock_alteration (alteration_id, stock_id, order_detail_id, 
+      alteration_num, alteration_status, alteration_reason, 
+      alteration_product_price, create_time, update_time
+      )
+    values (#{alterationId,jdbcType=INTEGER}, #{stockId,jdbcType=INTEGER}, #{orderDetailId,jdbcType=INTEGER}, 
+      #{alterationNum,jdbcType=INTEGER}, #{alterationStatus,jdbcType=INTEGER}, #{alterationReason,jdbcType=INTEGER}, 
+      #{alterationProductPrice,jdbcType=DECIMAL}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.StockAlteration" useGeneratedKeys="true" keyProperty="alterationId">
+    insert into truck_stock_alteration
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="alterationId != null" >
+        alteration_id,
+      </if>
+      <if test="stockId != null" >
+        stock_id,
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id,
+      </if>
+      <if test="alterationNum != null" >
+        alteration_num,
+      </if>
+      <if test="alterationStatus != null" >
+        alteration_status,
+      </if>
+      <if test="alterationReason != null" >
+        alteration_reason,
+      </if>
+      <if test="alterationProductPrice != null" >
+        alteration_product_price,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="alterationId != null" >
+        #{alterationId,jdbcType=INTEGER},
+      </if>
+      <if test="stockId != null" >
+        #{stockId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetailId != null" >
+        #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="alterationNum != null" >
+        #{alterationNum,jdbcType=INTEGER},
+      </if>
+      <if test="alterationStatus != null" >
+        #{alterationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="alterationReason != null" >
+        #{alterationReason,jdbcType=INTEGER},
+      </if>
+      <if test="alterationProductPrice != null" >
+        #{alterationProductPrice,jdbcType=DECIMAL},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.StockAlteration" >
+    update truck_stock_alteration
+    <set >
+      <if test="stockId != null" >
+        stock_id = #{stockId,jdbcType=INTEGER},
+      </if>
+      <if test="orderDetailId != null" >
+        order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="alterationNum != null" >
+        alteration_num = #{alterationNum,jdbcType=INTEGER},
+      </if>
+      <if test="alterationStatus != null" >
+        alteration_status = #{alterationStatus,jdbcType=INTEGER},
+      </if>
+      <if test="alterationReason != null" >
+        alteration_reason = #{alterationReason,jdbcType=INTEGER},
+      </if>
+      <if test="alterationProductPrice != null" >
+        alteration_product_price = #{alterationProductPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+        update_time = now(),
+    </set>
+    where alteration_id = #{alterationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.StockAlteration" >
+    update truck_stock_alteration
+    set stock_id = #{stockId,jdbcType=INTEGER},
+      order_detail_id = #{orderDetailId,jdbcType=INTEGER},
+      alteration_num = #{alterationNum,jdbcType=INTEGER},
+      alteration_status = #{alterationStatus,jdbcType=INTEGER},
+      alteration_reason = #{alterationReason,jdbcType=INTEGER},
+      alteration_product_price = #{alterationProductPrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where alteration_id = #{alterationId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectAllStockAlteration" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_stock_alteration
+    <where>
+      stock_id in (
+      select stock_id from truck_product_stock
+      <where>
+        <if test="adminId !=null">
+          and admin_id=#{adminId}
+        </if>
+      </where>
+      )
+      <if test="status != null">
+        and alteration_status = #{status}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectNumAlterationByAdminId" resultType="integer" parameterType="map">
+    select
+    sum(alteration_num)
+    from truck_stock_alteration
+    <where>
+      <if test="adminId !=null">
+      and stock_id in (
+      select stock_id from truck_product_stock
+      <where>
+        <if test="adminId !=null">
+          and admin_id=#{adminId}
+        </if>
+      </where>
+      )
+      </if>
+      <if test="status != null">
+        and alteration_status = #{status}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectStockAlterationByProductIdAdminIdWarehouseId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_stock_alteration
+    <where>
+      stock_id in (
+      select stock_id from truck_product_stock
+      <where>
+        <if test="productId !=null">
+          and product_id=#{productId}
+        </if>
+        <if test="warehouseId !=null">
+          and warehouse_id=#{warehouseId}
+        </if>
+        <if test="adminId !=null">
+          and admin_id=#{adminId}
+        </if>
+      </where>
+      )
+      <if test="status != null">
+        and alteration_status = #{status}
+      </if>
+      <if test="searchDate != null">
+        and DATE_FORMAT(create_time,'%Y-%m-%d') =  DATE_FORMAT(#{searchDate,jdbcType=INTEGER},'%Y-%m-%d')
+      </if>
+      <if test="beginDate != null">
+      <![CDATA[
+        and DATE_FORMAT(create_time,'%Y-%m-%d') >=  DATE_FORMAT(#{beginDate,jdbcType=INTEGER},'%Y-%m-%d')
+        ]]>
+      </if>
+      <if test="endDate != null">
+        <![CDATA[
+        and DATE_FORMAT(create_time,'%Y-%m-%d') <=  DATE_FORMAT(#{endDate,jdbcType=INTEGER},'%Y-%m-%d')
+        ]]>
+      </if>
+
+    </where>
+    order by create_time desc
+  </select>
+
+  <select id="selectNumAlterationByProductIdAdminIdWarehouseId" resultType="integer" parameterType="map">
+    select
+    sum(alteration_num)
+    from truck_stock_alteration
+    <where>
+      stock_id in (
+      select stock_id from truck_product_stock
+      <where>
+        <if test="productId !=null">
+          and product_id=#{productId}
+        </if>
+        <if test="warehouseId !=null">
+          and warehouse_id=#{warehouseId}
+        </if>
+        <if test="adminId !=null">
+          and admin_id=#{adminId}
+        </if>
+      </where>
+      )
+      <if test="status != null">
+        and alteration_status = #{status}
+      </if>
+      <if test="searchDate != null">
+        and DATE_FORMAT(create_time,'%Y-%m-%d') =  DATE_FORMAT(#{searchDate,jdbcType=INTEGER},'%Y-%m-%d')
+      </if>
+      <if test="beginDate != null">
+      <![CDATA[
+        and DATE_FORMAT(create_time,'%Y-%m-%d') >=  DATE_FORMAT(#{beginDate,jdbcType=INTEGER},'%Y-%m-%d')
+        ]]>
+      </if>
+      <if test="endDate != null">
+        <![CDATA[
+        and DATE_FORMAT(create_time,'%Y-%m-%d') <=  DATE_FORMAT(#{endDate,jdbcType=INTEGER},'%Y-%m-%d')
+        ]]>
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+</mapper>

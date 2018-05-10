@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.ShopMapper" >
+  <resultMap id="ResultMapWithBLOBs" type="com.truck.pojo.Shop" >
+    <constructor >
+      <idArg column="shop_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="admin_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="shop_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_desc" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_headImg" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="shop_firstImg" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_subImg" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="shop_account" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_tax_card" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_sppkp" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_licence" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_proxy_certificate" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="shop_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    shop_id, admin_id, shop_name, shop_desc, shop_email, shop_phone, shop_address, shop_headImg, 
+    shop_firstImg, shop_subImg,create_time, update_time, shop_account, shop_tax_card, shop_sppkp, shop_licence, 
+    shop_proxy_certificate ,shop_status
+  </sql>
+  <select id="checkShopName" resultType="int" parameterType="string">
+    select count(1) from truck_admin_shop where shop_name=#{shopName}
+  </select>
+
+
+  <select id="checkShopEmail" resultType="int" parameterType="string">
+    select count(1) from truck_admin_shop where shop_email=#{shopEmail}
+  </select>
+
+  <select id="checkShopNum" resultType="int" parameterType="java.lang.Integer">
+    select count(1) from truck_admin_shop where admin_id=#{adminId}
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_admin_shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_admin_shop
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByAdminId" parameterType="java.lang.Integer" >
+    delete from truck_admin_shop
+    where admin_id = #{adminId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Shop" useGeneratedKeys="true" keyProperty="shopId">
+    insert into truck_admin_shop (shop_id, admin_id, shop_name, 
+      shop_desc, shop_email, shop_phone, 
+      shop_address, shop_headImg,shop_firstImg, shop_subImg,
+       create_time, update_time,shop_account, shop_tax_card, shop_sppkp, 
+      shop_licence, shop_proxy_certificate, shop_status
+      )
+    values (#{shopId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
+      #{shopDesc,jdbcType=VARCHAR}, #{shopEmail,jdbcType=VARCHAR}, #{shopPhone,jdbcType=VARCHAR}, 
+      #{shopAddress,jdbcType=VARCHAR}, #{shopHeadimg,jdbcType=VARCHAR}, #{shopFirstimg,jdbcType=LONGVARCHAR},
+      #{shopSubimg,jdbcType=LONGVARCHAR}, now(), now(),
+      #{shopAccount,jdbcType=LONGVARCHAR}, #{shopTaxCard,jdbcType=LONGVARCHAR}, #{shopSppkp,jdbcType=LONGVARCHAR}, 
+      #{shopLicence,jdbcType=LONGVARCHAR}, #{shopProxyCertificate,jdbcType=LONGVARCHAR}, #{shopStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Shop" >
+    insert into truck_admin_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="adminId != null" >
+        admin_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopDesc != null" >
+        shop_desc,
+      </if>
+      <if test="shopEmail != null" >
+        shop_email,
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone,
+      </if>
+      <if test="shopAddress != null" >
+        shop_address,
+      </if>
+      <if test="shopHeadimg != null" >
+        shop_headImg,
+      </if>
+      <if test="shopFirstimg != null" >
+        shop_firstImg,
+      </if>
+      <if test="shopSubimg != null" >
+        shop_subImg,
+      </if>
+        create_time,
+        update_time,
+     <if test="shopAccount != null" >
+        shop_account,
+      </if>
+      <if test="shopTaxCard != null" >
+        shop_tax_card,
+      </if>
+      <if test="shopSppkp != null" >
+        shop_sppkp,
+      </if>
+      <if test="shopLicence != null" >
+        shop_licence,
+      </if>
+      <if test="shopProxyCertificate != null" >
+        shop_proxy_certificate,
+      </if>
+      <if test="shopStatus != null" >
+        shop_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDesc != null" >
+        #{shopDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="shopEmail != null" >
+        #{shopEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopHeadimg != null" >
+        #{shopHeadimg,jdbcType=VARCHAR},
+      </if>
+        <if test="shopFirstimg != null" >
+          #{shopFirstimg,jdbcType=LONGVARCHAR},
+        </if>
+        <if test="shopSubimg != null" >
+          #{shopSubimg,jdbcType=LONGVARCHAR},
+      </if>
+        now(),
+        now(),
+     <if test="shopAccount != null" >
+        #{shopAccount,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopTaxCard != null" >
+        #{shopTaxCard,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopSppkp != null" >
+        #{shopSppkp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopLicence != null" >
+        #{shopLicence,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopProxyCertificate != null" >
+        #{shopProxyCertificate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        #{shopStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Shop" >
+    update truck_admin_shop
+    <set >
+      <if test="adminId != null" >
+        admin_id = #{adminId,jdbcType=INTEGER},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopDesc != null" >
+        shop_desc = #{shopDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="shopEmail != null" >
+        shop_email = #{shopEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="shopPhone != null" >
+        shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddress != null" >
+        shop_address = #{shopAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="shopHeadimg != null" >
+        shop_headImg = #{shopHeadimg,jdbcType=VARCHAR},
+      </if>
+      <if test="shopFirstimg != null" >
+        shop_firstImg = #{shopFirstimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopSubimg != null" >
+        shop_subImg = #{shopSubimg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      
+        update_time = now(),
+      <if test="shopAccount != null" >
+        shop_account = #{shopAccount,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopTaxCard != null" >
+        shop_tax_card = #{shopTaxCard,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopSppkp != null" >
+        shop_sppkp = #{shopSppkp,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopLicence != null" >
+        shop_licence = #{shopLicence,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopProxyCertificate != null" >
+        shop_proxy_certificate = #{shopProxyCertificate,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shopStatus != null" >
+        shop_status = #{shopStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Shop" >
+    update truck_admin_shop
+    set
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_desc = #{shopDesc,jdbcType=VARCHAR},
+      shop_email = #{shopEmail,jdbcType=VARCHAR},
+      shop_phone = #{shopPhone,jdbcType=VARCHAR},
+      shop_address = #{shopAddress,jdbcType=VARCHAR},
+      shop_headImg = #{shopHeadimg,jdbcType=VARCHAR},
+      shop_firstImg = #{shopFirstimg,jdbcType=LONGVARCHAR},
+      shop_subImg = #{shopSubimg,jdbcType=LONGVARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = now(),
+      shop_account = #{shopAccount,jdbcType=LONGVARCHAR},
+      shop_tax_card = #{shopTaxCard,jdbcType=LONGVARCHAR},
+      shop_sppkp = #{shopSppkp,jdbcType=LONGVARCHAR},
+      shop_licence = #{shopLicence,jdbcType=LONGVARCHAR},
+      shop_proxy_certificate = #{shopProxyCertificate,jdbcType=LONGVARCHAR},
+      shop_status = #{shopStatus,jdbcType=INTEGER}
+    where shop_id = #{shopId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectList" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    <where>
+      <if test="shopStatus != null">
+        and shop_status = #{shopStatus}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByStatusReviewed" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    where shop_status=1
+  </select>
+
+  <select id="selectByAdminId" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    where
+    admin_id = #{adminId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectShopIdByadminId" resultType="int" parameterType="java.lang.Integer" >
+    SELECT
+    shop_id
+    from truck_admin_shop
+    where
+    admin_id = #{adminId,jdbcType=INTEGER}
+  </select>
+
+
+  <select id="selectByNameAndShopId" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    <where>
+      <if test="shopName != null">
+        and shop_name like #{shopName}
+      </if>
+      <if test="shopId != null">
+        and shop_id = #{shopId}
+      </if>
+        and shop_status=1
+    </where>
+  </select>
+
+  <select id="selectByNameAndShopIdAllStatus" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    <where>
+      <if test="shopName != null">
+        and shop_name like #{shopName}
+      </if>
+      <if test="shopId != null">
+        and shop_id = #{shopId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByNameAndShopIdAdminId" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from truck_admin_shop
+    <where>
+      <if test="shopName != null">
+        and shop_name like #{shopName}
+      </if>
+      <if test="shopId != null">
+        and shop_id = #{shopId}
+      </if>
+      <if test="adminId != null">
+        and admin_id = #{adminId}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectByNameAndCategoryIds" resultMap="ResultMapWithBLOBs" parameterType="map">
+    SELECT
+    <include refid="Base_Column_List"></include>
+    from truck_admin_shop
+    where status = 1
+    <if test="shopName != null">
+      and shop_name like #{shopName}
+    </if>
+    <if test="categoryIdList != null" >
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectShopListByUserId" resultMap="ResultMapWithBLOBs" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from truck_admin_shop
+    where admin_id in
+          (select admin_id from truck_product where Product_ID in
+              (select cart_product_id from truck_cart where cart_user_id = #{userId})
+          group by admin_id)
+  </select>
+
+  <select id="selectShopListByOrderId" resultMap="ResultMapWithBLOBs" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from truck_admin_shop
+    where admin_id in(
+        select admin_id from truck_product
+        where Product_ID in (
+                select product_id from truck_order_detail where order_id=#{orderId}
+        )
+        group by admin_id
+    )
+  </select>
+
+  <select id="selectShopIdByGroupCart" resultMap="ResultMapWithBLOBs" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_admin_shop
+    where shop_id in (
+      select shop_id from truck_cart
+      where cart_user_id = #{userId} and checked = 1
+      group by shop_id
+    )
+  </select>
+</mapper>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.BankMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.Bank" >
+    <constructor >
+      <idArg column="bank_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="bank_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_account" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="contact_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="present_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    bank_id, user_id, bank_name, bank_address, bank_account, bank_user_name, contact_number, 
+    present_address, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_bank
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_bank
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.Bank" >
+    insert into truck_bank (bank_id, user_id, bank_name,
+      bank_address, bank_account, bank_user_name, 
+      contact_number, present_address, create_time, 
+      update_time)
+    values (#{bankId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, 
+      #{bankAddress,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankUserName,jdbcType=VARCHAR}, 
+      #{contactNumber,jdbcType=VARCHAR}, #{presentAddress,jdbcType=VARCHAR}, now(),
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.Bank" >
+    insert into truck_bank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="bankId != null" >
+        bank_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAddress != null" >
+        bank_address,
+      </if>
+      <if test="bankAccount != null" >
+        bank_account,
+      </if>
+      <if test="bankUserName != null" >
+        bank_user_name,
+      </if>
+      <if test="contactNumber != null" >
+        contact_number,
+      </if>
+      <if test="presentAddress != null" >
+        present_address,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="bankId != null" >
+        #{bankId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankUserName != null" >
+        #{bankUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        #{contactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="presentAddress != null" >
+        #{presentAddress,jdbcType=VARCHAR},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Bank" >
+    update truck_bank
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAddress != null" >
+        bank_address = #{bankAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccount != null" >
+        bank_account = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankUserName != null" >
+        bank_user_name = #{bankUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null" >
+        contact_number = #{contactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="presentAddress != null" >
+        present_address = #{presentAddress,jdbcType=VARCHAR},
+      </if>
+        update_time = now(),
+    </set>
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Bank" >
+    update truck_bank
+    set user_id = #{userId,jdbcType=INTEGER},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_address = #{bankAddress,jdbcType=VARCHAR},
+      bank_account = #{bankAccount,jdbcType=VARCHAR},
+      bank_user_name = #{bankUserName,jdbcType=VARCHAR},
+      contact_number = #{contactNumber,jdbcType=VARCHAR},
+      present_address = #{presentAddress,jdbcType=VARCHAR},
+      update_time = now()
+    where bank_id = #{bankId,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteByBankIdUserId">
+    delete from truck_bank
+    where bank_id = #{bankId}
+    and user_id = #{userId}
+  </delete>
+
+  <update id="updateByBank" parameterType="com.truck.pojo.Bank" >
+    update truck_bank
+    set
+    bank_name = #{bankName,jdbcType=VARCHAR},
+    bank_address = #{bankAddress,jdbcType=VARCHAR},
+    bank_account = #{bankAccount,jdbcType=VARCHAR},
+    bank_user_name = #{bankUserName,jdbcType=VARCHAR},
+    contact_number = #{contactNumber,jdbcType=VARCHAR},
+    present_address = #{presentAddress,jdbcType=VARCHAR},
+    update_time = now()
+    where bank_id = #{bankId,jdbcType=INTEGER}
+    and user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByBankIdUserId" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from truck_bank
+    where bank_id = #{bankId}
+    and user_id = #{userId}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_bank
+    where user_id = #{userId}
+  </select>
+</mapper>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.truck.dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.truck.pojo.UserInfo" >
+    <constructor >
+      <idArg column="customer_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="company_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="duty_id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cumulative_purchase" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="register_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="office_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_fax" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="company_contactor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="member_level" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="account_balance" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="service_balance" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    customer_id, user_id, company_name, duty_id, cumulative_purchase, register_address, 
+    office_address, company_phone, company_email, company_fax, company_contactor, member_level, 
+    account_balance, service_balance, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from truck_user_info
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from truck_user_info
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.truck.pojo.UserInfo" >
+    insert into truck_user_info (customer_id, user_id, company_name, 
+      duty_id, cumulative_purchase, register_address, 
+      office_address, company_phone, company_email, 
+      company_fax, company_contactor, member_level, 
+      account_balance, service_balance, create_time, 
+      update_time)
+    values (#{customerId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, 
+      #{dutyId,jdbcType=VARCHAR}, #{cumulativePurchase,jdbcType=DECIMAL}, #{registerAddress,jdbcType=VARCHAR}, 
+      #{officeAddress,jdbcType=VARCHAR}, #{companyPhone,jdbcType=VARCHAR}, #{companyEmail,jdbcType=VARCHAR}, 
+      #{companyFax,jdbcType=VARCHAR}, #{companyContactor,jdbcType=VARCHAR}, #{memberLevel,jdbcType=VARCHAR}, 
+      #{accountBalance,jdbcType=DECIMAL}, #{serviceBalance,jdbcType=DECIMAL}, now(),
+      now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.truck.pojo.UserInfo" useGeneratedKeys="true" keyProperty="customerId" >
+    insert into truck_user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        customer_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="companyName != null" >
+        company_name,
+      </if>
+      <if test="dutyId != null" >
+        duty_id,
+      </if>
+      <if test="cumulativePurchase != null" >
+        cumulative_purchase,
+      </if>
+      <if test="registerAddress != null" >
+        register_address,
+      </if>
+      <if test="officeAddress != null" >
+        office_address,
+      </if>
+      <if test="companyPhone != null" >
+        company_phone,
+      </if>
+      <if test="companyEmail != null" >
+        company_email,
+      </if>
+      <if test="companyFax != null" >
+        company_fax,
+      </if>
+      <if test="companyContactor != null" >
+        company_contactor,
+      </if>
+      <if test="memberLevel != null" >
+        member_level,
+      </if>
+      <if test="accountBalance != null" >
+        account_balance,
+      </if>
+      <if test="serviceBalance != null" >
+        service_balance,
+      </if>
+        create_time,
+        update_time,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyId != null" >
+        #{dutyId,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativePurchase != null" >
+        #{cumulativePurchase,jdbcType=DECIMAL},
+      </if>
+      <if test="registerAddress != null" >
+        #{registerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null" >
+        #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFax != null" >
+        #{companyFax,jdbcType=VARCHAR},
+      </if>
+      <if test="companyContactor != null" >
+        #{companyContactor,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null" >
+        #{memberLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBalance != null" >
+        #{accountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBalance != null" >
+        #{serviceBalance,jdbcType=DECIMAL},
+      </if>
+      now(),
+      now(),
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.UserInfo" >
+    update truck_user_info
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null" >
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="dutyId != null" >
+        duty_id = #{dutyId,jdbcType=VARCHAR},
+      </if>
+      <if test="cumulativePurchase != null" >
+        cumulative_purchase = #{cumulativePurchase,jdbcType=DECIMAL},
+      </if>
+      <if test="registerAddress != null" >
+        register_address = #{registerAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="officeAddress != null" >
+        office_address = #{officeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="companyPhone != null" >
+        company_phone = #{companyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="companyEmail != null" >
+        company_email = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyFax != null" >
+        company_fax = #{companyFax,jdbcType=VARCHAR},
+      </if>
+      <if test="companyContactor != null" >
+        company_contactor = #{companyContactor,jdbcType=VARCHAR},
+      </if>
+      <if test="memberLevel != null" >
+        member_level = #{memberLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="accountBalance != null" >
+        account_balance = #{accountBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceBalance != null" >
+        service_balance = #{serviceBalance,jdbcType=DECIMAL},
+      </if>
+        update_time = now(),
+    </set>
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.UserInfo" >
+    update truck_user_info
+    set user_id = #{userId,jdbcType=INTEGER},
+      company_name = #{companyName,jdbcType=VARCHAR},
+      duty_id = #{dutyId,jdbcType=VARCHAR},
+      cumulative_purchase = #{cumulativePurchase,jdbcType=DECIMAL},
+      register_address = #{registerAddress,jdbcType=VARCHAR},
+      office_address = #{officeAddress,jdbcType=VARCHAR},
+      company_phone = #{companyPhone,jdbcType=VARCHAR},
+      company_email = #{companyEmail,jdbcType=VARCHAR},
+      company_fax = #{companyFax,jdbcType=VARCHAR},
+      company_contactor = #{companyContactor,jdbcType=VARCHAR},
+      member_level = #{memberLevel,jdbcType=VARCHAR},
+      account_balance = #{accountBalance,jdbcType=DECIMAL},
+      service_balance = #{serviceBalance,jdbcType=DECIMAL},
+      update_time = now()
+    where customer_id = #{customerId,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectCountByUserId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_info
+    where user_id = #{userId}
+  </select>
+
+  <select id="selectAllUserInfo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_info
+    <where>
+      <if test="companyName != null">
+        and company_name LIKE #{companyName}
+      </if>
+    </where>
+  </select>
+
+  <delete id="deleteByUserId" parameterType="int">
+    delete from truck_user_info
+    where user_id = #{userId}
+  </delete>
+
+  <select id="selectUserInfoByDutyId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_info
+    where duty_id = #{dutyId}
+  </select>
+
+  <select id="selectByDutyIdExcept" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from truck_user_info
+    where duty_id = #{dutyId} and user_id != #{userId}
+  </select>
+</mapper>
