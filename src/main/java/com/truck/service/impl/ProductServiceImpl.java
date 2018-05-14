@@ -76,6 +76,7 @@ public class ProductServiceImpl implements ProductService {
         if (category != null && !"".equals(category)) {
             categoryVo.setId(category.getId());
             categoryVo.setName(category.getName());
+            categoryVo.setCategoryLevel(category.getParentId());
             categoryVoList.add(categoryVo);
             selectCategorParent(categoryVoList, category.getParentId());
         }

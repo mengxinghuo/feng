@@ -9,6 +9,8 @@ public class CategoryVo {
 
     private String name;
 
+    private Integer categoryLevel;
+
     public int getId() {
         return id;
     }
@@ -23,5 +25,13 @@ public class CategoryVo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getCategoryLevel() {
+        return categoryLevel;
+    }
+
+    public void setCategoryLevel(Integer categoryLevel) {
+        this.categoryLevel = categoryLevel;
     }
 }
