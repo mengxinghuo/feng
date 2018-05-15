@@ -48,7 +48,11 @@ public class StockCategoryManageController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
             //更新categoryName
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
             return iStockCategoryService.updateStockCategoryName(categoryId,categoryName);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("get.do")
@@ -104,7 +108,11 @@ public class StockCategoryManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        return iStockCategoryService.deleteById(categoryId);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iStockCategoryService.deleteById(categoryId);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
 }

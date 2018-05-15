@@ -47,7 +47,11 @@ public class ContactController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-        return iContactService.del(contactId);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iContactService.del(contactId);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("update.do")
@@ -57,7 +61,11 @@ public class ContactController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-        return iContactService.update(contact);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iContactService.update(contact);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
 

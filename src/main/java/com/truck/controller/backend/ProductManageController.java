@@ -63,10 +63,10 @@ public class ProductManageController {
     public ServerResponse<PageInfo> search(@RequestParam(value = "productKeyword", required = false) String productKeyword,
                                            @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                            @RequestParam(value = "categoryKeyword", required = false) String categoryKeyword,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                         @RequestParam(value = "order", defaultValue = "Product_Price") String order,
-                                         @RequestParam(value = "by", defaultValue = "desc") String by) {
+                                           @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
+                                           @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                                           @RequestParam(value = "order", defaultValue = "Product_Price") String order,
+                                           @RequestParam(value = "by", defaultValue = "desc") String by) {
         return productService.getProductByKeywordCategory(productKeyword, categoryId,categoryKeyword, pageNum, pageSize, order, by);
     }
 
@@ -78,8 +78,11 @@ public class ProductManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        ServerResponse<String> response = productService.deleteProductByID(productId);
-        return response;
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return productService.deleteProductByID(productId);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
 
@@ -120,6 +123,10 @@ public class ProductManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        return productService.setSaleStatus(status,productId);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return productService.setSaleStatus(status,productId);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 }

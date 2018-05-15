@@ -7,7 +7,6 @@ import com.truck.pojo.Admin;
 import com.truck.pojo.Stock;
 import com.truck.service.IAdminService;
 import com.truck.service.IStockService;
-import com.truck.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,7 +49,11 @@ public class StockManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
             return iStockService.setStockStatus(stockId,status);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("detail.do")
@@ -88,7 +91,11 @@ public class StockManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-        return iStockService.reduceStockNum(stockId,reduceNum);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iStockService.reduceStockNum(stockId,reduceNum);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("add.do")
@@ -99,7 +106,11 @@ public class StockManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-        return iStockService.addStockNum(stockId,addNum);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iStockService.addStockNum(stockId,addNum);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
 

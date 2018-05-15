@@ -96,7 +96,7 @@ public class ShopManageController {
     @RequestMapping("delete.do")
     @ResponseBody
     //删除
-    public ServerResponse<String> deleteShopByAdminId(HttpSession session,@RequestParam(value = "adminId")Integer adminId) {
+    public ServerResponse<String> deleteShopByAdminId(HttpSession session, @RequestParam(value = "adminId")Integer adminId) {
         Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
@@ -127,7 +127,7 @@ public class ShopManageController {
 
     @RequestMapping("setStatus.do")
     @ResponseBody
-    public ServerResponse setShopStatus(HttpSession session, Integer shopId,Integer shopStatus){
+    public ServerResponse setShopStatus(HttpSession session, Integer shopId, Integer shopStatus){
         Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");

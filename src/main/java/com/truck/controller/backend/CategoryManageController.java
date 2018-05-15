@@ -36,7 +36,11 @@ public class CategoryManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        return categoryService.addCategory(admin.getAdminId(), categoryName, parentId);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return categoryService.addCategory(admin.getAdminId(), categoryName, parentId);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("delete_category.do")
@@ -47,7 +51,11 @@ public class CategoryManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        return categoryService.deleteById(Id);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return categoryService.deleteById(Id);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("set_category_name.do")
@@ -58,7 +66,11 @@ public class CategoryManageController {
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
-        return categoryService.updateCategoryName(categoryId, categoryName);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return categoryService.updateCategoryName(categoryId, categoryName);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
 

@@ -61,7 +61,11 @@ public class WarehouseController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-        return iWarehouseService.update(warehouse);
+        if (iAdminService.checkShopStatus(admin).isSuccess()){
+            return iWarehouseService.update(warehouse);
+        }else{
+            return iAdminService.checkShopStatus(admin);
+        }
     }
 
     @RequestMapping("list.do")
