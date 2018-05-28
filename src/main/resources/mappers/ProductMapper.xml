@@ -311,10 +311,10 @@
         from truck_product
         <where>
             <if test="adminId != null" >
-                and admin_id = #{adminId},
+                and admin_id = #{adminId}
             </if>
             <if test="idCode != null">
-                and id_code = #{idCode}
+                and id_code=#{idCode}
             </if>
         </where>
     </select>

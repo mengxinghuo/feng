@@ -263,10 +263,10 @@ public class ProductServiceImpl implements ProductService {
                 if (product.getIdCode() == null) {
                     return ServerResponse.createByErrorMessage("请填写设备唯一标识码");
                 }
-           /*     List<Product> products = productMapper.selectByAdminIdIdCode(adminId,product.getIdCode());
+                List<Product> products = productMapper.selectByAdminIdIdCode(adminId,product.getIdCode());
                 if (products.size()>0){
                     return ServerResponse.createByErrorMessage("设备唯一标识码不能重复");
-                }*/
+                }
                 product.setProductStock(0);
                 int rowCount = productMapper.insertSelective(product);
                 if (rowCount > 0) {
