@@ -44,6 +44,9 @@ public class CompanyController {
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
+        if (iUserService.checkUserRole(user).isSuccess()) {
+            return ServerResponse.createByErrorMessage("超级用户无法增加自己的公司");
+        }
             return iCompanyService.saveOrUpdateCompany(user.getUserId(),company,dutyId,officeAddress,companyFax,companyContactor);
     }
 

@@ -45,6 +45,9 @@ public class ShopManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
+        if (iAdminService.checkAdminRole(admin).isSuccess()){
+            return ServerResponse.createByErrorMessage("超级用户无法增加自己的店铺");
+        }
             return iShopService.saveOrUpdateShop(admin.getAdminId(),shop);
     }
 
