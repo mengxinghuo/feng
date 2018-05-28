@@ -6,12 +6,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.truck.common.Const;
 import com.truck.common.ServerResponse;
-import com.truck.dao.ProductMapper;
-import com.truck.dao.StockAlterationMapper;
-import com.truck.dao.StockMapper;
-import com.truck.pojo.Product;
-import com.truck.pojo.Stock;
-import com.truck.pojo.StockAlteration;
+import com.truck.dao.*;
+import com.truck.pojo.*;
 import com.truck.service.IStockAlterationService;
 import com.truck.service.IStockService;
 import com.truck.util.DateTimeUtil;
@@ -35,6 +31,10 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
     private IStockService iStockService;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private OrderMapper orderMapper;
+    @Autowired
+    private OrderDetailMapper orderDetailMapper;
 
     /**
      * 查询所有变动记录
@@ -114,6 +114,13 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
 
         if(!StringUtils.isEmpty(stockAlteration.getOrderDetailId())){
             stockAlterationVo.setOrderDetailId(stockAlteration.getOrderDetailId());
+            OrderDetail orderDetail = orderDetailMapper.selectByPrimaryKey(stockAlteration.getOrderDetailId());
+            if (orderDetail != null) {
+                Order order =orderMapper.selectByPrimaryKey(orderDetail.getOrderId());
+                if (order != null) {
+                    stockAlterationVo.setOrderNo(order.getOrderNo());
+                }
+            }
         }
         stockAlterationVo.setCreateTime(DateTimeUtil.dateToStr(stockAlteration.getCreateTime()));
         stockAlterationVo.setUpdateTime(DateTimeUtil.dateToStr(stockAlteration.getUpdateTime()));

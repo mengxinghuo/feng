@@ -28,6 +28,8 @@ public class StockAlterationVo {
 
     private StockVo stockVo;
 
+    private String orderNo;
+
     public StockAlterationVo() {
         super();
     }
@@ -126,5 +128,13 @@ public class StockAlterationVo {
 
     public void setStockVo(StockVo stockVo) {
         this.stockVo = stockVo;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }
