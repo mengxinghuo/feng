@@ -189,8 +189,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     //查詢产品
-    public ServerResponse<List<Product>> selectProductList() {
-        List<Product> productList = productMapper.selectAll();
+    public ServerResponse<List<Product>> selectProductList(Integer status) {
+        List<Product> productList = productMapper.selectAll(status);
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Product product : productList) {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
@@ -207,11 +207,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //查詢产品
-    public ServerResponse<List<Product>> selectProductList(int AdminId) {
-        if (StringUtils.isBlank(String.valueOf(AdminId))) {
+    public ServerResponse<List<Product>> selectProductList(Integer AdminId,Integer status) {
+        if (AdminId ==null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-        List<Product> productList = productMapper.selectByAdminId(AdminId);
+        List<Product> productList = productMapper.selectByAdminId(AdminId,status);
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Product product : productList) {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
@@ -263,10 +263,10 @@ public class ProductServiceImpl implements ProductService {
                 if (product.getIdCode() == null) {
                     return ServerResponse.createByErrorMessage("请填写设备唯一标识码");
                 }
-                List<Product> products = productMapper.selectByAdminIdIdCode(adminId,product.getIdCode());
+           /*     List<Product> products = productMapper.selectByAdminIdIdCode(adminId,product.getIdCode());
                 if (products.size()>0){
                     return ServerResponse.createByErrorMessage("设备唯一标识码不能重复");
-                }
+                }*/
                 product.setProductStock(0);
                 int rowCount = productMapper.insertSelective(product);
                 if (rowCount > 0) {

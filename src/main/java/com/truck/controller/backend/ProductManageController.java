@@ -51,9 +51,24 @@ public class ProductManageController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
         if (iAdminService.checkAdminRole(admin).isSuccess()) {
-            return productService.selectProductList();
+            return productService.selectProductList(null);
         } else {
-            return productService.selectProductList(admin.getAdminId());
+            return productService.selectProductList(admin.getAdminId(),null);
+        }
+    }
+
+    @RequestMapping(value = "selectListByStatus.do")
+    @ResponseBody
+    //查询所有产品
+    public ServerResponse<List<Product>> selectListByStatus(HttpSession session,Integer status) {
+        Admin admin = (Admin) session.getAttribute(Const.CURRENT_ADMIN);
+        if (admin == null) {
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
+        }
+        if (iAdminService.checkAdminRole(admin).isSuccess()) {
+            return productService.selectProductList(status);
+        } else {
+            return productService.selectProductList(admin.getAdminId(),status);
         }
     }
 

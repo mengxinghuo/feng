@@ -72,17 +72,23 @@
         from truck_product
         where Product_ID = #{productId,jdbcType=INTEGER}
     </select>
-    <select id="selectAll" resultMap="BaseResultMap" >
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from truck_product
+        <where>
+            <if test="status!=null">
+                and Product_Status = #{status}
+            </if>
+        </where>
     </select>
-    <select id="selectByAdminId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    <select id="selectByAdminId" resultMap="BaseResultMap" parameterType="map">
         select
         <include refid="Base_Column_List"/>
         from truck_product
-        <if test="adminId!=null">
-            where admin_id = #{adminId,jdbcType=INTEGER}
+        where admin_id = #{adminId,jdbcType=INTEGER}
+        <if test="status!=null">
+            and Product_Status = #{status}
         </if>
     </select>
     <select id="selectByCaAID" resultMap="BaseResultMap" parameterType="java.lang.Integer">

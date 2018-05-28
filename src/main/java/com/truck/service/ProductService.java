@@ -20,10 +20,10 @@ public interface ProductService {
 
 
     //超级管理员查询所有
-    ServerResponse<List<Product>> selectProductList();
+    ServerResponse<List<Product>> selectProductList(Integer status);
 
     //查询所有
-    ServerResponse<List<Product>> selectProductList(int adminId);
+    ServerResponse<List<Product>> selectProductList(Integer adminId,Integer status);
 
 
     //根据ID删除产品

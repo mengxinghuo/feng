@@ -16,9 +16,9 @@ public interface ProductMapper {
 
     Product selectByPrimaryKey(@Param("productId") Integer productId);
 
-    List<Product> selectAll();
+    List<Product> selectAll(@Param("status") Integer status);
 
-    List<Product> selectByAdminId(@Param("adminId") Integer adminId);
+    List<Product> selectByAdminId(@Param("adminId") Integer adminId,@Param("status") Integer status);
 
     List<Product> selectByCaAID(@Param("productId") Integer productId);
 

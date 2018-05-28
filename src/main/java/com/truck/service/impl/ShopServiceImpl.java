@@ -131,7 +131,7 @@ public class ShopServiceImpl implements IShopService {
         List<String> subimgList = Lists.newArrayList();
 
         List<ProductListVo> productListVoList = Lists.newArrayList();
-        List<Product> productList = productMapper.selectByAdminId(shop.getAdminId());
+        List<Product> productList = productMapper.selectByAdminId(shop.getAdminId(),null);
 
         for (int i = 0; i <  productList.size(); i++) {
             Product  product = productList.get(i);
@@ -194,7 +194,7 @@ public class ShopServiceImpl implements IShopService {
         shopListVo.setShopStatus(shop.getShopStatus());
         List<String> subimgList = Lists.newArrayList();
         List<ProductListVo> productListVoList = Lists.newArrayList();
-        List<Product> productList = productMapper.selectByAdminId(shop.getAdminId());
+        List<Product> productList = productMapper.selectByAdminId(shop.getAdminId(),null);
 
         for (int i = 0; i < (productList.size()>3 ? 3 : productList.size()); i++) {
             Product  product = productList.get(i);
