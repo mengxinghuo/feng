@@ -211,17 +211,19 @@ public class StockServiceImpl implements IStockService {
         return idList;
     }
 
-    public ServerResponse<PageInfo> selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId, int pageNum, int pageSize){
+    public ServerResponse selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum,pageSize);
+        List<StockVo> stockVoList = Lists.newArrayList();
         if (StringUtils.isNotBlank(idCode)){
             List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
             if (products.size()>0){
                 productId = products.get(0).getProductId();
+            }else{
+                return ServerResponse.createBySuccess(stockVoList);
             }
         }
         List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(adminId,productId,warehouseId);
 
-        List<StockVo> stockVoList = Lists.newArrayList();
         for(Stock stockItem : stockList){
             StockVo stockVo = assembleStockVo(stockItem);
             stockVoList.add(stockVo);

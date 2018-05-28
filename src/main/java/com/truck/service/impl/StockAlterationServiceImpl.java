@@ -66,13 +66,15 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
 
     public ServerResponse getListByProductId(Integer adminId,Integer productId, Integer warehouseId, Integer status,String idCode,String searchDate,String beginDate,String endDate,int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
+        List<StockAlterationVo> stockAlterationVoList = Lists.newArrayList();
         if (org.apache.commons.lang3.StringUtils.isNotBlank(idCode)){
             List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
             if (products.size()>0){
                 productId = products.get(0).getProductId();
+            }else{
+                return ServerResponse.createBySuccess(stockAlterationVoList);
             }
         }
-        List<StockAlterationVo> stockAlterationVoList = Lists.newArrayList();
 
             List<StockAlteration> stockAlterationList = stockAlterationMapper.selectStockAlterationByProductIdAdminIdWarehouseId(adminId,productId,warehouseId,status,searchDate,beginDate,endDate);
             if(stockAlterationList.size() > 0){
