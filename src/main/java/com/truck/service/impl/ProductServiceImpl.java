@@ -260,6 +260,9 @@ public class ProductServiceImpl implements ProductService {
                 }
                 return ServerResponse.createBySuccess("更新产品失败");
             } else {
+                if (product.getIdCode() == null) {
+                    return ServerResponse.createByErrorMessage("请填写设备唯一标识码");
+                }
                 product.setProductStock(0);
                 int rowCount = productMapper.insertSelective(product);
                 if (rowCount > 0) {
