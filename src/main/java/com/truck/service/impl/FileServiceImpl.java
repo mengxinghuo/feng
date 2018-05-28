@@ -1,5 +1,6 @@
 package com.truck.service.impl;
 
+import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.truck.service.FileService;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -82,5 +84,21 @@ public class FileServiceImpl implements FileService {
             return uploadUrl + uploadFileName;
         }
         return null;
+    }
+
+    public Map<String,String> delCDN( String urls) throws IOException {
+        Map fileMap = Maps.newHashMap();
+        UpYun upyun = new UpYun(bucketName, userName, passWord);
+        upyun.setTimeout(60);
+        upyun.setApiDomain(UpYun.ED_AUTO);
+
+        List<String> urlList = Splitter.on(",").splitToList(urls);
+        for (String url : urlList) {
+            String path = url.substring(url.indexOf("com")+3);
+
+            boolean result = upyun.deleteFile(path);
+            fileMap.put(url,result);
+        }
+        return fileMap;
     }
 }

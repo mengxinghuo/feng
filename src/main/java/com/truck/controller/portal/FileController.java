@@ -89,4 +89,22 @@ public class FileController {
         return resultMap;
     }
 
+    @RequestMapping(value = "delFileCDN.do", method = RequestMethod.POST)
+    @ResponseBody
+    //删除图片
+    public Map delCDN(HttpSession session,String urls ,HttpServletRequest request, HttpServletResponse response) throws IOException {
+//        Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
+        Map resultMap = Maps.newHashMap();
+   /*     if(admin == null){
+            resultMap.put("success",false);
+            resultMap.put("msg","请登录管理员");
+            return resultMap;
+        }*/
+        Map map = fileService.delCDN( urls);
+        resultMap.put("success", true);
+        resultMap.put("msg", "成功删除文件");
+        resultMap.put("file_path", map);
+        return resultMap;
+    }
+
 }
