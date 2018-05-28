@@ -62,9 +62,9 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
 
     public ServerResponse getListByProductId(Integer adminId,Integer productId, Integer warehouseId, Integer status,String searchDate,String beginDate,String endDate,int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
-        if(StringUtils.isEmpty(productId)){
+      /*  if(StringUtils.isEmpty(productId)){
             return ServerResponse.createByErrorMessage("请选择要查询的产品");
-        }
+        }*/
         List<StockAlterationVo> stockAlterationVoList = Lists.newArrayList();
 
             List<StockAlteration> stockAlterationList = stockAlterationMapper.selectStockAlterationByProductIdAdminIdWarehouseId(adminId,productId,warehouseId,status,searchDate,beginDate,endDate);
