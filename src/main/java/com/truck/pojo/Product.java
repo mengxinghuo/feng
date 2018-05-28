@@ -49,7 +49,9 @@ public class Product {
 
     private Date endtime;
 
-    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, Date createtime, Date endtime, String productDesc, String productSubimg) {
+    private String idCode;
+
+    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, Date createtime, Date endtime, String productDesc, String productSubimg,String idCode) {
         this.productId = productId;
         this.adminId = adminId;
         this.productCategoryid = productCategoryid;
@@ -66,6 +68,7 @@ public class Product {
         this.endtime = endtime;
         this.productDesc= productDesc;
         this.productSubimg = productSubimg;
+        this.idCode = idCode;
     }
 
     public Product() {
@@ -260,5 +263,13 @@ public class Product {
 
     public void setHigh(BigDecimal high) {
         High = high;
+    }
+
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 }

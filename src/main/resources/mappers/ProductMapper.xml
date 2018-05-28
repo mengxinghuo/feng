@@ -19,12 +19,13 @@
             <arg column="EndTime" jdbcType="TIMESTAMP" javaType="java.util.Date"/>
             <arg column="Product_Desc" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
             <arg column="Product_SubImg" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
+            <arg column="id_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
     Product_ID, admin_id,Product_CategoryID, Product_Title, Product_SubTitle, Product_Promotion, 
     Product_Weight, Product_Size, Product_Price, Product_Status, Product_Stock, Product_FirstImg, 
-    CreateTime, EndTime, Product_Desc, Product_SubImg
+    CreateTime, EndTime, Product_Desc, Product_SubImg,id_code
   </sql>
     <select id="selectByProductKeywordAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
         SELECT
@@ -101,13 +102,13 @@
       Product_SubTitle, Product_Promotion, Product_Weight,
       Product_Size, Product_Price, Product_Status,
       Product_Stock, Product_FirstImg, CreateTime,
-      EndTime, Product_Desc, Product_SubImg
+      EndTime, Product_Desc, Product_SubImg,id_code
       )
     values (#{productId,jdbcType=INTEGER},#{adminId,jdbcType=INTEGER}, #{productCategoryid,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR},
       #{productSubtitle,jdbcType=VARCHAR}, #{productPromotion,jdbcType=VARCHAR}, #{productWeight,jdbcType=DECIMAL},
       #{productSize,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productStatus,jdbcType=INTEGER},
       #{productStock,jdbcType=INTEGER}, #{productFirstimg,jdbcType=VARCHAR}, now(),
-      #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR}
+      #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR},#{idCode}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.truck.pojo.Product">
@@ -115,7 +116,7 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="productId != null">
                 Product_ID,
-	    </if>
+	        </if>
      	    <if test="adminId != null" >
         	admin_id,
             </if>
@@ -157,7 +158,9 @@
             <if test="productSubimg != null">
                 Product_SubImg,
             </if>
-
+            <if test="idCode != null">
+                id_code,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productId != null">
@@ -203,6 +206,9 @@
             </if>
             <if test="productSubimg != null">
                 #{productSubimg,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="idCode != null">
+                #{idCode},
             </if>
         </trim>
     </insert>
@@ -252,6 +258,9 @@
             <if test="productSubimg != null">
                 Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR},
             </if>
+            <if test="idCode != null">
+                id_code=#{idCode},
+            </if>
         </set>
         where Product_ID = #{productId,jdbcType=INTEGER}
     </update>
@@ -271,7 +280,8 @@
       CreateTime = #{createtime,jdbcType=TIMESTAMP},
       EndTime = now(),
       Product_Desc = #{productDesc,jdbcType=LONGVARCHAR},
-      Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR}
+      Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR},
+      id_code=#{idCode}
     where Product_ID = #{productId,jdbcType=INTEGER}
   </update>
 

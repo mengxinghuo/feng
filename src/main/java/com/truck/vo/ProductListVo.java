@@ -26,6 +26,8 @@ public class ProductListVo {
     private String createtime;
     private String endtime;
 
+    private String idCode;
+
 
     public Integer getAdminId() {
         return adminId;
@@ -154,5 +156,13 @@ public class ProductListVo {
 
     public void setEndtime(String endtime) {
         this.endtime = endtime;
+    }
+
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 }

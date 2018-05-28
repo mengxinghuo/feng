@@ -131,6 +131,7 @@ public class ProductServiceImpl implements ProductService {
         productDetailVo.setLong(product.getLong());
         productDetailVo.setWide(product.getWide());
         productDetailVo.setHigh(product.getHigh());
+        productDetailVo.setIdCode(product.getIdCode());
         productDetailVo.setImglist(product.getImglist());
         Shop shop = shopMapper.selectByAdminId(product.getAdminId());
         if (shop != null) {
@@ -366,6 +367,7 @@ public class ProductServiceImpl implements ProductService {
         productListVo.setProductStatus(product.getProductStatus());
         productListVo.setProductStock(product.getProductStock());
         productListVo.setProductPromotion(product.getProductPromotion());
+        productListVo.setIdCode(product.getIdCode());
         return productListVo;
     }
 

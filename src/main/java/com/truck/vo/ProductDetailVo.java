@@ -42,6 +42,8 @@ public class ProductDetailVo {
 
     private List<CategoryVo> categoryVoList;
 
+    private String idCode;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -242,5 +244,13 @@ public class ProductDetailVo {
 
     public void setCategoryVoList(List<CategoryVo> categoryVoList) {
         this.categoryVoList = categoryVoList;
+    }
+
+    public String getIdCode() {
+        return idCode;
+    }
+
+    public void setIdCode(String idCode) {
+        this.idCode = idCode;
     }
 }
