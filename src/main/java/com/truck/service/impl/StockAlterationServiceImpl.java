@@ -6,8 +6,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.truck.common.Const;
 import com.truck.common.ServerResponse;
+import com.truck.dao.ProductMapper;
 import com.truck.dao.StockAlterationMapper;
 import com.truck.dao.StockMapper;
+import com.truck.pojo.Product;
 import com.truck.pojo.Stock;
 import com.truck.pojo.StockAlteration;
 import com.truck.service.IStockAlterationService;
@@ -31,6 +33,8 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
     private StockMapper stockMapper;
     @Autowired
     private IStockService iStockService;
+    @Autowired
+    private ProductMapper productMapper;
 
     /**
      * 查询所有变动记录
@@ -60,11 +64,14 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
         }
     }
 
-    public ServerResponse getListByProductId(Integer adminId,Integer productId, Integer warehouseId, Integer status,String searchDate,String beginDate,String endDate,int pageNum, int pageSize){
+    public ServerResponse getListByProductId(Integer adminId,Integer productId, Integer warehouseId, Integer status,String idCode,String searchDate,String beginDate,String endDate,int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
-      /*  if(StringUtils.isEmpty(productId)){
-            return ServerResponse.createByErrorMessage("请选择要查询的产品");
-        }*/
+        if (org.apache.commons.lang3.StringUtils.isNotBlank(idCode)){
+            List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
+            if (products.size()>0){
+                productId = products.get(0).getProductId();
+            }
+        }
         List<StockAlterationVo> stockAlterationVoList = Lists.newArrayList();
 
             List<StockAlteration> stockAlterationList = stockAlterationMapper.selectStockAlterationByProductIdAdminIdWarehouseId(adminId,productId,warehouseId,status,searchDate,beginDate,endDate);

@@ -299,6 +299,20 @@
         </where>
     </select>
 
+    <select id="selectByAdminIdIdCode" resultMap="BaseResultMap" parameterType="map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from truck_product
+        <where>
+            <if test="adminId != null" >
+                and admin_id = #{adminId},
+            </if>
+            <if test="idCode != null">
+                and id_code = #{idCode}
+            </if>
+        </where>
+    </select>
+
     <select id="selectCountMin" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>

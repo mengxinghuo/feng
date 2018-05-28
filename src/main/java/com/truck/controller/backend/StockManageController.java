@@ -73,6 +73,7 @@ public class StockManageController {
     //查看某个产品的所有库存
     public ServerResponse getList(HttpSession session,
                                   @RequestParam(value = "productId",required = false)Integer productId,
+                                  @RequestParam(value = "idCode",required = false)String idCode,
                                   @RequestParam(value = "warehouseId",required = false)Integer warehouseId,
                                   @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                   @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
@@ -80,7 +81,7 @@ public class StockManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-            return iStockService.selectListByProductIdWarehouseId(admin.getAdminId(),productId,warehouseId,pageNum,pageSize);
+            return iStockService.selectListByProductIdWarehouseId(admin.getAdminId(),productId,idCode,warehouseId,pageNum,pageSize);
     }
 
     @RequestMapping("reduce.do")

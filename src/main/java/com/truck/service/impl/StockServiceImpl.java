@@ -14,6 +14,7 @@ import com.truck.service.IStockCategoryService;
 import com.truck.service.IStockService;
 import com.truck.util.DateTimeUtil;
 import com.truck.vo.StockVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -210,8 +211,14 @@ public class StockServiceImpl implements IStockService {
         return idList;
     }
 
-    public ServerResponse<PageInfo> selectListByProductIdWarehouseId(Integer adminId,Integer productId,Integer warehouseId, int pageNum, int pageSize){
+    public ServerResponse<PageInfo> selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum,pageSize);
+        if (StringUtils.isNotBlank(idCode)){
+            List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
+            if (products.size()>0){
+                productId = products.get(0).getProductId();
+            }
+        }
         List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(adminId,productId,warehouseId);
 
         List<StockVo> stockVoList = Lists.newArrayList();

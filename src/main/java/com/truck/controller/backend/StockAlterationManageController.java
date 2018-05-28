@@ -54,9 +54,10 @@ public class StockAlterationManageController {
     @RequestMapping("get_list_by_product.do")
     @ResponseBody
     public ServerResponse getListByUserInfo(HttpSession session,
-                                            Integer productId,
+                                            @RequestParam(value = "productId",required = false)Integer productId,
                                             @RequestParam(value = "warehouseId",required = false)Integer warehouseId,
                                             @RequestParam(value = "status", required = false) Integer status,
+                                            @RequestParam(value = "idCode",required = false)String idCode,
                                             @RequestParam(value = "searchDate", required = false)String searchDate,
                                             @RequestParam(value = "beginDate", required = false)String beginDate,
                                             @RequestParam(value = "endDate", required = false)String endDate,
@@ -66,7 +67,7 @@ public class StockAlterationManageController {
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-            return  iStockAlterationService.getListByProductId(admin.getAdminId(),productId,warehouseId,status ,searchDate,beginDate,endDate,pageNum, pageSize);
+            return  iStockAlterationService.getListByProductId(admin.getAdminId(),productId,warehouseId,status ,idCode,searchDate,beginDate,endDate,pageNum, pageSize);
     }
 
 }

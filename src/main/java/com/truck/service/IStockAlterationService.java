@@ -10,5 +10,5 @@ public interface IStockAlterationService {
 
     StockAlterationVo assembleStockAlterationVo(StockAlteration stockAlteration);
 
-    ServerResponse getListByProductId(Integer adminId,Integer productId,Integer warehouseId, Integer status,String searchDate,String beginDate,String endDate,int pageNum, int pageSize);
+    ServerResponse getListByProductId(Integer adminId,Integer productId,Integer warehouseId, Integer status,String idCode,String searchDate,String beginDate,String endDate,int pageNum, int pageSize);
 }
