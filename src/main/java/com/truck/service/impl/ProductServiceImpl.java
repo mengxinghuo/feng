@@ -267,6 +267,12 @@ public class ProductServiceImpl implements ProductService {
                 if (products.size()>0){
                     return ServerResponse.createByErrorMessage("设备唯一标识码不能重复");
                 }
+                if (product.getHigh()== null )
+                    product.setHigh(new BigDecimal(1));
+                if (product.getLong()== null )
+                    product.setLong(new BigDecimal(1));
+                if (product.getWide()== null )
+                    product.setWide(new BigDecimal(1));
                 product.setProductStock(0);
                 int rowCount = productMapper.insertSelective(product);
                 if (rowCount > 0) {
