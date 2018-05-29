@@ -260,6 +260,14 @@ public class ProductServiceImpl implements ProductService {
             }
             product.setAdminId(adminId);
             if (product.getProductId() != null) {
+                Product product1 = productMapper.selectByPrimaryKey(product.getProductId());
+                if (product.getIdCode()!= null ) {
+                    if (!product.getIdCode().equals(product1.getIdCode())) {
+                        List<Product> products = productMapper.selectByAdminIdIdCode(adminId,product.getIdCode());
+                        if (products.size()>0)
+                            return ServerResponse.createByErrorMessage("设备唯一标识码不能重复");
+                        }
+                    }
                 int rowCount = productMapper.updateByPrimaryKey(product);
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccess("更新产品成功");
