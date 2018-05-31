@@ -1,6 +1,7 @@
 package com.truck.controller.portal;
 
 
+import com.google.common.collect.Maps;
 import com.truck.common.Const;
 import com.truck.common.ResponseCode;
 import com.truck.common.ServerResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 
 @Controller
@@ -201,9 +203,13 @@ public class UserController {
     @ResponseBody
     public ServerResponse  loginSession(String userName, String password, HttpSession session){
         ServerResponse<User> response= iUserService.login(userName,password);
-        if (response.isSuccess())
+        Map map = Maps.newHashMap();
+        if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER,response.getData());
-        return ServerResponse.createBySuccess(session);
+            map.put("user",response.getData());
+            map.put("sessionId",session.getId());
+        }
+        return ServerResponse.createBySuccess(map);
     }
 
 }
