@@ -60,7 +60,10 @@ public class CompanyAddressServiceImpl implements ICompanyAddressService {
     public ServerResponse<PageInfo> list(Integer userId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
         Company company = companyMapper.selectByUserId(userId);
-        List<CompanyAddress> companyAddressList = companyAddressMapper.selectByCompanyId(company.getCompanyId());
+        List<CompanyAddress> companyAddressList = Lists.newArrayList();
+        if (company != null) {
+             companyAddressList = companyAddressMapper.selectByCompanyId(company.getCompanyId());
+        }
         List<CompanyAddressVo> companyAddressVoList = Lists.newArrayList();
         for(CompanyAddress companyAddressItem : companyAddressList){
             CompanyAddressVo companyAddressVo = assembleCompanyAddressVo(companyAddressItem);

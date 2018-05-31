@@ -69,7 +69,10 @@ public class WarehouseServiceImpl implements IWarehouseService {
     public ServerResponse<PageInfo> list(Integer adminId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
         Shop shop = shopMapper.selectByAdminId(adminId);
-        List<Warehouse> warehouseList = warehouseMapper.selectByShopId(shop.getShopId());
+        List<Warehouse> warehouseList = Lists.newArrayList();
+        if (shop != null) {
+            warehouseList = warehouseMapper.selectByShopId(shop.getShopId());
+        }
         List<WarehouseVo> warehouseVoList = Lists.newArrayList();
         for(Warehouse warehouseItem : warehouseList){
             WarehouseVo warehouseVo = assembleWarehouseVo(warehouseItem,null);

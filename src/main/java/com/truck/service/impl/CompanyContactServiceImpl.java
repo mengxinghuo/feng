@@ -59,7 +59,10 @@ public class CompanyContactServiceImpl implements ICompanyContactService {
     public ServerResponse<PageInfo> list(Integer userId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
         Company company = companyMapper.selectByUserId(userId);
-        List<CompanyContact> companyContactList = companyContactMapper.selectByCompanyId(company.getCompanyId());
+        List<CompanyContact> companyContactList = Lists.newArrayList();
+        if (company != null) {
+            companyContactList = companyContactMapper.selectByCompanyId(company.getCompanyId());
+        }
         List<CompanyContactVo> companyContactVoList = Lists.newArrayList();
         for(CompanyContact companyContactItem : companyContactList){
             CompanyContactVo companyContactVo = assembleCompanyContactVo(companyContactItem);

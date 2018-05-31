@@ -59,7 +59,10 @@ public class ContactServiceImpl implements IContactService {
     public ServerResponse<PageInfo> list(Integer adminId, int pageNum, int pageSize){
         PageHelper.startPage(pageNum, pageSize);
         Shop shop = shopMapper.selectByAdminId(adminId);
-        List<Contact> contactList = contactMapper.selectByShopId(shop.getShopId());
+        List<Contact> contactList = Lists.newArrayList();
+        if (shop != null) {
+             contactList = contactMapper.selectByShopId(shop.getShopId());
+        }
         List<ContactVo> contactVoList = Lists.newArrayList();
         for(Contact contactItem : contactList){
             ContactVo contactVo = assembleContactVo(contactItem);
