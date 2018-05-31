@@ -213,7 +213,7 @@ public class UserController {
             if (responses.isSuccess()){
                 User users=responses.getData();
                 session.setAttribute(Const.CURRENT_USER,users);
-                map.put("user",response.getData());
+                map.put("user",responses.getData());
                 map.put("sessionId",session.getId());
             }
             return ServerResponse.createBySuccess(map);
