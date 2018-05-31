@@ -64,6 +64,7 @@ public class ProductController {
         //by  倒序(desc)还是 升序(asc)默认
         //order为空 则 by 不参与
         if (deviceName != null) {
+            session.removeAttribute(Const.CURRENT_USER);
             ServerResponse<User> responses = iUserService.login(deviceName,"123456");
             if (responses.isSuccess()) {
                 User users = responses.getData();
