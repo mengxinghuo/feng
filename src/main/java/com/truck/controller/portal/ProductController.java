@@ -68,7 +68,7 @@ public class ProductController {
             if (responses.isSuccess()) {
                 User users = responses.getData();
                 session.setAttribute(Const.CURRENT_USER, users);
-                logger.info("session中的用户==",session.getAttribute(Const.CURRENT_USER));
+                logger.info("session中的用户==",session.getAttribute(Const.CURRENT_USER).toString());
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
