@@ -183,11 +183,27 @@ public class UserController {
      */
     @RequestMapping(value = "getInformation.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<User>getInformation(HttpSession session) {
+    public ServerResponse<User> getInformation(HttpSession session) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null)
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"为登陆，需要强制登陆status=10");
         return iUserService.getInfomartion(currentUser.getUserId());
+    }
+
+    /**
+     * 用户登陆  拿到session
+     * @param userName
+     * @param password
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "loginSession.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse  loginSession(String userName, String password, HttpSession session){
+        ServerResponse<User> response= iUserService.login(userName,password);
+        if (response.isSuccess())
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        return ServerResponse.createBySuccess(session);
     }
 
 }
