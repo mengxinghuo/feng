@@ -28,7 +28,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<User> login(String userName, String password) {
-        int resultCount=userMapper.checkUserName(userName);
+        int resultCount = userMapper.checkUserName(userName);
         if (resultCount==0)
             return ServerResponse.createByErrorMessage("用户名不存在");
         String md5Password= MD5Util.MD5EncodeUtf8(password);

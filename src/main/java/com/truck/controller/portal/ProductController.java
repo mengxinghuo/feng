@@ -64,12 +64,11 @@ public class ProductController {
         //by  倒序(desc)还是 升序(asc)默认
         //order为空 则 by 不参与
         if (deviceName != null) {
-            iUserService.login(deviceName,"123456");
             ServerResponse<User> responses = iUserService.login(deviceName,"123456");
             if (responses.isSuccess()) {
                 User users = responses.getData();
                 session.setAttribute(Const.CURRENT_USER, users);
-                logger.info("session中的用户",session.getAttribute(Const.CURRENT_USER));
+                logger.info("session中的用户==",session.getAttribute(Const.CURRENT_USER));
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
