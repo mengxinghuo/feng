@@ -44,7 +44,8 @@ public class ProductController {
     @RequestMapping("search.do")
     @ResponseBody
     //根据关键字或者分类ID查询产品
-    public ServerResponse<PageInfo> search(HttpSession session,String deviceName,
+    public ServerResponse<PageInfo> search(HttpSession session,
+                                           @RequestParam(value = "deviceName", required = false) String deviceName,
                                            @RequestParam(value = "productKeyword", required = false) String productKeyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                          @RequestParam(value = "categoryKeyword", required = false) String categoryKeyword,
@@ -56,11 +57,13 @@ public class ProductController {
         //order  根据什么排序
         //by  倒序(desc)还是 升序(asc)默认
         //order为空 则 by 不参与
-        iAdminService.login(deviceName,"123456");
-        ServerResponse<Admin> responses = iAdminService.login(deviceName,"123456");
-        if (responses.isSuccess()) {
-            Admin admins = responses.getData();
-            session.setAttribute(Const.CURRENT_ADMIN, admins);
+        if (deviceName != null) {
+            iAdminService.login(deviceName,"123456");
+            ServerResponse<Admin> responses = iAdminService.login(deviceName,"123456");
+            if (responses.isSuccess()) {
+                Admin admins = responses.getData();
+                session.setAttribute(Const.CURRENT_ADMIN, admins);
+            }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
     }
