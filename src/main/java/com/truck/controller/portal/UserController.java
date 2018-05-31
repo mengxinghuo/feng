@@ -199,17 +199,26 @@ public class UserController {
      * @param session
      * @return
      */
-    @RequestMapping(value = "loginSession.do",method = RequestMethod.POST)
+    @RequestMapping(value = "registerLoginSession.do",method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse  loginSession(String userName, String password, HttpSession session){
-        ServerResponse<User> response= iUserService.login(userName,password);
-        Map map = Maps.newHashMap();
-        if (response.isSuccess()) {
-            session.setAttribute(Const.CURRENT_USER,response.getData());
-            map.put("user",response.getData());
-            map.put("sessionId",session.getId());
+    public ServerResponse  registerLoginSession(String userName, String password,String email, HttpSession session){
+        User user = new User();
+        user.setUserName(userName);
+        user.setPassword(password);
+        user.setEmail(email);
+        ServerResponse<String> response = iUserService.register(user);
+        if (response.isSuccess()){
+            ServerResponse<User> responses = iUserService.login(user.getUserName(),password);
+            Map map = Maps.newHashMap();
+            if (responses.isSuccess()){
+                User users=responses.getData();
+                session.setAttribute(Const.CURRENT_USER,users);
+                map.put("user",response.getData());
+                map.put("sessionId",session.getId());
+            }
+            return ServerResponse.createBySuccess(map);
         }
-        return ServerResponse.createBySuccess(map);
+        return response;
     }
 
 }

@@ -9,6 +9,7 @@ import com.truck.pojo.Product;
 import com.truck.pojo.User;
 import com.truck.service.CategoryService;
 import com.truck.service.IAdminService;
+import com.truck.service.IUserService;
 import com.truck.service.ProductService;
 import com.truck.vo.ProductDetailVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
     @Autowired
-    private IAdminService iAdminService;
+    private IUserService iUserService;
 
     @RequestMapping(value = "selectById.do")
     @ResponseBody
@@ -58,40 +59,16 @@ public class ProductController {
         //by  倒序(desc)还是 升序(asc)默认
         //order为空 则 by 不参与
         if (deviceName != null) {
-            iAdminService.login(deviceName,"123456");
-            ServerResponse<Admin> responses = iAdminService.login(deviceName,"123456");
+            iUserService.login(deviceName,"123456");
+            ServerResponse<User> responses = iUserService.login(deviceName,"123456");
             if (responses.isSuccess()) {
-                Admin admins = responses.getData();
-                session.setAttribute(Const.CURRENT_ADMIN, admins);
+                User users = responses.getData();
+                session.setAttribute(Const.CURRENT_USER, users);
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
     }
 
-    @RequestMapping("searchFromDevice.do")
-    @ResponseBody
-    //根据关键字或者分类ID查询产品
-    public ServerResponse searchFromDevice( HttpSession session,String deviceName,
-                                                     @RequestParam(value = "productKeyword", required = false) String productKeyword,
-                                         @RequestParam(value = "categoryId", required = false) Integer categoryId,
-                                         @RequestParam(value = "categoryKeyword", required = false) String categoryKeyword,
-                                         @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
-                                         @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
-                                         @RequestParam(value = "order", defaultValue = "Product_Price") String order,
-                                         @RequestParam(value = "by", defaultValue = "desc") String by) {
-        //默认不排序
-        //order  根据什么排序
-        //by  倒序(desc)还是 升序(asc)默认
-        //order为空 则 by 不参与
-        iAdminService.login(deviceName,"123456");
-        ServerResponse<Admin> responses = iAdminService.login(deviceName,"123456");
-        if (responses.isSuccess()){
-            Admin admins=responses.getData();
-            session.setAttribute(Const.CURRENT_ADMIN,admins);
-            return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
-        }
-        return responses;
-    }
 
     //根据分类查询商品
     @RequestMapping("selectByCategoryId.do")
