@@ -11,7 +11,10 @@ import com.truck.service.CategoryService;
 import com.truck.service.IAdminService;
 import com.truck.service.IUserService;
 import com.truck.service.ProductService;
+import com.truck.util.FTPUtil;
 import com.truck.vo.ProductDetailVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +30,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/product/")
 public class ProductController {
+
+    private static  final Logger logger = LoggerFactory.getLogger(ProductController.class);
     @Autowired
     private CategoryService categoryService;
 
@@ -64,6 +69,7 @@ public class ProductController {
             if (responses.isSuccess()) {
                 User users = responses.getData();
                 session.setAttribute(Const.CURRENT_USER, users);
+                logger.info("session中的用户",session.getAttribute(Const.CURRENT_USER));
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
