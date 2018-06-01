@@ -6,7 +6,6 @@ import com.truck.common.Const;
 import com.truck.common.ResponseCode;
 import com.truck.common.ServerResponse;
 import com.truck.pojo.User;
-import com.truck.pojo.User;
 import com.truck.service.IUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -102,6 +101,13 @@ public class UserController {
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
         logger.info("从session中取用户信息");
+        Thread thread = Thread.currentThread();
+        try {
+            Thread.sleep(500);
+            logger.info("沉睡0.5");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if (user!=null)
             return ServerResponse.createBySuccess(user);
