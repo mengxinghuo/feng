@@ -256,6 +256,10 @@ public class CompanyServiceImpl implements ICompanyService {
         productListVo.setProductStock(product.getProductStock());
         productListVo.setProductPromotion(product.getProductPromotion());
         productListVo.setIdCode(product.getIdCode());
+        productListVo.setEngineType(product.getEngineType());
+        productListVo.setPartsNo(product.getPartsNo());
+        productListVo.setSystemNo(product.getSystemNo());
+        productListVo.setPartsSerialNo(product.getPartsSerialNo());
         return productListVo;
     }
 

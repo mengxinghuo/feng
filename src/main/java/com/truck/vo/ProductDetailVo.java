@@ -44,6 +44,14 @@ public class ProductDetailVo {
 
     private String idCode;
 
+    private String engineType;
+
+    private String partsNo;
+
+    private String systemNo;
+
+    private String partsSerialNo;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -252,5 +260,37 @@ public class ProductDetailVo {
 
     public void setIdCode(String idCode) {
         this.idCode = idCode;
+    }
+
+    public String getEngineType() {
+        return engineType;
+    }
+
+    public void setEngineType(String engineType) {
+        this.engineType = engineType;
+    }
+
+    public String getPartsNo() {
+        return partsNo;
+    }
+
+    public void setPartsNo(String partsNo) {
+        this.partsNo = partsNo;
+    }
+
+    public String getSystemNo() {
+        return systemNo;
+    }
+
+    public void setSystemNo(String systemNo) {
+        this.systemNo = systemNo;
+    }
+
+    public String getPartsSerialNo() {
+        return partsSerialNo;
+    }
+
+    public void setPartsSerialNo(String partsSerialNo) {
+        this.partsSerialNo = partsSerialNo;
     }
 }

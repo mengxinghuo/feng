@@ -20,12 +20,17 @@
             <arg column="Product_Desc" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
             <arg column="Product_SubImg" jdbcType="LONGVARCHAR" javaType="java.lang.String"/>
             <arg column="id_code" jdbcType="VARCHAR" javaType="java.lang.String"/>
+            <arg column="engine_type" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="parts_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="system_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="parts_serial_no" jdbcType="VARCHAR" javaType="java.lang.String" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
     Product_ID, admin_id,Product_CategoryID, Product_Title, Product_SubTitle, Product_Promotion, 
     Product_Weight, Product_Size, Product_Price, Product_Status, Product_Stock, Product_FirstImg, 
-    CreateTime, EndTime, Product_Desc, Product_SubImg,id_code
+    CreateTime, EndTime, Product_Desc, Product_SubImg,id_code, engine_type, parts_no,
+    system_no, parts_serial_no
   </sql>
     <select id="selectByProductKeywordAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
         SELECT
@@ -108,13 +113,15 @@
       Product_SubTitle, Product_Promotion, Product_Weight,
       Product_Size, Product_Price, Product_Status,
       Product_Stock, Product_FirstImg, CreateTime,
-      EndTime, Product_Desc, Product_SubImg,id_code
+      EndTime, Product_Desc, Product_SubImg,id_code, engine_type, parts_no,
+    system_no, parts_serial_no
       )
     values (#{productId,jdbcType=INTEGER},#{adminId,jdbcType=INTEGER}, #{productCategoryid,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR},
       #{productSubtitle,jdbcType=VARCHAR}, #{productPromotion,jdbcType=VARCHAR}, #{productWeight,jdbcType=DECIMAL},
       #{productSize,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productStatus,jdbcType=INTEGER},
       #{productStock,jdbcType=INTEGER}, #{productFirstimg,jdbcType=VARCHAR}, now(),
-      #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR},#{idCode}
+      #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR},#{idCode}, #{engineType,jdbcType=VARCHAR},
+      #{partsNo,jdbcType=VARCHAR}, #{systemNo,jdbcType=VARCHAR}, #{partsSerialNo,jdbcType=VARCHAR}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.truck.pojo.Product">
@@ -167,6 +174,18 @@
             <if test="idCode != null">
                 id_code,
             </if>
+            <if test="engineType != null" >
+                engine_type,
+            </if>
+            <if test="partsNo != null" >
+                parts_no,
+            </if>
+            <if test="systemNo != null" >
+                system_no,
+            </if>
+            <if test="partsSerialNo != null" >
+                parts_serial_no,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productId != null">
@@ -215,6 +234,18 @@
             </if>
             <if test="idCode != null">
                 #{idCode},
+            </if>
+            <if test="engineType != null" >
+                #{engineType,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNo != null" >
+                #{partsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="systemNo != null" >
+                #{systemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsSerialNo != null" >
+                #{partsSerialNo,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -267,6 +298,18 @@
             <if test="idCode != null">
                 id_code=#{idCode},
             </if>
+            <if test="engineType != null" >
+                engine_type = #{engineType,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNo != null" >
+                parts_no = #{partsNo,jdbcType=VARCHAR},
+            </if>
+            <if test="systemNo != null" >
+                system_no = #{systemNo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsSerialNo != null" >
+                parts_serial_no = #{partsSerialNo,jdbcType=VARCHAR},
+            </if>
         </set>
         where Product_ID = #{productId,jdbcType=INTEGER}
     </update>
@@ -287,7 +330,11 @@
       EndTime = now(),
       Product_Desc = #{productDesc,jdbcType=LONGVARCHAR},
       Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR},
-      id_code=#{idCode}
+      id_code=#{idCode},
+        engine_type = #{engineType,jdbcType=VARCHAR},
+      parts_no = #{partsNo,jdbcType=VARCHAR},
+      system_no = #{systemNo,jdbcType=VARCHAR},
+      parts_serial_no = #{partsSerialNo,jdbcType=VARCHAR}
     where Product_ID = #{productId,jdbcType=INTEGER}
   </update>
 
