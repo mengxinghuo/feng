@@ -8,6 +8,8 @@ import com.truck.common.ServerResponse;
 import com.truck.pojo.User;
 import com.truck.pojo.User;
 import com.truck.service.IUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.util.Map;
 @RequestMapping("/user/")
 public class UserController {
 
+    private static  final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private IUserService iUserService;
@@ -98,6 +101,7 @@ public class UserController {
     @RequestMapping(value = "getUserInfo.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
+        logger.info("从session中取用户信息");
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if (user!=null)
             return ServerResponse.createBySuccess(user);
