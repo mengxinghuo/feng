@@ -102,8 +102,8 @@ public class UserController {
     public ServerResponse<User> getUserInfo(HttpSession session){
         Thread thread = Thread.currentThread();
         try {
-            Thread.sleep(10000);
             logger.info("沉睡10");
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
