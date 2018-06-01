@@ -100,7 +100,6 @@ public class UserController {
     @RequestMapping(value = "getUserInfo.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
-        logger.info("从session中取用户信息");
         Thread thread = Thread.currentThread();
         try {
             Thread.sleep(500);
@@ -108,9 +107,13 @@ public class UserController {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        logger.info("从session中取用户信息");
         User user =(User) session.getAttribute(Const.CURRENT_USER);
-        if (user!=null)
+        if (user!=null){
+            logger.info("取到用户信息");
             return ServerResponse.createBySuccess(user);
+        }
+        logger.info("没取到用户信息");
         return ServerResponse.createByErrorMessage("用户没登陆，无法获取当前用户的信息");
     }
 
