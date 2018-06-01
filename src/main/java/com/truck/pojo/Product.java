@@ -59,30 +59,29 @@ public class Product {
 
     private String partsSerialNo;
 
-    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, String productDesc, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, String productSubimg, Date createtime, Date endtime, String idCode, String engineType, String partsNo, String systemNo, String partsSerialNo) {
+    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, Date createtime, Date endtime, String productDesc, String productSubimg,String idCode,String engineType,String partsNo,String systemNo,String partsSerialNo) {
         this.productId = productId;
         this.adminId = adminId;
         this.productCategoryid = productCategoryid;
         this.productTitle = productTitle;
         this.productSubtitle = productSubtitle;
         this.productPromotion = productPromotion;
-        this.productDesc = productDesc;
         this.productWeight = productWeight;
         this.productSize = productSize;
         this.productPrice = productPrice;
         this.productStatus = productStatus;
         this.productStock = productStock;
         this.productFirstimg = productFirstimg;
-        this.productSubimg = productSubimg;
         this.createtime = createtime;
         this.endtime = endtime;
+        this.productDesc= productDesc;
+        this.productSubimg = productSubimg;
         this.idCode = idCode;
         this.engineType = engineType;
         this.partsNo = partsNo;
         this.systemNo = systemNo;
         this.partsSerialNo = partsSerialNo;
     }
-
 
     public Product() {
         super();

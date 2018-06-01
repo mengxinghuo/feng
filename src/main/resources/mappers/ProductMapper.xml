@@ -331,7 +331,7 @@
       Product_Desc = #{productDesc,jdbcType=LONGVARCHAR},
       Product_SubImg = #{productSubimg,jdbcType=LONGVARCHAR},
       id_code=#{idCode},
-        engine_type = #{engineType,jdbcType=VARCHAR},
+      engine_type = #{engineType,jdbcType=VARCHAR},
       parts_no = #{partsNo,jdbcType=VARCHAR},
       system_no = #{systemNo,jdbcType=VARCHAR},
       parts_serial_no = #{partsSerialNo,jdbcType=VARCHAR}
