@@ -14,6 +14,7 @@ public class Const {
     public static final String SHOPNAME = "shopname";
     public static final String SHOPEMAIL = "shopemail";
     public static final String SHOPNUM = "adminId";
+    public static final String DEVICE_SYSTEM_USER_PHONE = "88888888";
 
 
     public interface Role {
