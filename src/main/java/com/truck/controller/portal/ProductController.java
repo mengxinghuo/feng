@@ -69,6 +69,7 @@ public class ProductController {
             if (responses.isSuccess()) {
                 User users = responses.getData();
                 session.setAttribute(Const.CURRENT_USER, users);
+                logger.info("放入session");
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
