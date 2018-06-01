@@ -100,13 +100,6 @@ public class UserController {
     @RequestMapping(value = "getUserInfo.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession session){
-        Thread thread = Thread.currentThread();
-        try {
-            Thread.sleep(500);
-            logger.info("沉睡0.5");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         logger.info("从session中取用户信息");
         User user =(User) session.getAttribute(Const.CURRENT_USER);
         if (user!=null){
