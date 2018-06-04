@@ -18,7 +18,6 @@ import com.truck.vo.CartProductVo;
 import com.truck.vo.CartShopListVo;
 import com.truck.vo.CartVo;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +57,7 @@ public class CartServiceImpl implements ICartService {
             cartItem.setAmount(count);
             cartItem.setCartProductId(productId);
             cartItem.setChecked(Const.Cart.CHECKED);
+            cartItem.setCartPrice(product.getProductPrice());
             cartMapper.insert(cartItem);
         } else {
             //这个产品已经在购物车中相加产品数量
@@ -68,14 +68,21 @@ public class CartServiceImpl implements ICartService {
         return this.list(userId);
     }
 
-    public ServerResponse<CartVo> update(Integer userId, Integer count, Integer productId) {
+    public ServerResponse<CartVo> update(Integer userId, Integer count, Integer productId,BigDecimal cartPrice) {
         if (count == null || productId == null)
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         if (count < 1)
             return ServerResponse.createByErrorMessage("");
         Cart cart = cartMapper.selectCartByUserIdProductId(userId, productId);
-        if (cart != null)
+        if (cart != null){
+            if (cartPrice !=null  ) {
+                if (cartPrice.compareTo(new BigDecimal(0))<0) {
+                    return  ServerResponse.createByErrorMessage("单价不可小于0");
+                }
+                cart.setCartPrice(cartPrice);
+            }
             cart.setAmount(count);
+        }
         cartMapper.updateByPrimaryKeySelective(cart);
         return this.list(userId);
     }
@@ -132,7 +139,7 @@ public class CartServiceImpl implements ICartService {
                         cartProductVo.setProductMainImage(product.getProductFirstimg());
                         cartProductVo.setProductName(product.getProductTitle());
                         cartProductVo.setProductSubtitle(product.getProductSubtitle());
-                        cartProductVo.setProductPrice(product.getProductPrice());
+                        cartProductVo.setCartPrice(cartItem.getCartPrice());
                         cartProductVo.setProductStock(product.getProductStock());
                         cartProductVo.setProductStatus(product.getProductStatus());
                         int buyLimitCount = 0;
@@ -153,7 +160,7 @@ public class CartServiceImpl implements ICartService {
                         }
                         cartProductVo.setProductAmount(buyLimitCount);
                         //计算总价
-                        cartProductVo.setProductTotalPrice(BigDecimalUtil.mul(product.getProductPrice().doubleValue(), cartProductVo.getProductAmount()));
+                        cartProductVo.setProductTotalPrice(BigDecimalUtil.mul(cartItem.getCartPrice().doubleValue(), cartProductVo.getProductAmount()));
                         cartProductVo.setProductChecked(cartItem.getChecked());
 
                         if (cartItem.getChecked() == Const.Cart.CHECKED)

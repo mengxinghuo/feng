@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 
 @Controller
 @RequestMapping("/cart/")
@@ -52,12 +53,12 @@ public class CartController {
 
     @RequestMapping("update.do")
     @ResponseBody
-    public ServerResponse<CartVo> update(HttpSession session, Integer count, Integer productId){
+    public ServerResponse<CartVo> update(HttpSession session, Integer count, Integer productId,BigDecimal cartPrice){
         User user=(User)session.getAttribute(Const.CURRENT_USER);
         if (user==null)
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
 
-        return iCartService.update(user.getUserId(),count,productId);
+        return iCartService.update(user.getUserId(),count,productId,cartPrice);
     }
 
     @RequestMapping("deleteProduct.do")

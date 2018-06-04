@@ -11,10 +11,11 @@
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="shop_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="cart_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    cart_id, cart_user_id, cart_product_id, amount, checked, create_time, update_time,shop_id
+    cart_id, cart_user_id, cart_product_id, amount, checked, create_time, update_time,shop_id,cart_price
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -29,10 +30,10 @@
   <insert id="insert" parameterType="com.truck.pojo.Cart" >
     insert into truck_cart (cart_id, cart_user_id, cart_product_id, 
       amount, checked, create_time, 
-      update_time, shop_id)
+      update_time, shop_id,cart_price)
     values (#{cartId,jdbcType=INTEGER}, #{cartUserId,jdbcType=INTEGER}, #{cartProductId,jdbcType=INTEGER}, 
       #{amount,jdbcType=INTEGER}, #{checked,jdbcType=INTEGER}, now(),
-      now(), #{shopId,jdbcType=INTEGER})
+      now(), #{shopId,jdbcType=INTEGER},#{cartPrice})
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.Cart" >
     insert into truck_cart
@@ -61,6 +62,9 @@
       <if test="shopId != null" >
         shop_id,
       </if>
+      <if test="cartPrice != null" >
+        cart_price,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="cartId != null" >
@@ -86,6 +90,9 @@
       </if>
       <if test="shopId != null" >
         #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="cartPrice != null" >
+        #{cartPrice},
       </if>
     </trim>
   </insert>
@@ -113,6 +120,9 @@
       <if test="shopId != null" >
         shop_id = #{shopId,jdbcType=INTEGER},
       </if>
+      <if test="cartPrice != null" >
+        cart_price=#{cartPrice},
+      </if>
     </set>
     where cart_id = #{cartId,jdbcType=INTEGER}
   </update>
@@ -124,7 +134,8 @@
       checked = #{checked,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = now(),
-       shop_id = #{shopId,jdbcType=INTEGER}
+       shop_id = #{shopId,jdbcType=INTEGER},
+       cart_price=#{cartPrice}
     where cart_id = #{cartId,jdbcType=INTEGER}
   </update>
 

@@ -1,5 +1,6 @@
 package com.truck.pojo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class Cart {
@@ -19,7 +20,9 @@ public class Cart {
 
     private Integer shopId;
 
-    public Cart(Integer cartId, Integer cartUserId, Integer cartProductId, Integer amount, Integer checked, Date createTime, Date updateTime, Integer shopId) {
+    private BigDecimal cartPrice;
+
+    public Cart(Integer cartId, Integer cartUserId, Integer cartProductId, Integer amount, Integer checked, Date createTime, Date updateTime, Integer shopId,BigDecimal cartPrice) {
         this.cartId = cartId;
         this.cartUserId = cartUserId;
         this.cartProductId = cartProductId;
@@ -28,6 +31,7 @@ public class Cart {
         this.createTime = createTime;
         this.updateTime = updateTime;
         this.shopId = shopId;
+        this.cartPrice = cartPrice;
     }
 
     public Cart() {
@@ -96,5 +100,13 @@ public class Cart {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public BigDecimal getCartPrice() {
+        return cartPrice;
+    }
+
+    public void setCartPrice(BigDecimal cartPrice) {
+        this.cartPrice = cartPrice;
     }
 }

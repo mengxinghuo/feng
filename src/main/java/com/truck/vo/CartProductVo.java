@@ -12,11 +12,12 @@ public class CartProductVo {
     private String productName;
     private String productSubtitle;
     private String productMainImage;
-    private BigDecimal productPrice;
+    private BigDecimal cartPrice;
     private Integer productStatus;
     private BigDecimal productTotalPrice;
     private Integer productStock;
     private String limitAmount;
+
 
     public Integer getCartId() {
         return cartId;
@@ -82,12 +83,12 @@ public class CartProductVo {
         this.productMainImage = productMainImage;
     }
 
-    public BigDecimal getProductPrice() {
-        return productPrice;
+    public BigDecimal getCartPrice() {
+        return cartPrice;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
-        this.productPrice = productPrice;
+    public void setCartPrice(BigDecimal cartPrice) {
+        this.cartPrice = cartPrice;
     }
 
     public Integer getProductStatus() {
