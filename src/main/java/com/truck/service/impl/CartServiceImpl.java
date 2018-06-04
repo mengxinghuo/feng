@@ -140,6 +140,7 @@ public class CartServiceImpl implements ICartService {
                         cartProductVo.setProductName(product.getProductTitle());
                         cartProductVo.setProductSubtitle(product.getProductSubtitle());
                         cartProductVo.setCartPrice(cartItem.getCartPrice());
+                        cartProductVo.setProductPrice(product.getProductPrice());
                         cartProductVo.setProductStock(product.getProductStock());
                         cartProductVo.setProductStatus(product.getProductStatus());
                         int buyLimitCount = 0;

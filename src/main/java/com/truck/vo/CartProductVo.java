@@ -13,6 +13,7 @@ public class CartProductVo {
     private String productSubtitle;
     private String productMainImage;
     private BigDecimal cartPrice;
+    private BigDecimal productPrice;
     private Integer productStatus;
     private BigDecimal productTotalPrice;
     private Integer productStock;
@@ -121,5 +122,13 @@ public class CartProductVo {
 
     public void setLimitAmount(String limitAmount) {
         this.limitAmount = limitAmount;
+    }
+
+    public BigDecimal getProductPrice() {
+        return productPrice;
+    }
+
+    public void setProductPrice(BigDecimal productPrice) {
+        this.productPrice = productPrice;
     }
 }
