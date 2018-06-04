@@ -31,6 +31,7 @@ public class StockVo {
 
     private String stockName;
 
+    private String stockStatusDesc;
 
 
     public StockVo() {
@@ -147,5 +148,13 @@ public class StockVo {
 
     public void setStockName(String stockName) {
         this.stockName = stockName;
+    }
+
+    public String getStockStatusDesc() {
+        return stockStatusDesc;
+    }
+
+    public void setStockStatusDesc(String stockStatusDesc) {
+        this.stockStatusDesc = stockStatusDesc;
     }
 }

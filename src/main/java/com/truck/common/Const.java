@@ -78,6 +78,15 @@ public class Const {
         public int getCode() {
             return code;
         }
+
+        public static ProductStockStatusEnum codeOf(int code) {
+            for (ProductStockStatusEnum productStockStatusEnum : values()) {
+                if (productStockStatusEnum.getCode() == code) {
+                    return productStockStatusEnum;
+                }
+            }
+            throw new RuntimeException("么有找到对应的枚举");
+        }
     }
 
     public enum ShopStatusEnum {
