@@ -32,6 +32,13 @@ public class CartController {
         return iCartService.list(user.getUserId());
     }
 
+    //报价系统
+    @RequestMapping("listByUserId.do")
+    @ResponseBody
+    public ServerResponse<CartVo> list(Integer userId){
+        return iCartService.list(userId);
+    }
+
     @RequestMapping("add.do")
     @ResponseBody
     public ServerResponse<CartVo> add(HttpSession session, Integer count, Integer productId){
