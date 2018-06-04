@@ -211,7 +211,7 @@ public class StockServiceImpl implements IStockService {
         return idList;
     }
 
-    public ServerResponse selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId, int pageNum, int pageSize){
+    public ServerResponse selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId, Integer stockStatus,int pageNum, int pageSize){
         PageHelper.startPage(pageNum,pageSize);
         List<StockVo> stockVoList = Lists.newArrayList();
         if (StringUtils.isNotBlank(idCode)){
@@ -222,7 +222,7 @@ public class StockServiceImpl implements IStockService {
                 return ServerResponse.createBySuccess(stockVoList);
             }
         }
-        List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(adminId,productId,warehouseId);
+        List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(adminId,productId,warehouseId,stockStatus);
 
         for(Stock stockItem : stockList){
             StockVo stockVo = assembleStockVo(stockItem);

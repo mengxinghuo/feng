@@ -20,7 +20,7 @@ public interface IStockService {
 
 //    ServerResponse<StockVo> manageStockDetail(Integer stockId);
 
-    ServerResponse selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId,int pageNum, int pageSize);
+    ServerResponse selectListByProductIdWarehouseId(Integer adminId,Integer productId,String idCode,Integer warehouseId,Integer stockStatus,int pageNum, int pageSize);
 
 //    ServerResponse<PageInfo> searchStock(String stockName, Integer stockId, int pageNum, int pageSize);
 

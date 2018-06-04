@@ -75,13 +75,14 @@ public class StockManageController {
                                   @RequestParam(value = "productId",required = false)Integer productId,
                                   @RequestParam(value = "idCode",required = false)String idCode,
                                   @RequestParam(value = "warehouseId",required = false)Integer warehouseId,
+                                  @RequestParam(value = "stockStatus",required = false)Integer stockStatus,
                                   @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                   @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
          Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
-            return iStockService.selectListByProductIdWarehouseId(admin.getAdminId(),productId,idCode,warehouseId,pageNum,pageSize);
+            return iStockService.selectListByProductIdWarehouseId(admin.getAdminId(),productId,idCode,warehouseId,stockStatus,pageNum,pageSize);
     }
 
     @RequestMapping("reduce.do")

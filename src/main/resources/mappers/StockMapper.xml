@@ -39,13 +39,18 @@
     <include refid="Base_Column_List" />
     from truck_product_stock
     <where>
-    <if test="productId != null">
+      <if test="adminId != null">
+        and admin_id = #{adminId}
+      </if>
+      <if test="productId != null">
       and product_id = #{productId}
     </if>
     <if test="warehouseId != null">
       and warehouse_id = #{warehouseId}
     </if>
-      and admin_id = #{adminId}
+    <if test="stockStatus != null">
+      and stock_status = #{stockStatus}
+    </if>
     </where>
   </select>
   <select id="selectListByWarehouseId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

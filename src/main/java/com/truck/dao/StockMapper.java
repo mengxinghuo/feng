@@ -16,7 +16,7 @@ public interface StockMapper {
 
     Stock selectByStockIdAndProductId(@Param("stockId")Integer stockId,@Param("productId")Integer productId);
 
-    List<Stock> selectListByProductIdWarehouseId(@Param("adminId")Integer adminId,@Param("productId")Integer productId,@Param("warehouseId")Integer warehouseId);
+    List<Stock> selectListByProductIdWarehouseId(@Param("adminId")Integer adminId,@Param("productId")Integer productId,@Param("warehouseId")Integer warehouseId,@Param("stockStatus")Integer stockStatus);
 
     List<Stock> selectListByWarehouseId(Integer warehouseId);
 

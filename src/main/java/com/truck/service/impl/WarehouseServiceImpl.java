@@ -97,7 +97,7 @@ public class WarehouseServiceImpl implements IWarehouseService {
 
         Shop shop = shopMapper.selectByPrimaryKey(warehouse.getShopId());
         if (shop != null) {
-        List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(shop.getAdminId(),productId,warehouse.getWarehouseId());
+        List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(shop.getAdminId(),productId,warehouse.getWarehouseId(),null);
         if(stockList != null){
             List<StockVo> stockVoList = Lists.newArrayList();
             for (Stock stock : stockList) {
