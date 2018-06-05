@@ -27,7 +27,7 @@
     delete from truck_company_address
     where address_id = #{addressId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.truck.pojo.Warehouse" >
+  <insert id="insert" parameterType="com.truck.pojo.CompanyAddress" >
     insert into truck_company_address (address_id, company_id, address_name,
     address_desc, address_phone, address_email,
     create_time, update_time)
@@ -35,7 +35,7 @@
     #{addressDesc,jdbcType=VARCHAR}, #{addressPhone,jdbcType=VARCHAR}, #{addressEmail,jdbcType=VARCHAR},
     #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.truck.pojo.Warehouse" useGeneratedKeys="true" keyProperty="addressId">
+  <insert id="insertSelective" parameterType="com.truck.pojo.CompanyAddress" useGeneratedKeys="true" keyProperty="addressId">
     insert into truck_company_address
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="addressId != null" >
@@ -82,7 +82,7 @@
       now(),
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Warehouse" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.CompanyAddress" >
     update truck_company_address
     <set >
       <if test="companyId != null" >
@@ -107,7 +107,7 @@
     </set>
     where address_id = #{addressId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.Warehouse" >
+  <update id="updateByPrimaryKey" parameterType="com.truck.pojo.CompanyAddress" >
     update truck_company_address
     set company_id = #{companyId,jdbcType=INTEGER},
     address_name = #{addressName,jdbcType=VARCHAR},
