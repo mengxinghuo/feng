@@ -94,12 +94,18 @@ public class OrderController {
      */
     @RequestMapping("get_order_list.do")
     @ResponseBody
-    public ServerResponse orderList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum, @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+    public ServerResponse orderList(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                                    @RequestParam(value = "userId",required = false)Integer userId,
+                                    @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
+        if (userId != null) {
+            return iOrderService.getOrderList(userId,pageNum,pageSize);
+        }else{
+            User user = (User)session.getAttribute(Const.CURRENT_USER);
+            if(user == null){
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+            }
+            return iOrderService.getOrderList(user.getUserId(),pageNum,pageSize);
         }
-        return iOrderService.getOrderList(user.getUserId(),pageNum,pageSize);
     }
 
 
