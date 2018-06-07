@@ -29,12 +29,17 @@ public class UserInfoController {
      */
     @RequestMapping("get_user_info.do")
     @ResponseBody
-    public ServerResponse<UserInfoVo> getUserInfo(HttpSession session){
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+    public ServerResponse<UserInfoVo> getUserInfo(HttpSession session,
+                                                  @RequestParam(value = "userId",required = false)Integer userId){
+        if (userId != null) {
+            return iUserInfoService.getUserInfo(userId);
+        }else{
+            User user = (User)session.getAttribute(Const.CURRENT_USER);
+            if(user == null){
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            }
+            return iUserInfoService.getUserInfo(user.getUserId());
         }
-        return iUserInfoService.getUserInfo(user.getUserId());
     }
 
     /**
@@ -47,12 +52,17 @@ public class UserInfoController {
     @RequestMapping("get_balanceAlteration.do")
     @ResponseBody
     public ServerResponse getBalanceAlteration(HttpSession session,
+                                               @RequestParam(value = "userId",required = false)Integer userId,
                                                @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
                                                @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-        User user = (User)session.getAttribute(Const.CURRENT_USER);
-        if(user == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+        if (userId != null) {
+            return iUserInfoService.getBalanceAlteration(userId,pageNum,pageSize);
+        }else{
+            User user = (User)session.getAttribute(Const.CURRENT_USER);
+            if(user == null){
+                return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            }
+            return iUserInfoService.getBalanceAlteration(user.getUserId(),pageNum,pageSize);
         }
-        return iUserInfoService.getBalanceAlteration(user.getUserId(),pageNum,pageSize);
     }
 }

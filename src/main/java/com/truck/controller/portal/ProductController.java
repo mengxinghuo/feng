@@ -52,6 +52,7 @@ public class ProductController {
     //根据关键字或者分类ID查询产品
     public ServerResponse<PageInfo> search(HttpSession session,
                                            @RequestParam(value = "deviceName", required = false) String deviceName,
+                                           @RequestParam(value = "serviceId", required = false) String serviceId,
                                            @RequestParam(value = "productKeyword", required = false) String productKeyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                          @RequestParam(value = "categoryKeyword", required = false) String categoryKeyword,
@@ -70,6 +71,9 @@ public class ProductController {
                 User users = responses.getData();
                 session.setAttribute(Const.CURRENT_USER, users);
                 logger.info("放入session");
+                if (serviceId != null) {
+                    session.setAttribute("serviceId", serviceId);
+                }
             }
         }
         return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
