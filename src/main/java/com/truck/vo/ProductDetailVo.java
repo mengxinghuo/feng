@@ -64,6 +64,10 @@ public class ProductDetailVo {
 
     private String productBrand;
 
+    private Integer stockStatus;
+
+    private Integer picketLine;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -103,8 +107,6 @@ public class ProductDetailVo {
     public void setHigh(BigDecimal high) {
         High = high;
     }
-
-
 
     public String getProductTitle() {
         return productTitle;
@@ -352,5 +354,21 @@ public class ProductDetailVo {
 
     public void setProductBrand(String productBrand) {
         this.productBrand = productBrand;
+    }
+
+    public Integer getStockStatus() {
+        return stockStatus;
+    }
+
+    public void setStockStatus(Integer stockStatus) {
+        this.stockStatus = stockStatus;
+    }
+
+    public Integer getPicketLine() {
+        return picketLine;
+    }
+
+    public void setPicketLine(Integer picketLine) {
+        this.picketLine = picketLine;
     }
 }

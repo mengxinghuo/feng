@@ -30,13 +30,13 @@ public class StockManageController {
 
     @RequestMapping("save.do")
     @ResponseBody
-    public ServerResponse stockSave(HttpSession session, Stock stock){
+    public ServerResponse stockSave(HttpSession session, Stock stock,String vendor,String buyingContract){
          Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
         if (iAdminService.checkShopStatus(admin).isSuccess()){
-            return iStockService.saveOrUpdateStock(admin.getAdminId(),stock);
+            return iStockService.saveOrUpdateStock(admin.getAdminId(),stock,vendor,buyingContract);
         }else{
             return iAdminService.checkShopStatus(admin);
         }

@@ -143,7 +143,10 @@ public class ProductServiceImpl implements ProductService {
         productDetailVo.setUnit(product.getUnit());
         productDetailVo.setDescEnglish(product.getDescEnglish());
         productDetailVo.setProductBrand(product.getProductBrand());
-        
+
+        productDetailVo.setStockStatus(product.getStockStatus());
+        productDetailVo.setPicketLine(product.getPicketLine());
+
         productDetailVo.setImglist(product.getImglist());
         Shop shop = shopMapper.selectByAdminId(product.getAdminId());
         if (shop != null) {
@@ -412,6 +415,9 @@ public class ProductServiceImpl implements ProductService {
         productListVo.setUnit(product.getUnit());
         productListVo.setDescEnglish(product.getDescEnglish());
         productListVo.setProductBrand(product.getProductBrand());
+
+        productListVo.setStockStatus(product.getStockStatus());
+        productListVo.setPicketLine(product.getPicketLine());
         
         return productListVo;
     }

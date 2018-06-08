@@ -48,6 +48,10 @@ public class ProductListVo {
 
     private String productBrand;
 
+    private Integer stockStatus;
+
+    private Integer picketLine;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -263,5 +267,21 @@ public class ProductListVo {
 
     public void setProductBrand(String productBrand) {
         this.productBrand = productBrand;
+    }
+
+    public Integer getStockStatus() {
+        return stockStatus;
+    }
+
+    public void setStockStatus(Integer stockStatus) {
+        this.stockStatus = stockStatus;
+    }
+
+    public Integer getPicketLine() {
+        return picketLine;
+    }
+
+    public void setPicketLine(Integer picketLine) {
+        this.picketLine = picketLine;
     }
 }

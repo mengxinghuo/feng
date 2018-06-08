@@ -267,6 +267,10 @@ public class CompanyServiceImpl implements ICompanyService {
         productListVo.setUnit(product.getUnit());
         productListVo.setDescEnglish(product.getDescEnglish());
         productListVo.setProductBrand(product.getProductBrand());
+
+        productListVo.setStockStatus(product.getStockStatus());
+        productListVo.setPicketLine(product.getPicketLine());
+
         return productListVo;
     }
 

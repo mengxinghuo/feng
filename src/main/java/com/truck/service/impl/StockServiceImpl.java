@@ -44,7 +44,7 @@ public class StockServiceImpl implements IStockService {
     @Autowired
     private IStockCategoryService iStockCategoryService;
 
-    public ServerResponse saveOrUpdateStock(Integer adminId,Stock stock) {
+    public ServerResponse saveOrUpdateStock(Integer adminId,Stock stock,String vendor,String buyingContract) {
         if (stock != null) {
             stock.setAdminId(adminId);
             if (stock.getStockId() != null) {

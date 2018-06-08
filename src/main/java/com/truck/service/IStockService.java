@@ -10,7 +10,7 @@ import com.truck.vo.StockVo;
  */
 public interface IStockService {
 
-    ServerResponse saveOrUpdateStock(Integer adminId,Stock stock);
+    ServerResponse saveOrUpdateStock(Integer adminId,Stock stock,String vendor,String buyingContract);
 
     ServerResponse<String> setStockStatus(Integer stockId, Integer status);
 
