@@ -59,7 +59,7 @@ public class StockServiceImpl implements IStockService {
                         Integer status = (stock.getStockNum() - stock.getStockLimitNum())>=0?1:0;
                         stock.setStockStatus(status);
                     }else{
-                        stock.setStockStatus(Const.ProductStockStatusEnum.OUT_LIMIT.getCode());
+                        stock.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
                     }
                     Shop shop = shopMapper.selectByAdminId(adminId);
                     if (shop != null) {
@@ -73,10 +73,25 @@ public class StockServiceImpl implements IStockService {
                         stockAlteration.setAlterationStatus(Const.StockAlterationStatusEnum.INSTOCK.getCode());
                         stockAlteration.setAlterationReason(Const.StockAlterationReasonEnum.BUY_PRODUCT.getCode());
                         stockAlteration.setAlterationProductPrice(stock.getInStockPrice());
+                        if (StringUtils.isNotBlank(vendor)) {
+                            stockAlteration.setVendor(vendor);
+                        }
+                        if (StringUtils.isNotBlank(buyingContract)) {
+                            stockAlteration.setBuyingContract(buyingContract);
+                        }
                         stockAlterationMapper.insertSelective(stockAlteration);
 
                         Product product = productMapper.selectByPrimaryKey(stock.getProductId());
                         product.setProductStock(product.getProductStock() + stock.getStockNum());
+                        if(product.getProductStock()==0){
+                            product.setStockStatus(Const.ProductStockStatusEnum.STOCK_ZERO.getCode());
+                        }else{
+                            if(product.getProductStock()>product.getPicketLine()){
+                                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_NORMAL.getCode());
+                            }else{
+                                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
+                            }
+                        }
                         productMapper.updateByPrimaryKeySelective(product);
 
                         Map result = Maps.newHashMap();
@@ -115,7 +130,7 @@ public class StockServiceImpl implements IStockService {
             return ServerResponse.createByErrorMessage("产品库存不足");
         }
         if ((stock.getStockNum() - reduceNum)< stock.getStockLimitNum()) {
-            stock.setStockStatus(Const.ProductStockStatusEnum.IN_LIMIT.getCode());
+            stock.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
         }
         stock.setStockNum(stock.getStockNum() - reduceNum);
         int rowCount = stockMapper.updateByPrimaryKeySelective(stock);
@@ -128,6 +143,18 @@ public class StockServiceImpl implements IStockService {
             stockAlteration.setAlterationProductPrice(stock.getInStockPrice());
             stockAlterationMapper.insertSelective(stockAlteration);
 
+            Product product = productMapper.selectByPrimaryKey(stock.getProductId());
+            product.setProductStock(product.getProductStock() - reduceNum);
+            if(product.getProductStock()==0){
+                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_ZERO.getCode());
+            }else{
+                if(product.getProductStock()>product.getPicketLine()){
+                    product.setStockStatus(Const.ProductStockStatusEnum.STOCK_NORMAL.getCode());
+                }else{
+                    product.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
+                }
+            }
+            productMapper.updateByPrimaryKeySelective(product);
             return ServerResponse.createBySuccess("减少库存数量成功");
         }
         return ServerResponse.createByErrorMessage("减少库存数量失败");
@@ -155,6 +182,15 @@ public class StockServiceImpl implements IStockService {
 
                 Product product = productMapper.selectByPrimaryKey(stock.getProductId());
                 product.setProductStock(product.getProductStock() + addNum);
+                if(product.getProductStock()==0){
+                    product.setStockStatus(Const.ProductStockStatusEnum.STOCK_ZERO.getCode());
+                }else{
+                    if(product.getProductStock()>product.getPicketLine()){
+                        product.setStockStatus(Const.ProductStockStatusEnum.STOCK_NORMAL.getCode());
+                    }else{
+                        product.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
+                    }
+                }
                 productMapper.updateByPrimaryKeySelective(product);
                 return ServerResponse.createBySuccess("增加库存数量成功");
             }

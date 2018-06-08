@@ -20,10 +20,10 @@ public interface ProductService {
 
 
     //超级管理员查询所有
-    ServerResponse<List<Product>> selectProductList(Integer status);
+    ServerResponse<List<Product>> selectProductList(Integer status,Integer stockStatus);
 
     //查询所有
-    ServerResponse<List<Product>> selectProductList(Integer adminId,Integer status);
+    ServerResponse<List<Product>> selectProductList(Integer adminId,Integer status,Integer stockStatus);
 
 
     //根据ID删除产品
@@ -37,13 +37,13 @@ public interface ProductService {
     //警戒线
     ServerResponse selectCountMin(int Min);
 
-    ProductListVo assembleProductListVo(Product product);
+    ProductListVo assembleProductListVo(Integer userId,Product product);
 
 
     //分页查询
 //    ServerResponse<PageInfo> getProductByKeywordCategory(String keyword, Integer categoryId, int pageNum, int pageSize, String order, String by);
 
-    ServerResponse<PageInfo> getProductByKeywordCategory(String productKeyword, Integer categoryId, String categoryKeyword, int pageNum, int pageSize, String order, String by);
+    ServerResponse<PageInfo> getProductByKeywordCategory(Integer userId,String productKeyword, Integer categoryId, String categoryKeyword, int pageNum, int pageSize, String order, String by);
 
     //上下架
     ServerResponse<String> setSaleStatus(Integer status,Integer productId);

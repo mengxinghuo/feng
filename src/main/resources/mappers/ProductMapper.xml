@@ -94,6 +94,9 @@
             <if test="status!=null">
                 and Product_Status = #{status}
             </if>
+            <if test="stockStatus!=null">
+                and stock_status = #{stockStatus}
+            </if>
         </where>
     </select>
     <select id="selectByAdminId" resultMap="BaseResultMap" parameterType="map">
@@ -103,6 +106,9 @@
         where admin_id = #{adminId,jdbcType=INTEGER}
         <if test="status!=null">
             and Product_Status = #{status}
+        </if>
+        <if test="stockStatus!=null">
+            and stock_status = #{stockStatus}
         </if>
     </select>
     <select id="selectByCaAID" resultMap="BaseResultMap" parameterType="java.lang.Integer">

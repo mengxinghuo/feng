@@ -51,24 +51,24 @@ public class ProductManageController {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
         if (iAdminService.checkAdminRole(admin).isSuccess()) {
-            return productService.selectProductList(null);
+            return productService.selectProductList(null,null);
         } else {
-            return productService.selectProductList(admin.getAdminId(),null);
+            return productService.selectProductList(admin.getAdminId(),null,null);
         }
     }
 
     @RequestMapping(value = "selectListByStatus.do")
     @ResponseBody
     //查询所有产品
-    public ServerResponse<List<Product>> selectListByStatus(HttpSession session,Integer status) {
+    public ServerResponse<List<Product>> selectListByStatus(HttpSession session,Integer status,Integer stockStatus) {
         Admin admin = (Admin) session.getAttribute(Const.CURRENT_ADMIN);
         if (admin == null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), "管理员用户未登录，请登录");
         }
         if (iAdminService.checkAdminRole(admin).isSuccess()) {
-            return productService.selectProductList(status);
+            return productService.selectProductList(status,stockStatus);
         } else {
-            return productService.selectProductList(admin.getAdminId(),status);
+            return productService.selectProductList(admin.getAdminId(),status,stockStatus);
         }
     }
 
@@ -82,7 +82,7 @@ public class ProductManageController {
                                            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                            @RequestParam(value = "order", defaultValue = "Product_Price") String order,
                                            @RequestParam(value = "by", defaultValue = "desc") String by) {
-        return productService.getProductByKeywordCategory(productKeyword, categoryId,categoryKeyword, pageNum, pageSize, order, by);
+        return productService.getProductByKeywordCategory(null,productKeyword, categoryId,categoryKeyword, pageNum, pageSize, order, by);
     }
 
     @RequestMapping("deleteById.do")

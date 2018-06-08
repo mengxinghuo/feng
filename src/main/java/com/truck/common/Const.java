@@ -61,8 +61,9 @@ public class Const {
     }
 
     public enum ProductStockStatusEnum {
-        OUT_LIMIT(1, "正常"),
-        IN_LIMIT(0, "警戒");
+        STOCK_NORMAL(2, "正常"),
+        STOCK_LIMIT(1, "警戒"),
+        STOCK_ZERO(0, "库存数量为0");
         private String value;
         private int code;
 

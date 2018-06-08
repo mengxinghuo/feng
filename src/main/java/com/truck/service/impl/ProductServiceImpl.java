@@ -7,9 +7,11 @@ import com.google.common.collect.Sets;
 import com.truck.common.Const;
 import com.truck.common.ResponseCode;
 import com.truck.common.ServerResponse;
+import com.truck.dao.CartMapper;
 import com.truck.dao.CategoryMapper;
 import com.truck.dao.ProductMapper;
 import com.truck.dao.ShopMapper;
+import com.truck.pojo.Cart;
 import com.truck.pojo.Category;
 import com.truck.pojo.Product;
 import com.truck.pojo.Shop;
@@ -44,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductMapper productMapper;
-
+    @Autowired
+    CartMapper cartMapper;
     @Autowired
     private ShopMapper shopMapper;
 
@@ -204,8 +207,8 @@ public class ProductServiceImpl implements ProductService {
 
 
     //查詢产品
-    public ServerResponse<List<Product>> selectProductList(Integer status) {
-        List<Product> productList = productMapper.selectAll(status);
+    public ServerResponse<List<Product>> selectProductList(Integer status,Integer stockStatus) {
+        List<Product> productList = productMapper.selectAll(status,stockStatus);
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Product product : productList) {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
@@ -222,11 +225,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     //查詢产品
-    public ServerResponse<List<Product>> selectProductList(Integer AdminId,Integer status) {
+    public ServerResponse<List<Product>> selectProductList(Integer AdminId,Integer status,Integer stockStatus) {
         if (AdminId ==null) {
             return ServerResponse.createByErrorCodeMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
-        List<Product> productList = productMapper.selectByAdminId(AdminId,status);
+        List<Product> productList = productMapper.selectByAdminId(AdminId,status,stockStatus);
         List<CategoryVo> categoryVoList = new ArrayList<>();
         for (Product product : productList) {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
@@ -337,7 +340,7 @@ public class ProductServiceImpl implements ProductService {
         return ServerResponse.createByErrorMessage("修改产品销售状态失败");
     }
 
-    public ServerResponse<PageInfo> getProductByKeywordCategory(String productKeyword, Integer categoryId, String categoryKeyword, int pageNum, int pageSize, String order, String by) {
+    public ServerResponse<PageInfo> getProductByKeywordCategory(Integer userId,String productKeyword, Integer categoryId, String categoryKeyword, int pageNum, int pageSize, String order, String by) {
         List<Integer> categoryIdList = new ArrayList<Integer>();
         if (categoryId != null) {
             Category category = categoryMapper.selectByPrimaryKey(categoryId);
@@ -376,7 +379,7 @@ public class ProductServiceImpl implements ProductService {
         }
         this.setSize(productList);
         for (Product product : productList) {
-            productListVos.add(this.assembleProductListVo(product));
+            productListVos.add(this.assembleProductListVo(userId,product));
         }
         PageInfo pageInfo = new PageInfo(productList);
         pageInfo.setList(productListVos);
@@ -384,7 +387,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
-    public ProductListVo assembleProductListVo(Product product) {
+    public ProductListVo assembleProductListVo(Integer userId,Product product) {
         ProductListVo productListVo = new ProductListVo();
         productListVo.setProductId(product.getProductId());
         productListVo.setAdminId(product.getAdminId());
@@ -417,8 +420,14 @@ public class ProductServiceImpl implements ProductService {
         productListVo.setProductBrand(product.getProductBrand());
 
         productListVo.setStockStatus(product.getStockStatus());
+        productListVo.setStockStatusDesc(Const.ProductStockStatusEnum.codeOf(product.getStockStatus()).getValue());
         productListVo.setPicketLine(product.getPicketLine());
-        
+
+        Cart cart = cartMapper.selectCartByUserIdProductId(userId,product.getProductId());
+        if (cart != null) {
+            productListVo.setInCartQuantity(cart.getAmount());
+        }
+
         return productListVo;
     }
 

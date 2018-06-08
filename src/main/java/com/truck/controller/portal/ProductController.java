@@ -76,7 +76,11 @@ public class ProductController {
                 }
             }
         }
-        return productService.getProductByKeywordCategory(productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
+        User user = (User)session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
+        }
+        return productService.getProductByKeywordCategory(user.getUserId(),productKeyword, categoryId, categoryKeyword,pageNum, pageSize, order, by);
     }
 
 

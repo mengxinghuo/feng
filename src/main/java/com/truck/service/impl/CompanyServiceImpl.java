@@ -7,9 +7,11 @@ import com.google.common.collect.Maps;
 import com.truck.common.Const;
 import com.truck.common.ResponseCode;
 import com.truck.common.ServerResponse;
+import com.truck.dao.CartMapper;
 import com.truck.dao.ProductMapper;
 import com.truck.dao.CompanyMapper;
 import com.truck.dao.UserInfoMapper;
+import com.truck.pojo.Cart;
 import com.truck.pojo.Product;
 import com.truck.pojo.Company;
 import com.truck.pojo.UserInfo;
@@ -36,6 +38,8 @@ public class CompanyServiceImpl implements ICompanyService {
 
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private CartMapper cartMapper;
     @Autowired
     private ProductMapper productMapper;
     @Autowired
@@ -233,45 +237,6 @@ public class CompanyServiceImpl implements ICompanyService {
         companyListVo.setCompanySubimg(subimgList);
         companyListVo.setCompanyName(company.getCompanyName());
         return companyListVo;
-    }
-
-
-    private ProductListVo assembleProductListVo(Product product) {
-        ProductListVo productListVo = new ProductListVo();
-        productListVo.setProductId(product.getProductId());
-        productListVo.setAdminId(product.getAdminId());
-        productListVo.setProductStatus(product.getProductStatus());
-        productListVo.setProductSubtitle(product.getProductSubtitle());
-        productListVo.setProductPrice(product.getProductPrice());
-        productListVo.setProductFirstimg(product.getProductFirstimg());
-        productListVo.setCatagoryVoList(product.getCategoryVoList());
-        productListVo.setProductTitle(product.getProductTitle());
-        productListVo.setHigh(product.getHigh());
-        productListVo.setWide(product.getWide());
-        productListVo.setLong(product.getLong());
-        productListVo.setProductWeight(product.getProductWeight());
-        productListVo.setCreatetime(DateTimeUtil.dateToStr(product.getCreatetime()));
-        productListVo.setEndtime(DateTimeUtil.dateToStr(product.getEndtime()));
-        productListVo.setProductStatus(product.getProductStatus());
-        productListVo.setProductStock(product.getProductStock());
-        productListVo.setProductPromotion(product.getProductPromotion());
-        productListVo.setIdCode(product.getIdCode());
-        productListVo.setEngineType(product.getEngineType());
-        productListVo.setPartsNo(product.getPartsNo());
-        productListVo.setSystemNo(product.getSystemNo());
-        productListVo.setPartsSerialNo(product.getPartsSerialNo());
-
-        productListVo.setPartsNoTwo(product.getPartsNoTwo());
-        productListVo.setPartsNoThree(product.getPartsNoThree());
-        productListVo.setPartsNoFour(product.getPartsNoFour());
-        productListVo.setUnit(product.getUnit());
-        productListVo.setDescEnglish(product.getDescEnglish());
-        productListVo.setProductBrand(product.getProductBrand());
-
-        productListVo.setStockStatus(product.getStockStatus());
-        productListVo.setPicketLine(product.getPicketLine());
-
-        return productListVo;
     }
 
     public ServerResponse<PageInfo> searchCompany(String companyName, Integer companyId, int pageNum, int pageSize){

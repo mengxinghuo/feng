@@ -298,6 +298,15 @@ public class OrderServiceImpl implements IOrderService {
         for (OrderDetail orderDetail : orderDetailList) {
             Product product = productMapper.selectByPrimaryKey(orderDetail.getProductId());
             product.setProductStock(product.getProductStock() - orderDetail.getQuantity());
+            if(product.getProductStock()==0){
+                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_ZERO.getCode());
+            }else{
+                if(product.getProductStock()>product.getPicketLine()){
+                    product.setStockStatus(Const.ProductStockStatusEnum.STOCK_NORMAL.getCode());
+                }else{
+                    product.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
+                }
+            }
             productMapper.updateByPrimaryKeySelective(product);
         }
     }
@@ -712,7 +721,7 @@ public class OrderServiceImpl implements IOrderService {
      */
     private int reduceProductWarehouseStock(OrderDetail orderDetail , Stock stock) {
         if ((stock.getStockNum() - orderDetail.getQuantity())< stock.getStockLimitNum()) {
-            stock.setStockStatus(Const.ProductStockStatusEnum.IN_LIMIT.getCode());
+            stock.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
         }
         stock.setStockNum(stock.getStockNum() - orderDetail.getQuantity());
         return stockMapper.updateByPrimaryKeySelective(stock);
