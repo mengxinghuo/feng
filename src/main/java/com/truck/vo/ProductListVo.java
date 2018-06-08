@@ -54,7 +54,7 @@ public class ProductListVo {
 
     private Integer picketLine;
 
-    private Integer inCartQuantity;
+    private Integer count;
 
     public Integer getAdminId() {
         return adminId;
@@ -289,12 +289,12 @@ public class ProductListVo {
         this.picketLine = picketLine;
     }
 
-    public Integer getInCartQuantity() {
-        return inCartQuantity;
+    public Integer getCount() {
+        return count;
     }
 
-    public void setInCartQuantity(Integer inCartQuantity) {
-        this.inCartQuantity = inCartQuantity;
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     public String getStockStatusDesc() {

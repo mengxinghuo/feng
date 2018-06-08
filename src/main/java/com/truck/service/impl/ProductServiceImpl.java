@@ -425,7 +425,7 @@ public class ProductServiceImpl implements ProductService {
 
         Cart cart = cartMapper.selectCartByUserIdProductId(userId,product.getProductId());
         if (cart != null) {
-            productListVo.setInCartQuantity(cart.getAmount());
+            productListVo.setCount(cart.getAmount());
         }
 
         return productListVo;
