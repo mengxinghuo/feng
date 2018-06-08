@@ -77,7 +77,7 @@ public class Product {
 
     private String stockStatusDesc;
 
-    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, Date createtime, Date endtime, String productDesc, String productSubimg,String idCode,String engineType,String partsNo,String systemNo,String partsSerialNo,String partsNoTwo,String partsNoThree,String partsNoFour,String descEnglish,String unit,String productBrand,Integer stockStatus,Integer picketLine,String stockStatusDesc) {
+    public Product(Integer productId, Integer adminId, Integer productCategoryid, String productTitle, String productSubtitle, String productPromotion, BigDecimal productWeight, String productSize, BigDecimal productPrice, Integer productStatus, Integer productStock, String productFirstimg, Date createtime, Date endtime, String productDesc, String productSubimg,String idCode,String engineType,String partsNo,String systemNo,String partsSerialNo,String partsNoTwo,String partsNoThree,String partsNoFour,String descEnglish,String unit,String productBrand,Integer stockStatus,Integer picketLine) {
         this.productId = productId;
         this.adminId = adminId;
         this.productCategoryid = productCategoryid;
@@ -107,7 +107,6 @@ public class Product {
         this.productBrand = productBrand;
         this.stockStatus = stockStatus;
         this.picketLine = picketLine;
-        this.stockStatusDesc = stockStatusDesc;
     }
 
     public Product() {
