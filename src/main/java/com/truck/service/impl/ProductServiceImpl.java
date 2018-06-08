@@ -214,6 +214,7 @@ public class ProductServiceImpl implements ProductService {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
             product.setCategoryVoList(categoryVoList);
             product.setImglist(this.selectImgList(product));
+            product.setStockStatusDesc(Const.ProductStockStatusEnum.codeOf(product.getStockStatus()).getValue());
             Shop shop = shopMapper.selectByAdminId(product.getAdminId());
             if (shop != null) {
                 ShopDetailVo shopDetailVo = assembleShopDetailVo(shop);
@@ -235,6 +236,7 @@ public class ProductServiceImpl implements ProductService {
             categoryVoList = this.selectCategorParent(categoryVoList, product.getProductCategoryid());
             product.setCategoryVoList(categoryVoList);
             product.setImglist(this.selectImgList(product));
+            product.setStockStatusDesc(Const.ProductStockStatusEnum.codeOf(product.getStockStatus()).getValue());
             Shop shop = shopMapper.selectByAdminId(product.getAdminId());
             if (shop != null) {
                 ShopDetailVo shopDetailVo = assembleShopDetailVo(shop);
