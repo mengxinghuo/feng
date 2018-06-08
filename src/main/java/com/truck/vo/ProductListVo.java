@@ -36,6 +36,18 @@ public class ProductListVo {
 
     private String partsSerialNo;
 
+    private String partsNoTwo;
+
+    private String partsNoThree;
+
+    private String partsNoFour;
+
+    private String descEnglish;
+
+    private String unit;
+
+    private String productBrand;
+
     public Integer getAdminId() {
         return adminId;
     }
@@ -203,5 +215,53 @@ public class ProductListVo {
 
     public void setPartsSerialNo(String partsSerialNo) {
         this.partsSerialNo = partsSerialNo;
+    }
+
+    public String getPartsNoTwo() {
+        return partsNoTwo;
+    }
+
+    public void setPartsNoTwo(String partsNoTwo) {
+        this.partsNoTwo = partsNoTwo;
+    }
+
+    public String getPartsNoThree() {
+        return partsNoThree;
+    }
+
+    public void setPartsNoThree(String partsNoThree) {
+        this.partsNoThree = partsNoThree;
+    }
+
+    public String getPartsNoFour() {
+        return partsNoFour;
+    }
+
+    public void setPartsNoFour(String partsNoFour) {
+        this.partsNoFour = partsNoFour;
+    }
+
+    public String getDescEnglish() {
+        return descEnglish;
+    }
+
+    public void setDescEnglish(String descEnglish) {
+        this.descEnglish = descEnglish;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getProductBrand() {
+        return productBrand;
+    }
+
+    public void setProductBrand(String productBrand) {
+        this.productBrand = productBrand;
     }
 }

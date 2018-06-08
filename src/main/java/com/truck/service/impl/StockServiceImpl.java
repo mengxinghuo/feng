@@ -193,6 +193,8 @@ public class StockServiceImpl implements IStockService {
         }
         stockVo.setStockName(stringBuilder.toString());
         stockVo.setStockStatusDesc(Const.ProductStockStatusEnum.codeOf(stock.getStockStatus()).getValue());
+        stockVo.setType(stock.getType());
+        stockVo.setTypeDesc(Const.ProductStockTypeEnum.codeOf(stock.getType()).getValue());
         stockVo.setCreateTime(DateTimeUtil.dateToStr(stock.getCreateTime()));
         stockVo.setUpdateTime(DateTimeUtil.dateToStr(stock.getUpdateTime()));
         return stockVo;

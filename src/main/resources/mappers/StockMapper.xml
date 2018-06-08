@@ -15,11 +15,12 @@
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="stock_category_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="in_stock_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="type" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     stock_id, product_id, admin_id, warehouse_id, shop_id, stock_num, stock_limit_num,
-    stock_status, create_time, update_time, stock_category_id, in_stock_price
+    stock_status, create_time, update_time, stock_category_id, in_stock_price,type
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -67,12 +68,12 @@
     insert into truck_product_stock (stock_id, product_id, admin_id,
     warehouse_id, shop_id, stock_num,
     stock_limit_num, stock_status, create_time,
-    update_time, stock_category_id, in_stock_price
+    update_time, stock_category_id, in_stock_price,type
     )
     values (#{stockId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER},
     #{warehouseId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{stockNum,jdbcType=INTEGER},
     #{stockLimitNum,jdbcType=INTEGER}, #{stockStatus,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
-    #{updateTime,jdbcType=TIMESTAMP}, #{stockCategoryId,jdbcType=INTEGER}, #{inStockPrice,jdbcType=DECIMAL}
+    #{updateTime,jdbcType=TIMESTAMP}, #{stockCategoryId,jdbcType=INTEGER}, #{inStockPrice,jdbcType=DECIMAL},#{type}
     )
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.Stock" useGeneratedKeys="true" keyProperty="stockId">
@@ -110,6 +111,9 @@
       <if test="inStockPrice != null" >
         in_stock_price,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="stockId != null" >
@@ -143,6 +147,9 @@
       </if>
       <if test="inStockPrice != null" >
         #{inStockPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="type != null" >
+        #{type}
       </if>
     </trim>
   </insert>
@@ -180,6 +187,9 @@
       <if test="inStockPrice != null" >
         in_stock_price = #{inStockPrice,jdbcType=DECIMAL},
       </if>
+      <if test="type != null" >
+        type=#{type}
+      </if>
     </set>
     where stock_id = #{stockId,jdbcType=INTEGER}
   </update>
@@ -195,7 +205,8 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       stock_category_id = #{stockCategoryId,jdbcType=INTEGER},
-      in_stock_price = #{inStockPrice,jdbcType=DECIMAL}
+      in_stock_price = #{inStockPrice,jdbcType=DECIMAL},
+       type=#{type}
     where stock_id = #{stockId,jdbcType=INTEGER}
   </update>
 </mapper>

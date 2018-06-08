@@ -24,13 +24,20 @@
             <arg column="parts_no" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="system_no" jdbcType="VARCHAR" javaType="java.lang.String" />
             <arg column="parts_serial_no" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="parts_no_two" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="parts_no_three" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="parts_no_four" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="desc_english" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="unit" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="product_brand" jdbcType="VARCHAR" javaType="java.lang.String" />
         </constructor>
     </resultMap>
     <sql id="Base_Column_List">
     Product_ID, admin_id,Product_CategoryID, Product_Title, Product_SubTitle, Product_Promotion, 
     Product_Weight, Product_Size, Product_Price, Product_Status, Product_Stock, Product_FirstImg, 
     CreateTime, EndTime, Product_Desc, Product_SubImg,id_code, engine_type, parts_no,
-    system_no, parts_serial_no
+    system_no, parts_serial_no,parts_no_two, parts_no_three, parts_no_four, desc_english,
+    unit, product_brand
   </sql>
     <select id="selectByProductKeywordAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
         SELECT
@@ -114,14 +121,17 @@
       Product_Size, Product_Price, Product_Status,
       Product_Stock, Product_FirstImg, CreateTime,
       EndTime, Product_Desc, Product_SubImg,id_code, engine_type, parts_no,
-    system_no, parts_serial_no
+    system_no, parts_serial_no,parts_no_two, parts_no_three, parts_no_four,
+      desc_english, unit, product_brand
       )
     values (#{productId,jdbcType=INTEGER},#{adminId,jdbcType=INTEGER}, #{productCategoryid,jdbcType=INTEGER}, #{productTitle,jdbcType=VARCHAR},
       #{productSubtitle,jdbcType=VARCHAR}, #{productPromotion,jdbcType=VARCHAR}, #{productWeight,jdbcType=DECIMAL},
       #{productSize,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productStatus,jdbcType=INTEGER},
       #{productStock,jdbcType=INTEGER}, #{productFirstimg,jdbcType=VARCHAR}, now(),
       #{endtime,jdbcType=TIMESTAMP}, #{productDesc,jdbcType=LONGVARCHAR}, #{productSubimg,jdbcType=LONGVARCHAR},#{idCode}, #{engineType,jdbcType=VARCHAR},
-      #{partsNo,jdbcType=VARCHAR}, #{systemNo,jdbcType=VARCHAR}, #{partsSerialNo,jdbcType=VARCHAR}
+      #{partsNo,jdbcType=VARCHAR}, #{systemNo,jdbcType=VARCHAR}, #{partsSerialNo,jdbcType=VARCHAR},
+       #{partsNoTwo,jdbcType=VARCHAR}, #{partsNoThree,jdbcType=VARCHAR}, #{partsNoFour,jdbcType=VARCHAR},
+      #{descEnglish,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{productBrand,jdbcType=VARCHAR}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.truck.pojo.Product">
@@ -186,6 +196,24 @@
             <if test="partsSerialNo != null" >
                 parts_serial_no,
             </if>
+            <if test="partsNoTwo != null" >
+                parts_no_two,
+            </if>
+            <if test="partsNoThree != null" >
+                parts_no_three,
+            </if>
+            <if test="partsNoFour != null" >
+                parts_no_four,
+            </if>
+            <if test="descEnglish != null" >
+                desc_english,
+            </if>
+            <if test="unit != null" >
+                unit,
+            </if>
+            <if test="productBrand != null" >
+                product_brand,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="productId != null">
@@ -246,6 +274,24 @@
             </if>
             <if test="partsSerialNo != null" >
                 #{partsSerialNo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoTwo != null" >
+                #{partsNoTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoThree != null" >
+                #{partsNoThree,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoFour != null" >
+                #{partsNoFour,jdbcType=VARCHAR},
+            </if>
+            <if test="descEnglish != null" >
+                #{descEnglish,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                #{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrand != null" >
+                #{productBrand,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -309,6 +355,24 @@
             </if>
             <if test="partsSerialNo != null" >
                 parts_serial_no = #{partsSerialNo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoTwo != null" >
+                parts_no_two=#{partsNoTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoThree != null" >
+                parts_no_three=#{partsNoThree,jdbcType=VARCHAR},
+            </if>
+            <if test="partsNoFour != null" >
+                parts_no_four=#{partsNoFour,jdbcType=VARCHAR},
+            </if>
+            <if test="descEnglish != null" >
+                desc_english=#{descEnglish,jdbcType=VARCHAR},
+            </if>
+            <if test="unit != null" >
+                unit=#{unit,jdbcType=VARCHAR},
+            </if>
+            <if test="productBrand != null" >
+                product_brand=#{productBrand,jdbcType=VARCHAR},
             </if>
         </set>
         where Product_ID = #{productId,jdbcType=INTEGER}

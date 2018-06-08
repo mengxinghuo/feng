@@ -89,6 +89,35 @@ public class Const {
         }
     }
 
+    public enum ProductStockTypeEnum {
+        OUT_LIMIT(1, "配件"),
+        IN_LIMIT(0, "主机");
+        private String value;
+        private int code;
+
+        ProductStockTypeEnum(int code, String value) {
+            this.code = code;
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public int getCode() {
+            return code;
+        }
+
+        public static ProductStockTypeEnum codeOf(int code) {
+            for (ProductStockTypeEnum productStockTypeEnum : values()) {
+                if (productStockTypeEnum.getCode() == code) {
+                    return productStockTypeEnum;
+                }
+            }
+            throw new RuntimeException("么有找到对应的枚举");
+        }
+    }
+
     public enum ShopStatusEnum {
         REVIEW_SUCCESS(1, "审核通过"),
         REVIEW_FAILED(2, "审核不通过"),

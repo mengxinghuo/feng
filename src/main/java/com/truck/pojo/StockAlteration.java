@@ -22,7 +22,12 @@ public class StockAlteration {
 
     private Date updateTime;
 
-    public StockAlteration(Integer alterationId, Integer stockId, Integer orderDetailId, Integer alterationNum, Integer alterationStatus, Integer alterationReason, BigDecimal alterationProductPrice, Date createTime, Date updateTime) {
+    private String vendor;
+
+    private String buyingContract;
+
+
+    public StockAlteration(Integer alterationId, Integer stockId, Integer orderDetailId, Integer alterationNum, Integer alterationStatus, Integer alterationReason, BigDecimal alterationProductPrice, Date createTime, Date updateTime, String vendor, String buyingContract) {
         this.alterationId = alterationId;
         this.stockId = stockId;
         this.orderDetailId = orderDetailId;
@@ -32,6 +37,8 @@ public class StockAlteration {
         this.alterationProductPrice = alterationProductPrice;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.vendor = vendor;
+        this.buyingContract = buyingContract;
     }
 
     public StockAlteration() {
@@ -108,5 +115,21 @@ public class StockAlteration {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getBuyingContract() {
+        return buyingContract;
+    }
+
+    public void setBuyingContract(String buyingContract) {
+        this.buyingContract = buyingContract;
     }
 }

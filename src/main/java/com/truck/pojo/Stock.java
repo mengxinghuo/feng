@@ -28,7 +28,9 @@ public class Stock {
 
     private BigDecimal inStockPrice;
 
-    public Stock(Integer stockId, Integer productId, Integer adminId, Integer warehouseId, Integer shopId, Integer stockNum, Integer stockLimitNum, Integer stockStatus, Date createTime, Date updateTime, Integer stockCategoryId, BigDecimal inStockPrice) {
+    private Integer type;
+
+    public Stock(Integer stockId, Integer productId, Integer adminId, Integer warehouseId, Integer shopId, Integer stockNum, Integer stockLimitNum, Integer stockStatus, Date createTime, Date updateTime, Integer stockCategoryId, BigDecimal inStockPrice,Integer type) {
         this.stockId = stockId;
         this.productId = productId;
         this.adminId = adminId;
@@ -41,6 +43,7 @@ public class Stock {
         this.updateTime = updateTime;
         this.stockCategoryId = stockCategoryId;
         this.inStockPrice = inStockPrice;
+        this.type = type;
     }
 
     public Stock() {
@@ -141,5 +144,13 @@ public class Stock {
 
     public void setInStockPrice(BigDecimal inStockPrice) {
         this.inStockPrice = inStockPrice;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 }

@@ -260,6 +260,13 @@ public class CompanyServiceImpl implements ICompanyService {
         productListVo.setPartsNo(product.getPartsNo());
         productListVo.setSystemNo(product.getSystemNo());
         productListVo.setPartsSerialNo(product.getPartsSerialNo());
+
+        productListVo.setPartsNoTwo(product.getPartsNoTwo());
+        productListVo.setPartsNoThree(product.getPartsNoThree());
+        productListVo.setPartsNoFour(product.getPartsNoFour());
+        productListVo.setUnit(product.getUnit());
+        productListVo.setDescEnglish(product.getDescEnglish());
+        productListVo.setProductBrand(product.getProductBrand());
         return productListVo;
     }
 

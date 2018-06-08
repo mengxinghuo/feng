@@ -105,7 +105,8 @@ public class StockAlterationServiceImpl implements IStockAlterationService {
         stockAlterationVo.setAlterationReason(stockAlteration.getAlterationReason());
         stockAlterationVo.setReasonDesc(Const.StockAlterationReasonEnum.codeOf(stockAlteration.getAlterationReason()).getValue());
         stockAlterationVo.setAlterationProductPrice(stockAlteration.getAlterationProductPrice());
-
+        stockAlterationVo.setVendor(stockAlteration.getVendor());
+        stockAlterationVo.setBuyingContract(stockAlteration.getBuyingContract());
         Stock stock = stockMapper.selectByPrimaryKey(stockAlteration.getStockId());
         if (stock != null) {
             StockVo stockVo = iStockService.assembleStockVo(stock);

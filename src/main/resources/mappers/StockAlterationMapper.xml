@@ -12,11 +12,13 @@
       <arg column="alteration_product_price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="vendor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="buying_contract" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     alteration_id, stock_id, order_detail_id, alteration_num, alteration_status, alteration_reason, 
-    alteration_product_price, create_time, update_time
+    alteration_product_price, create_time, update_time, vendor, buying_contract
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -31,11 +33,11 @@
   <insert id="insert" parameterType="com.truck.pojo.StockAlteration" useGeneratedKeys="true" keyProperty="alterationId">
     insert into truck_stock_alteration (alteration_id, stock_id, order_detail_id, 
       alteration_num, alteration_status, alteration_reason, 
-      alteration_product_price, create_time, update_time
+      alteration_product_price, create_time, update_time, vendor, buying_contract
       )
     values (#{alterationId,jdbcType=INTEGER}, #{stockId,jdbcType=INTEGER}, #{orderDetailId,jdbcType=INTEGER}, 
       #{alterationNum,jdbcType=INTEGER}, #{alterationStatus,jdbcType=INTEGER}, #{alterationReason,jdbcType=INTEGER}, 
-      #{alterationProductPrice,jdbcType=DECIMAL}, now(), now()
+      #{alterationProductPrice,jdbcType=DECIMAL}, now(), now()，#{vendor,jdbcType=VARCHAR}, #{buyingContract,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.StockAlteration" useGeneratedKeys="true" keyProperty="alterationId">
@@ -64,6 +66,12 @@
       </if>
         create_time,
         update_time,
+      <if test="vendor != null" >
+        vendor,
+      </if>
+      <if test="buyingContract != null" >
+        buying_contract,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="alterationId != null" >
@@ -89,6 +97,12 @@
       </if>
       now(),
       now(),
+      <if test="vendor != null" >
+        #{vendor,jdbcType=VARCHAR},
+      </if>
+      <if test="buyingContract != null" >
+        #{buyingContract,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.StockAlteration" >
@@ -116,6 +130,12 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
         update_time = now(),
+      <if test="vendor != null" >
+        vendor = #{vendor,jdbcType=VARCHAR},
+      </if>
+      <if test="buyingContract != null" >
+        buying_contract = #{buyingContract,jdbcType=VARCHAR},
+      </if>
     </set>
     where alteration_id = #{alterationId,jdbcType=INTEGER}
   </update>
@@ -128,7 +148,9 @@
       alteration_reason = #{alterationReason,jdbcType=INTEGER},
       alteration_product_price = #{alterationProductPrice,jdbcType=DECIMAL},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = now()
+      update_time = now(),
+      vendor = #{vendor,jdbcType=VARCHAR},
+      buying_contract = #{buyingContract,jdbcType=VARCHAR}
     where alteration_id = #{alterationId,jdbcType=INTEGER}
   </update>
 

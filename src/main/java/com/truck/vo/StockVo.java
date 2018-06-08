@@ -33,6 +33,10 @@ public class StockVo {
 
     private String stockStatusDesc;
 
+    private Integer type;
+
+    private String typeDesc;
+
 
     public StockVo() {
         super();
@@ -156,5 +160,21 @@ public class StockVo {
 
     public void setStockStatusDesc(String stockStatusDesc) {
         this.stockStatusDesc = stockStatusDesc;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getTypeDesc() {
+        return typeDesc;
+    }
+
+    public void setTypeDesc(String typeDesc) {
+        this.typeDesc = typeDesc;
     }
 }

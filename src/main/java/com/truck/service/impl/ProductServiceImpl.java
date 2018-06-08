@@ -136,6 +136,14 @@ public class ProductServiceImpl implements ProductService {
         productDetailVo.setPartsNo(product.getPartsNo());
         productDetailVo.setSystemNo(product.getSystemNo());
         productDetailVo.setPartsSerialNo(product.getPartsSerialNo());
+
+        productDetailVo.setPartsNoTwo(product.getPartsNoTwo());
+        productDetailVo.setPartsNoThree(product.getPartsNoThree());
+        productDetailVo.setPartsNoFour(product.getPartsNoFour());
+        productDetailVo.setUnit(product.getUnit());
+        productDetailVo.setDescEnglish(product.getDescEnglish());
+        productDetailVo.setProductBrand(product.getProductBrand());
+        
         productDetailVo.setImglist(product.getImglist());
         Shop shop = shopMapper.selectByAdminId(product.getAdminId());
         if (shop != null) {
@@ -397,6 +405,14 @@ public class ProductServiceImpl implements ProductService {
         productListVo.setPartsNo(product.getPartsNo());
         productListVo.setSystemNo(product.getSystemNo());
         productListVo.setPartsSerialNo(product.getPartsSerialNo());
+
+        productListVo.setPartsNoTwo(product.getPartsNoTwo());
+        productListVo.setPartsNoThree(product.getPartsNoThree());
+        productListVo.setPartsNoFour(product.getPartsNoFour());
+        productListVo.setUnit(product.getUnit());
+        productListVo.setDescEnglish(product.getDescEnglish());
+        productListVo.setProductBrand(product.getProductBrand());
+        
         return productListVo;
     }
 

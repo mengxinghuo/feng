@@ -30,6 +30,10 @@ public class StockAlterationVo {
 
     private String orderNo;
 
+    private String vendor;
+
+    private String buyingContract;
+
     public StockAlterationVo() {
         super();
     }
@@ -136,5 +140,21 @@ public class StockAlterationVo {
 
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getBuyingContract() {
+        return buyingContract;
+    }
+
+    public void setBuyingContract(String buyingContract) {
+        this.buyingContract = buyingContract;
     }
 }
