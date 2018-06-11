@@ -37,6 +37,8 @@ public class StockVo {
 
     private String typeDesc;
 
+    private ProductListVo productListVo;
+
 
     public StockVo() {
         super();
@@ -176,5 +178,13 @@ public class StockVo {
 
     public void setTypeDesc(String typeDesc) {
         this.typeDesc = typeDesc;
+    }
+
+    public ProductListVo getProductListVo() {
+        return productListVo;
+    }
+
+    public void setProductListVo(ProductListVo productListVo) {
+        this.productListVo = productListVo;
     }
 }

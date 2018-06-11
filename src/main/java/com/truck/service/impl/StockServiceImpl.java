@@ -12,7 +12,9 @@ import com.truck.dao.*;
 import com.truck.pojo.*;
 import com.truck.service.IStockCategoryService;
 import com.truck.service.IStockService;
+import com.truck.service.ProductService;
 import com.truck.util.DateTimeUtil;
+import com.truck.vo.ProductListVo;
 import com.truck.vo.StockVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,8 @@ public class StockServiceImpl implements IStockService {
 
     @Autowired
     private IStockCategoryService iStockCategoryService;
+    @Autowired
+    private ProductService productService;
 
     public ServerResponse saveOrUpdateStock(Integer adminId,Stock stock,String vendor,String buyingContract) {
         if (stock != null) {
@@ -203,6 +207,11 @@ public class StockServiceImpl implements IStockService {
         StockVo stockVo = new StockVo();
         stockVo.setAdminId(stock.getAdminId());
         stockVo.setProductId(stock.getProductId());
+        Product product = productMapper.selectByPrimaryKey(stock.getProductId());
+        if (product != null) {
+            ProductListVo productListVo = productService.assembleProductListVo(null,product);
+            stockVo.setProductListVo(productListVo);
+        }
         stockVo.setShopId(stock.getShopId());
         stockVo.setStockId(stock.getStockId());
         stockVo.setStockLimitNum(stock.getStockLimitNum());
