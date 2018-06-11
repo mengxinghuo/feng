@@ -277,7 +277,15 @@ public class StockServiceImpl implements IStockService {
         }
         PageInfo pageResult = new PageInfo(stockList);
         pageResult.setList(stockVoList);
-        return ServerResponse.createBySuccess(pageResult);
+
+        Map map = Maps.newHashMap();
+        Map mapNumPrice = stockMapper.selectNumPrice(adminId,productId,warehouseId,stockStatus);
+        if (mapNumPrice!=null) {
+            map.put("totalNum",mapNumPrice.get("totalNum"));
+            map.put("totalPrice",mapNumPrice.get("totalPrice"));
+            map.put("pageResult",pageResult);
+        }
+        return ServerResponse.createBySuccess(map);
     }
 
 /*    public ServerResponse<PageInfo> searchStock(String stockName,Integer stockId,int pageNum,int pageSize){
