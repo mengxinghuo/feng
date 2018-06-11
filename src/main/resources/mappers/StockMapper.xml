@@ -209,4 +209,26 @@
        type=#{type}
     where stock_id = #{stockId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectNumPrice" resultType="map" parameterType="map" >
+    select a.totalNum ,a.totalPrice from(
+    select
+    sum(stock_num) as totalNum,sum(in_stock_price) as totalPrice
+    from truck_product_stock
+    <where>
+      <if test="adminId!=null">
+        and admin_id = #{adminId}
+      </if>
+      <if test="productId!=null">
+        and product_id = #{productId}
+      </if>
+      <if test="warehouseId!=null">
+        and warehouse_id = #{warehouseId}
+      </if>
+      <if test="stockStatus!=null">
+        and stock_status =#{stockStatus}
+      </if>
+    </where> ) a
+  </select>
 </mapper>
+
