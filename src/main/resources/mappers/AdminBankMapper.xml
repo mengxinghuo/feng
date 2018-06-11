@@ -8,7 +8,7 @@
       <arg column="bank_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="bank_address" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="bank_account" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="bank_admin_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="bank_user_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="contact_number" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="present_address" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -18,7 +18,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    bank_id, admin_id, bank_name, bank_address, bank_account, bank_admin_name, contact_number,
+    bank_id, admin_id, bank_name, bank_address, bank_account, bank_user_name, contact_number,
     present_address, create_time, update_time,swift_code,currency
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -33,7 +33,7 @@
   </delete>
   <insert id="insert" parameterType="com.truck.pojo.AdminBank" >
     insert into truck_admin_bank (bank_id, admin_id, bank_name,
-      bank_address, bank_account, bank_admin_name,
+      bank_address, bank_account, bank_user_name,
       contact_number, present_address, create_time, 
       update_time,swift_code,currency)
     values (#{bankId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR},
@@ -60,7 +60,7 @@
         bank_account,
       </if>
       <if test="bankUserName != null" >
-        bank_admin_name,
+        bank_user_name,
       </if>
       <if test="contactNumber != null" >
         contact_number,
@@ -128,7 +128,7 @@
         bank_account = #{bankAccount,jdbcType=VARCHAR},
       </if>
       <if test="bankUserName != null" >
-        bank_admin_name = #{bankUserName,jdbcType=VARCHAR},
+        bank_user_name = #{bankUserName,jdbcType=VARCHAR},
       </if>
       <if test="contactNumber != null" >
         contact_number = #{contactNumber,jdbcType=VARCHAR},
@@ -152,7 +152,7 @@
       bank_name = #{bankName,jdbcType=VARCHAR},
       bank_address = #{bankAddress,jdbcType=VARCHAR},
       bank_account = #{bankAccount,jdbcType=VARCHAR},
-      bank_admin_name = #{bankUserName,jdbcType=VARCHAR},
+      bank_user_name = #{bankUserName,jdbcType=VARCHAR},
       contact_number = #{contactNumber,jdbcType=VARCHAR},
       present_address = #{presentAddress,jdbcType=VARCHAR},
       update_time = now()
@@ -171,7 +171,7 @@
     bank_name = #{bankName,jdbcType=VARCHAR},
     bank_address = #{bankAddress,jdbcType=VARCHAR},
     bank_account = #{bankAccount,jdbcType=VARCHAR},
-    bank_admin_name = #{bankUserName,jdbcType=VARCHAR},
+    bank_user_name = #{bankUserName,jdbcType=VARCHAR},
     contact_number = #{contactNumber,jdbcType=VARCHAR},
     present_address = #{presentAddress,jdbcType=VARCHAR},
     update_time = now(),
