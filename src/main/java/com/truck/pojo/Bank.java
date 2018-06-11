@@ -23,7 +23,11 @@ public class Bank {
 
     private Date updateTime;
 
-    public Bank(Integer bankId, Integer userId, String bankName, String bankAddress, String bankAccount, String bankUserName, String contactNumber, String presentAddress, Date createTime, Date updateTime) {
+    private String swiftCode;
+
+    private String currency;
+
+    public Bank(Integer bankId, Integer userId, String bankName, String bankAddress, String bankAccount, String bankUserName, String contactNumber, String presentAddress, Date createTime, Date updateTime,String swiftCode,String currency) {
         this.bankId = bankId;
         this.userId = userId;
         this.bankName = bankName;
@@ -34,6 +38,8 @@ public class Bank {
         this.presentAddress = presentAddress;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.swiftCode = swiftCode;
+        this.currency = currency;
     }
 
     public Bank() {
@@ -118,5 +124,21 @@ public class Bank {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSwiftCode() {
+        return swiftCode;
+    }
+
+    public void setSwiftCode(String swiftCode) {
+        this.swiftCode = swiftCode;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

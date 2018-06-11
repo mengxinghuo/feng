@@ -13,11 +13,13 @@
       <arg column="present_address" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="swift_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="currency" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     bank_id, user_id, bank_name, bank_address, bank_account, bank_user_name, contact_number, 
-    present_address, create_time, update_time
+    present_address, create_time, update_time,swift_code,currency
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,11 +35,11 @@
     insert into truck_bank (bank_id, user_id, bank_name,
       bank_address, bank_account, bank_user_name, 
       contact_number, present_address, create_time, 
-      update_time)
+      update_time,swift_code,currency)
     values (#{bankId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{bankName,jdbcType=VARCHAR}, 
       #{bankAddress,jdbcType=VARCHAR}, #{bankAccount,jdbcType=VARCHAR}, #{bankUserName,jdbcType=VARCHAR}, 
       #{contactNumber,jdbcType=VARCHAR}, #{presentAddress,jdbcType=VARCHAR}, now(),
-      now())
+      now(),#{swiftCode},#{currency})
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.Bank" >
     insert into truck_bank
@@ -68,6 +70,12 @@
       </if>
         create_time,
         update_time,
+      <if test="swiftCode != null" >
+        swift_code,
+      </if>
+      <if test="currency != null" >
+        currency,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="bankId != null" >
@@ -96,6 +104,12 @@
       </if>
       now(),
       now(),
+      <if test="swiftCode != null" >
+        #{swiftCode},
+      </if>
+      <if test="currency != null" >
+        #{currency},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Bank" >
@@ -123,6 +137,12 @@
         present_address = #{presentAddress,jdbcType=VARCHAR},
       </if>
         update_time = now(),
+      <if test="swiftCode != null" >
+        #{swiftCode},
+      </if>
+      <if test="currency != null" >
+        #{currency},
+      </if>
     </set>
     where bank_id = #{bankId,jdbcType=INTEGER}
   </update>
@@ -154,7 +174,9 @@
     bank_user_name = #{bankUserName,jdbcType=VARCHAR},
     contact_number = #{contactNumber,jdbcType=VARCHAR},
     present_address = #{presentAddress,jdbcType=VARCHAR},
-    update_time = now()
+    update_time = now(),
+    swift_code=#{swiftCode},
+    currency=#{currency}
     where bank_id = #{bankId,jdbcType=INTEGER}
     and user_id = #{userId,jdbcType=INTEGER}
   </update>

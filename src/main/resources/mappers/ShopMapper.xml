@@ -21,12 +21,13 @@
       <arg column="shop_licence" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
       <arg column="shop_proxy_certificate" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
       <arg column="shop_status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="post_code" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     shop_id, admin_id, shop_name, shop_desc, shop_email, shop_phone, shop_address, shop_headImg, 
     shop_firstImg, shop_subImg,create_time, update_time, shop_account, shop_tax_card, shop_sppkp, shop_licence, 
-    shop_proxy_certificate ,shop_status
+    shop_proxy_certificate ,shop_status,post_code
   </sql>
   <select id="checkShopName" resultType="int" parameterType="string">
     select count(1) from truck_admin_shop where shop_name=#{shopName}
@@ -61,14 +62,15 @@
       shop_desc, shop_email, shop_phone, 
       shop_address, shop_headImg,shop_firstImg, shop_subImg,
        create_time, update_time,shop_account, shop_tax_card, shop_sppkp, 
-      shop_licence, shop_proxy_certificate, shop_status
+      shop_licence, shop_proxy_certificate, shop_status,post_code
       )
     values (#{shopId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{shopName,jdbcType=VARCHAR}, 
       #{shopDesc,jdbcType=VARCHAR}, #{shopEmail,jdbcType=VARCHAR}, #{shopPhone,jdbcType=VARCHAR}, 
       #{shopAddress,jdbcType=VARCHAR}, #{shopHeadimg,jdbcType=VARCHAR}, #{shopFirstimg,jdbcType=LONGVARCHAR},
       #{shopSubimg,jdbcType=LONGVARCHAR}, now(), now(),
       #{shopAccount,jdbcType=LONGVARCHAR}, #{shopTaxCard,jdbcType=LONGVARCHAR}, #{shopSppkp,jdbcType=LONGVARCHAR}, 
-      #{shopLicence,jdbcType=LONGVARCHAR}, #{shopProxyCertificate,jdbcType=LONGVARCHAR}, #{shopStatus,jdbcType=INTEGER}
+      #{shopLicence,jdbcType=LONGVARCHAR}, #{shopProxyCertificate,jdbcType=LONGVARCHAR}, #{shopStatus,jdbcType=INTEGER},
+      #{postCode}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.Shop" >
@@ -124,6 +126,9 @@
       <if test="shopStatus != null" >
         shop_status,
       </if>
+      <if test="postCode != null" >
+        post_code,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="shopId != null" >
@@ -175,6 +180,9 @@
       </if>
       <if test="shopStatus != null" >
         #{shopStatus,jdbcType=INTEGER},
+      </if>
+      <if test="postCode != null" >
+        #{postCode},
       </if>
     </trim>
   </insert>
@@ -231,6 +239,9 @@
       <if test="shopStatus != null" >
         shop_status = #{shopStatus,jdbcType=INTEGER},
       </if>
+      <if test="postCode != null" >
+        post_code=#{postCode},
+      </if>
     </set>
     where shop_id = #{shopId,jdbcType=INTEGER}
   </update>
@@ -252,7 +263,8 @@
       shop_sppkp = #{shopSppkp,jdbcType=LONGVARCHAR},
       shop_licence = #{shopLicence,jdbcType=LONGVARCHAR},
       shop_proxy_certificate = #{shopProxyCertificate,jdbcType=LONGVARCHAR},
-      shop_status = #{shopStatus,jdbcType=INTEGER}
+      shop_status = #{shopStatus,jdbcType=INTEGER},
+      post_code=#{postCode}
     where shop_id = #{shopId,jdbcType=INTEGER}
   </update>
 

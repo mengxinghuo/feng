@@ -39,12 +39,13 @@ public class Shop {
 
     private Integer shopStatus;
 
+    private String postCode;
 
     public Shop(Integer shopId, Integer adminId, String shopName, String shopDesc, String shopEmail,
                 String shopPhone, String shopAddress, String shopHeadimg, String shopFirstimg,
                 String shopSubimg, Date createTime, Date updateTime, String shopAccount,
                 String shopTaxCard, String shopSppkp, String shopLicence,
-                String shopProxyCertificate,Integer shopStatus) {
+                String shopProxyCertificate,Integer shopStatus,String postCode) {
         this.shopId = shopId;
         this.adminId = adminId;
         this.shopName = shopName;
@@ -63,6 +64,7 @@ public class Shop {
         this.shopLicence = shopLicence;
         this.shopProxyCertificate = shopProxyCertificate;
         this.shopStatus = shopStatus;
+        this.postCode = postCode;
     }
 
     public Shop() {
@@ -211,5 +213,13 @@ public class Shop {
 
     public void setShopStatus(Integer shopStatus) {
         this.shopStatus = shopStatus;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
     }
 }
