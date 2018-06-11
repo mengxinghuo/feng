@@ -359,6 +359,7 @@ public class StockServiceImpl implements IStockService {
                         Map maps= Maps.newHashMap();
                         maps.put("warehouseId",warehouse.getWarehouseId());
                         maps.put("warehouseName",warehouse.getWarehouseName());
+                        maps.put("totalNum",0);
                         mapList.add(maps);
                     }
                 }
