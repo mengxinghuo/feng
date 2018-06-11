@@ -375,9 +375,9 @@ public class OrderServiceImpl implements IOrderService {
             orderDetail.setProductId(product.getProductId());
             orderDetail.setProductName(product.getProductTitle());
             orderDetail.setProductImage(product.getProductFirstimg());
-            orderDetail.setCurrentUnitPrice(product.getProductPrice());
+            orderDetail.setCurrentUnitPrice(cartItem.getCartPrice());
             orderDetail.setQuantity(cartItem.getAmount());
-            orderDetail.setTotalPrice(BigDecimalUtil.mul(product.getProductPrice().doubleValue(), cartItem.getAmount()));
+            orderDetail.setTotalPrice(BigDecimalUtil.mul(cartItem.getCartPrice().doubleValue(), cartItem.getAmount()));
             orderDetailList.add(orderDetail);
         }
         return ServerResponse.createBySuccess(orderDetailList);
