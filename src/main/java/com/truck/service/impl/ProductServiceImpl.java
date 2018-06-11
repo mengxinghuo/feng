@@ -288,7 +288,7 @@ public class ProductServiceImpl implements ProductService {
                             return ServerResponse.createByErrorMessage("设备唯一标识码不能重复");
                         }
                     }
-                int rowCount = productMapper.updateByPrimaryKey(product);
+                int rowCount = productMapper.updateByPrimaryKeySelective(product);
                 if (rowCount > 0) {
                     return ServerResponse.createBySuccess("更新产品成功");
                 }
