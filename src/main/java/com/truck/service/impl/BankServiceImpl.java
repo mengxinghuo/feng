@@ -84,6 +84,8 @@ public class BankServiceImpl implements IBankService {
         bankListVo.setPresentAddress(bank.getPresentAddress());
         bankListVo.setCreateTime(DateTimeUtil.dateToStr(bank.getCreateTime()));
         bankListVo.setUpdateTime(DateTimeUtil.dateToStr(bank.getUpdateTime()));
+        bankListVo.setSwiftCode(bank.getSwiftCode());
+        bankListVo.setCurrency(bank.getCurrency());
         return bankListVo;
     }
 }

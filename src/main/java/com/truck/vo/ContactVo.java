@@ -18,6 +18,8 @@ public class ContactVo {
 
     private String updateTime;
 
+    private Integer warehouseId;
+
     public Integer getContactId() {
         return contactId;
     }
@@ -80,5 +82,13 @@ public class ContactVo {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
     }
 }

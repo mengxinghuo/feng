@@ -43,6 +43,8 @@ public class ShopDetailVo {
 
     private Integer shopStatus;
 
+    private List<String> proxyCertificateList;
+
     private List<ProductListVo> productListVoList;
 
     public List<ProductListVo> getProductListVoList() {
@@ -197,5 +199,13 @@ public class ShopDetailVo {
 
     public void setShopStatus(Integer shopStatus) {
         this.shopStatus = shopStatus;
+    }
+
+    public List<String> getProxyCertificateList() {
+        return proxyCertificateList;
+    }
+
+    public void setProxyCertificateList(List<String> proxyCertificateList) {
+        this.proxyCertificateList = proxyCertificateList;
     }
 }

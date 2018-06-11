@@ -11,11 +11,12 @@
       <arg column="contact_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="warehouse_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
     contact_id, shop_id, contact_name, contact_position, contact_email, contact_phone, 
-    create_time, update_time
+    create_time, update_time,warehouse_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -30,10 +31,10 @@
   <insert id="insert" parameterType="com.truck.pojo.Contact" >
     insert into truck_shop_contact (contact_id, shop_id, contact_name, 
       contact_position, contact_email, contact_phone, 
-      create_time, update_time)
+      create_time, update_time,warehouse_id)
     values (#{contactId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{contactName,jdbcType=VARCHAR}, 
       #{contactPosition,jdbcType=VARCHAR}, #{contactEmail,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},#{warehouseId})
   </insert>
   <insert id="insertSelective" parameterType="com.truck.pojo.Contact" useGeneratedKeys="true" keyProperty="contactId" >
     insert into truck_shop_contact
@@ -58,6 +59,9 @@
       </if>
         create_time,
         update_time,
+      <if test="warehouseId != null" >
+        warehouse_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="contactId != null" >
@@ -79,7 +83,10 @@
         #{contactPhone,jdbcType=VARCHAR},
       </if>
        now(),
-       now()
+       now(),
+      <if test="warehouseId != null" >
+        #{warehouseId},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.truck.pojo.Contact" >
@@ -104,6 +111,9 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
         update_time = now(),
+      <if test="warehouseId != null" >
+        warehouse_id=#{warehouseId},
+      </if>
     </set>
     where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
@@ -115,7 +125,8 @@
       contact_email = #{contactEmail,jdbcType=VARCHAR},
       contact_phone = #{contactPhone,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      warehouse_id=#{warehouseId}
     where contact_id = #{contactId,jdbcType=INTEGER}
   </update>
   <select id="selectByShopId" resultMap="BaseResultMap" parameterType="java.lang.Integer">

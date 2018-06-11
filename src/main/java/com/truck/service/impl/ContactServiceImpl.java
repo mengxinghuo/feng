@@ -31,6 +31,9 @@ public class ContactServiceImpl implements IContactService {
         if (shop !=null){
             contact.setShopId(shop.getShopId());
         }
+        if(contact.getWarehouseId() ==null){
+            return ServerResponse.createByErrorMessage("请选择仓库");
+        }
         int rowCount = contactMapper.insertSelective(contact);
         if(rowCount > 0){
             Map result = Maps.newHashMap();
@@ -84,6 +87,7 @@ public class ContactServiceImpl implements IContactService {
         contactVo.setContactPhone(contact.getContactPhone());
         contactVo.setCreateTime(DateTimeUtil.dateToStr(contact.getCreateTime()));
         contactVo.setUpdateTime(DateTimeUtil.dateToStr(contact.getUpdateTime()));
+        contactVo.setWarehouseId(contact.getWarehouseId());
         return contactVo;
     }
 }

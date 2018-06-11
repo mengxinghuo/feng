@@ -22,6 +22,10 @@ public class BankListVo {
 
     private String updateTime;
 
+    private String swiftCode;
+
+    private String currency;
+
     public Integer getBankId() {
         return bankId;
     }
@@ -100,5 +104,21 @@ public class BankListVo {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getSwiftCode() {
+        return swiftCode;
+    }
+
+    public void setSwiftCode(String swiftCode) {
+        this.swiftCode = swiftCode;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

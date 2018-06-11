@@ -19,7 +19,9 @@ public class Contact {
 
     private Date updateTime;
 
-    public Contact(Integer contactId, Integer shopId, String contactName, String contactPosition, String contactEmail, String contactPhone, Date createTime, Date updateTime) {
+    private Integer warehouseId;
+
+    public Contact(Integer contactId, Integer shopId, String contactName, String contactPosition, String contactEmail, String contactPhone, Date createTime, Date updateTime,Integer warehouseId) {
         this.contactId = contactId;
         this.shopId = shopId;
         this.contactName = contactName;
@@ -28,6 +30,7 @@ public class Contact {
         this.contactPhone = contactPhone;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.warehouseId = warehouseId;
     }
 
     public Contact() {
@@ -96,5 +99,13 @@ public class Contact {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
     }
 }

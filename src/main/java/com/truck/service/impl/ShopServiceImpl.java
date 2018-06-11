@@ -128,7 +128,7 @@ public class ShopServiceImpl implements IShopService {
         shopDetailVo.setShopSppkp(shop.getShopSppkp());
         shopDetailVo.setShopLicence(shop.getShopLicence());
         shopDetailVo.setShopProxyCertificate(shop.getShopProxyCertificate());
-        List<String> subimgList = Lists.newArrayList();
+
 
         List<ProductListVo> productListVoList = Lists.newArrayList();
         List<Product> productList = productMapper.selectByAdminId(shop.getAdminId(),null,null);
@@ -139,6 +139,7 @@ public class ShopServiceImpl implements IShopService {
             productListVoList.add(productListVo);
         }
 
+        List<String> subimgList = Lists.newArrayList();
         if(StringUtils.isNotBlank(shop.getShopSubimg())){
             String[] subImageArray = shop.getShopSubimg().split(",");
             for (String img : subImageArray) {
@@ -146,8 +147,17 @@ public class ShopServiceImpl implements IShopService {
             }
         }
 
+        List<String> proxyCertificateList = Lists.newArrayList();
+        if(StringUtils.isNotBlank(shop.getShopProxyCertificate())){
+            String[] subImageArray = shop.getShopProxyCertificate().split(",");
+            for (String img : subImageArray) {
+                proxyCertificateList.add(img);
+            }
+        }
+
         shopDetailVo.setProductListVoList(productListVoList);
         shopDetailVo.setShopSubimg(subimgList);
+        shopDetailVo.setProxyCertificateList(proxyCertificateList);
         shopDetailVo.setShopId(shop.getShopId());
 
         shopDetailVo.setCreateTime(DateTimeUtil.dateToStr(shop.getCreateTime()));
