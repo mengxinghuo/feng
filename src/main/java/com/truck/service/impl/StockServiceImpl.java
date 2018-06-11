@@ -359,7 +359,9 @@ public class StockServiceImpl implements IStockService {
                 }
                 stockWarehouseNumVo.setMapList(mapList);
             }
-            stockWarehouseNumVos.add(stockWarehouseNumVo);
+            if (stockWarehouseNumVo.getTotalNum() > 0) {
+                stockWarehouseNumVos.add(stockWarehouseNumVo);
+            }
         }
         PageInfo pageResult = new PageInfo(stockWarehouseNumVos);
         return ServerResponse.createBySuccess(pageResult);
