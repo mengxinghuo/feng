@@ -103,7 +103,10 @@ public class WarehouseServiceImpl implements IWarehouseService {
         warehouseVo.setWarehousePhone(warehouse.getWarehousePhone());
         warehouseVo.setCreateTime(DateTimeUtil.dateToStr(warehouse.getCreateTime()));
         warehouseVo.setUpdateTime(DateTimeUtil.dateToStr(warehouse.getUpdateTime()));
-
+        StockCategory stockCategory = stockCategoryMapper.selectByName(warehouseVo.getWarehouseName());
+        if (stockCategory != null) {
+            warehouseVo.setStockCategoryId(stockCategory.getId());
+        }
         Shop shop = shopMapper.selectByPrimaryKey(warehouse.getShopId());
         if (shop != null) {
         List<Stock> stockList = stockMapper.selectListByProductIdWarehouseId(shop.getAdminId(),productId,warehouse.getWarehouseId(),null);

@@ -21,4 +21,6 @@ public interface StockCategoryMapper {
     List<StockCategory> selectStockCategoryChildrenByParentId(Integer parentId);
 
     int deleteByPrimaryKeyByIdList(@Param("integers") List<Integer> integers);
+
+    StockCategory selectByName(@Param("name") String name);
 }

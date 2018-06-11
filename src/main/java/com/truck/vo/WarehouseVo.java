@@ -24,6 +24,8 @@ public class WarehouseVo {
 
     private List<StockVo> stockVoList;
 
+    private Integer stockCategoryId;
+
     public Integer getWarehouseId() {
         return warehouseId;
     }
@@ -102,5 +104,13 @@ public class WarehouseVo {
 
     public void setStockCategoryIdList(List<Integer> stockCategoryIdList) {
         this.stockCategoryIdList = stockCategoryIdList;
+    }
+
+    public Integer getStockCategoryId() {
+        return stockCategoryId;
+    }
+
+    public void setStockCategoryId(Integer stockCategoryId) {
+        this.stockCategoryId = stockCategoryId;
     }
 }
