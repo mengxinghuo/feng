@@ -57,13 +57,13 @@ public class StockCategoryManageController {
 
     @RequestMapping("get.do")
     @ResponseBody
-    public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId){
+    public ServerResponse getChildrenParallelCategory(HttpSession session, @RequestParam(value = "categoryId" ,defaultValue = "0") Integer categoryId,@RequestParam(value = "warehouseId" , required = false) Integer warehouseId){
        Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
         if(admin == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
         }
             //查询子节点的category信息,并且不递归,保持平级
-            return iStockCategoryService.getChildrenParallelStockCategory(categoryId);
+            return iStockCategoryService.getChildrenParallelStockCategory(categoryId,warehouseId);
     }
 
     /**

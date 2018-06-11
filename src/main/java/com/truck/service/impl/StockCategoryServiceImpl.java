@@ -6,7 +6,9 @@ import com.google.common.collect.Sets;
 import com.truck.common.ResponseCode;
 import com.truck.common.ServerResponse;
 import com.truck.dao.StockCategoryMapper;
+import com.truck.dao.WarehouseMapper;
 import com.truck.pojo.StockCategory;
+import com.truck.pojo.Warehouse;
 import com.truck.service.IStockCategoryService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +31,8 @@ public class StockCategoryServiceImpl implements IStockCategoryService {
 
     @Autowired
     private StockCategoryMapper stockCategoryMapper;
+    @Autowired
+    private WarehouseMapper warehouseMapper;
 
     public ServerResponse addStockCategory(Integer adminId, String stockCategoryName, Integer parentId){
         if(parentId == null || StringUtils.isBlank(stockCategoryName)){
@@ -65,7 +69,14 @@ public class StockCategoryServiceImpl implements IStockCategoryService {
         return ServerResponse.createByErrorMessage("更新品类名字失败");
     }
 
-    public ServerResponse<List<StockCategory>> getChildrenParallelStockCategory(Integer stockCategoryId){
+    public ServerResponse<List<StockCategory>> getChildrenParallelStockCategory(Integer stockCategoryId,Integer warehouseId){
+        Warehouse warehouse = warehouseMapper.selectByPrimaryKey(warehouseId);
+        if (warehouse != null) {
+            StockCategory stockCategory = stockCategoryMapper.selectByName(warehouse.getWarehouseName());
+            if (stockCategory != null) {
+                stockCategoryId=stockCategory.getId();
+            }
+        }
         List<StockCategory> stockCategoryList = stockCategoryMapper.selectStockCategoryChildrenByParentId(stockCategoryId);
         if(CollectionUtils.isEmpty(stockCategoryList)){
             logger.info("未找到当前分类的子分类");
