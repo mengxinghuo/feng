@@ -288,21 +288,32 @@ public class StockServiceImpl implements IStockService {
         return ServerResponse.createBySuccess(map);
     }
 
-/*    public ServerResponse<PageInfo> searchStock(String stockName,Integer stockId,int pageNum,int pageSize){
+    public ServerResponse listByJingJie(Integer adminId,Integer productId,String idCode,Integer warehouseId, Integer stockStatus,int pageNum, int pageSize){
         PageHelper.startPage(pageNum,pageSize);
-        if(StringUtils.isNotBlank(stockName)){
-            stockName = new StringBuilder().append("%").append(stockName).append("%").toString();
+        List<StockVo> stockVoList = Lists.newArrayList();
+        if (StringUtils.isNotBlank(idCode)){
+            List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
+            if (products.size()>0){
+                productId = products.get(0).getProductId();
+            }else{
+                return ServerResponse.createBySuccess(stockVoList);
+            }
         }
-        List<Stock> stockList = stockMapper.selectByNameAndStockId(stockName,stockId);
-        List<StockListVo> stockListVoList = Lists.newArrayList();
-        for(Stock stockItem : stockList){
-            StockListVo stockListVo = assembleStockListVo(stockItem);
-            stockListVoList.add(stockListVo);
+        if (stockStatus == null) {
+            return  ServerResponse.createByErrorMessage("请选择警戒状态");
         }
-        PageInfo pageResult = new PageInfo(stockList);
-        pageResult.setList(stockListVoList);
+        List<Product> products = (List<Product>)productService.selectProductList(adminId,null,stockStatus).getData();
+        for (Product product : products) {
+            Map mapNumPrice = stockMapper.selectNumPrice(adminId,product.getProductId(),warehouseId,null);
+            if (mapNumPrice!=null) {
+                product.setProductStock(Integer.parseInt(mapNumPrice.get("totalNum").toString()));
+            }
+        }
+        PageInfo pageResult = new PageInfo(products);
+        pageResult.setList(products);
         return ServerResponse.createBySuccess(pageResult);
-    }*/
+    }
+
 
 
     public ServerResponse<StockVo> getStockDetail(Integer stockId){
