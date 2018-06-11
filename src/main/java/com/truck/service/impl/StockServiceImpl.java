@@ -331,9 +331,6 @@ public class StockServiceImpl implements IStockService {
             }
         }
 
-        if (stockStatus == null) {
-            return  ServerResponse.createByErrorMessage("请选择警戒状态");
-        }
         List<Product> products = (List<Product>)productService.selectProductList(adminId,null,stockStatus).getData();
         List<StockWarehouseNumVo> stockWarehouseNumVos = Lists.newArrayList();
         for (Product product : products) {
