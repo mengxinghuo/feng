@@ -6,10 +6,12 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.truck.common.ServerResponse;
 import com.truck.dao.ShopMapper;
+import com.truck.dao.StockCategoryMapper;
 import com.truck.dao.StockMapper;
 import com.truck.dao.WarehouseMapper;
 import com.truck.pojo.Shop;
 import com.truck.pojo.Stock;
+import com.truck.pojo.StockCategory;
 import com.truck.pojo.Warehouse;
 import com.truck.service.IStockService;
 import com.truck.service.IWarehouseService;
@@ -34,6 +36,8 @@ public class WarehouseServiceImpl implements IWarehouseService {
     @Autowired
     private StockMapper stockMapper;
     @Autowired
+    private StockCategoryMapper stockCategoryMapper;
+    @Autowired
     private IStockService stockService;
 
     public ServerResponse add(Integer adminId,Warehouse warehouse){
@@ -43,6 +47,11 @@ public class WarehouseServiceImpl implements IWarehouseService {
          }
         int rowCount = warehouseMapper.insertSelective(warehouse);
         if(rowCount > 0){
+            StockCategory stockCategory = new StockCategory();
+            stockCategory.setParentId(0);
+            stockCategory.setAdminId(adminId);
+            stockCategory.setName(warehouse.getWarehouseName());
+             stockCategoryMapper.insertSelective(stockCategory);
             Map result = Maps.newHashMap();
             result.put("warehouseId",warehouse.getWarehouseId());
             return ServerResponse.createBySuccess("新建仓库成功",result);
