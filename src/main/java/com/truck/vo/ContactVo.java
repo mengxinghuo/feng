@@ -20,6 +20,8 @@ public class ContactVo {
 
     private Integer warehouseId;
 
+    private String warehouseName;
+
     public Integer getContactId() {
         return contactId;
     }
@@ -90,5 +92,13 @@ public class ContactVo {
 
     public void setWarehouseId(Integer warehouseId) {
         this.warehouseId = warehouseId;
+    }
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
     }
 }

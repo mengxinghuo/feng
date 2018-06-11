@@ -7,8 +7,10 @@ import com.google.common.collect.Maps;
 import com.truck.common.ServerResponse;
 import com.truck.dao.ContactMapper;
 import com.truck.dao.ShopMapper;
+import com.truck.dao.WarehouseMapper;
 import com.truck.pojo.Contact;
 import com.truck.pojo.Shop;
+import com.truck.pojo.Warehouse;
 import com.truck.service.IContactService;
 import com.truck.util.DateTimeUtil;
 import com.truck.vo.ContactVo;
@@ -25,6 +27,8 @@ public class ContactServiceImpl implements IContactService {
     private ContactMapper contactMapper;
     @Autowired
     private ShopMapper shopMapper;
+    @Autowired
+    private WarehouseMapper warehouseMapper;
 
     public ServerResponse add(Integer adminId ,Contact contact){
         Shop shop = shopMapper.selectByAdminId(adminId);
@@ -88,6 +92,10 @@ public class ContactServiceImpl implements IContactService {
         contactVo.setCreateTime(DateTimeUtil.dateToStr(contact.getCreateTime()));
         contactVo.setUpdateTime(DateTimeUtil.dateToStr(contact.getUpdateTime()));
         contactVo.setWarehouseId(contact.getWarehouseId());
+        Warehouse warehouse = warehouseMapper.selectByPrimaryKey(contactVo.getWarehouseId());
+        if (warehouse != null) {
+            contactVo.setWarehouseName(warehouse.getWarehouseName());
+        }
         return contactVo;
     }
 }

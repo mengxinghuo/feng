@@ -102,6 +102,23 @@ public class StockManageController {
             return iStockService.listByJingJie(admin.getAdminId(),productId,idCode,warehouseId,stockStatus,pageNum,pageSize);
     }
 
+    @RequestMapping("listByNumWarehouse.do")
+    @ResponseBody
+    //查看某个产品的所有库存
+    public ServerResponse listByNumWarehouse(HttpSession session,
+                                  @RequestParam(value = "productId",required = false)Integer productId,
+                                  @RequestParam(value = "idCode",required = false)String idCode,
+                                  @RequestParam(value = "warehouseId",required = false)Integer warehouseId,
+                                  @RequestParam(value = "stockStatus",required = false)Integer stockStatus,
+                                  @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,
+                                  @RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
+         Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
+        if(admin == null){
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
+        }
+            return iStockService.listByNumWarehouse(admin.getAdminId(),productId,idCode,warehouseId,stockStatus,pageNum,pageSize);
+    }
+
     @RequestMapping("reduce.do")
     @ResponseBody
     //减少某个产品的库存

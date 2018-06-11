@@ -16,6 +16,8 @@ import com.truck.service.ProductService;
 import com.truck.util.DateTimeUtil;
 import com.truck.vo.ProductListVo;
 import com.truck.vo.StockVo;
+import com.truck.vo.StockWarehouseNumVo;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +39,8 @@ public class StockServiceImpl implements IStockService {
     private ShopMapper shopMapper;
     @Autowired
     private ProductMapper productMapper;
+    @Autowired
+    private WarehouseMapper warehouseMapper;
     @Autowired
     private StockAlterationMapper stockAlterationMapper;
 
@@ -311,6 +315,53 @@ public class StockServiceImpl implements IStockService {
         }
         PageInfo pageResult = new PageInfo(products);
         pageResult.setList(products);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    public ServerResponse listByNumWarehouse(Integer adminId,Integer productId,String idCode,Integer warehouseId, Integer stockStatus,int pageNum, int pageSize){
+        PageHelper.startPage(pageNum,pageSize);
+
+        List<StockVo> stockVoList = Lists.newArrayList();
+        if (StringUtils.isNotBlank(idCode)){
+            List<Product> products = productMapper.selectByAdminIdIdCode(adminId,idCode);
+            if (products.size()>0){
+                productId = products.get(0).getProductId();
+            }else{
+                return ServerResponse.createBySuccess(stockVoList);
+            }
+        }
+
+        if (stockStatus == null) {
+            return  ServerResponse.createByErrorMessage("请选择警戒状态");
+        }
+        List<Product> products = (List<Product>)productService.selectProductList(adminId,null,stockStatus).getData();
+        List<StockWarehouseNumVo> stockWarehouseNumVos = Lists.newArrayList();
+        for (Product product : products) {
+            StockWarehouseNumVo stockWarehouseNumVo = new StockWarehouseNumVo();
+            Map mapNumPrice = stockMapper.selectNumPrice(adminId,product.getProductId(),warehouseId,null);
+            if (mapNumPrice!=null) {
+                product.setProductStock(Integer.parseInt(mapNumPrice.get("totalNum").toString()));
+            }
+            stockWarehouseNumVo.setProductId(product.getProductId());
+            stockWarehouseNumVo.setProductName(product.getProductTitle());
+            stockWarehouseNumVo.setTotalNum(product.getProductStock());
+            Shop shop = shopMapper.selectByAdminId(adminId);
+            if (shop != null) {
+                List<Map> mapList = Lists.newArrayList();
+                List<Warehouse> warehouseList = warehouseMapper.selectByShopId(shop.getShopId());
+                for (Warehouse warehouse : warehouseList) {
+                    Map mapNumWarehouse = stockMapper.selectNumPrice(adminId,product.getProductId(),warehouse.getWarehouseId(),null);
+                    if(mapNumWarehouse!=null){
+                        mapNumWarehouse.put("warehouseId",warehouse.getWarehouseId());
+                        mapNumWarehouse.put("warehouseName",warehouse.getWarehouseName());
+                        mapList.add(mapNumWarehouse);
+                    }
+                }
+                stockWarehouseNumVo.setMapList(mapList);
+            }
+            stockWarehouseNumVos.add(stockWarehouseNumVo);
+        }
+        PageInfo pageResult = new PageInfo(stockWarehouseNumVos);
         return ServerResponse.createBySuccess(pageResult);
     }
 

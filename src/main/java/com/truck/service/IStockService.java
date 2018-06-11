@@ -24,6 +24,8 @@ public interface IStockService {
 
     ServerResponse listByJingJie(Integer adminId,Integer productId,String idCode,Integer warehouseId,Integer stockStatus,int pageNum, int pageSize);
 
+    ServerResponse listByNumWarehouse(Integer adminId,Integer productId,String idCode,Integer warehouseId,Integer stockStatus,int pageNum, int pageSize);
+
 //    ServerResponse<PageInfo> searchStock(String stockName, Integer stockId, int pageNum, int pageSize);
 
     ServerResponse<StockVo> getStockDetail(Integer stockId);
