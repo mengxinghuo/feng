@@ -459,6 +459,15 @@ public class OrderServiceImpl implements IOrderService {
     private void backProductStock(OrderDetail orderDetail) {
         Product product = productMapper.selectByPrimaryKey(orderDetail.getProductId());
         product.setProductStock(product.getProductStock() + orderDetail.getQuantity());
+        if(product.getProductStock()==0){
+            product.setStockStatus(Const.ProductStockStatusEnum.STOCK_ZERO.getCode());
+        }else{
+            if(product.getProductStock()>product.getPicketLine()){
+                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_NORMAL.getCode());
+            }else{
+                product.setStockStatus(Const.ProductStockStatusEnum.STOCK_LIMIT.getCode());
+            }
+        }
         productMapper.updateByPrimaryKeySelective(product);
     }
 
