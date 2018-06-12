@@ -196,6 +196,7 @@
     from truck_order_detail
     where shop_id=#{shopId}
     )
+    order by create_time desc
   </select>
 
   <select id="searchByOrderNo" resultMap="BaseResultMap" parameterType="String">
