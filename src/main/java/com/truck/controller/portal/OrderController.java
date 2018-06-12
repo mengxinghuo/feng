@@ -30,7 +30,11 @@ public class OrderController {
     @RequestMapping("create_order.do")
     @ResponseBody
     public ServerResponse createOrder(HttpSession session, Integer shippingId,
+                                      @RequestParam(value = "userId", required = false) Integer userId,
                                       @RequestParam(value = "paymentType",required = false)Integer paymentType){
+        if (userId != null) {
+            return iOrderService.createOrder(userId,shippingId,paymentType);
+        }
         User user = (User)session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
