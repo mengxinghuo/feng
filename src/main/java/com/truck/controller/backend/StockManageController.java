@@ -149,15 +149,4 @@ public class StockManageController {
         }
     }
 
-
-/*    @RequestMapping("search.do")
-    @ResponseBody
-    public ServerResponse stockSearch(HttpSession session,String stockName,Integer stockId, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,@RequestParam(value = "pageSize",defaultValue = "10") int pageSize){
-         Admin admin = (Admin)session.getAttribute(Const.CURRENT_ADMIN);
-        if(admin == null){
-            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),"管理员用户未登录，请登录");
-        }
-            return iStockService.searchStock(stockName,stockId,pageNum,pageSize);
-    }*/
-
 }
