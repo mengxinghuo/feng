@@ -117,6 +117,16 @@ public class CartController {
         if (user==null)
             return ServerResponse.createBySuccess(0);
         return iCartService.getcartCount(user.getUserId());
+    }
 
+
+    //一键清空购物车
+    @RequestMapping("cleanCart.do")
+    @ResponseBody
+    public ServerResponse cleanCart(HttpSession session){
+        User user=(User)session.getAttribute(Const.CURRENT_USER);
+        if (user==null)
+            return ServerResponse.createByErrorCodeMessage(ResponseCode.NEED_LOGIN.getCode(),ResponseCode.NEED_LOGIN.getDesc());
+        return iCartService.cleanCart(user.getUserId());
     }
 }

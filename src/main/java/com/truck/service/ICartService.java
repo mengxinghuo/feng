@@ -18,4 +18,6 @@ public interface ICartService {
     ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer checked, Integer productId);
 
     ServerResponse<Integer> getcartCount(Integer userId);
+
+    ServerResponse cleanCart(Integer userId);
 }

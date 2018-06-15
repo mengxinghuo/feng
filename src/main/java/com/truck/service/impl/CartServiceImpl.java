@@ -82,8 +82,8 @@ public class CartServiceImpl implements ICartService {
                 cart.setCartPrice(cartPrice);
             }
             cart.setAmount(count);
+            cartMapper.updateByPrimaryKeySelective(cart);
         }
-        cartMapper.updateByPrimaryKeySelective(cart);
         return this.list(userId);
     }
 
@@ -109,6 +109,17 @@ public class CartServiceImpl implements ICartService {
             return ServerResponse.createBySuccess(0);
 
         return ServerResponse.createBySuccess(cartMapper.selectCartProductCount(userId));
+    }
+
+    public ServerResponse cleanCart(Integer userId) {
+        if (userId == null)
+            return ServerResponse.createByErrorMessage("请登录");
+           int result =  cartMapper.deleteByUserId(userId);
+        if (result >0) {
+            return ServerResponse.createBySuccess("清空购物车成功");
+        }
+        return ServerResponse.createBySuccess("清空购物车失败");
+
     }
 
     private CartVo getCartVoLimit(Integer userId) {

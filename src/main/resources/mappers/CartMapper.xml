@@ -170,7 +170,12 @@
       </foreach>
     </if>
   </delete>
-  
+
+  <delete id="deleteByUserId" parameterType="integer">
+    DELETE FROM truck_cart
+    WHERE cart_user_id=#{userId}
+  </delete>
+
   
   <update id="checkedOrUncheckedProduct" parameterType="map">
     UPDATE truck_cart
